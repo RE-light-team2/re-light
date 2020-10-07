@@ -1,35 +1,37 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, loader, redirect
 from django.contrib.auth import login, authenticate
+from django.http import HttpResponse
+from relight.models import UserInfo
+from relight.forms.forms import Create_account_Form
 # from relight.forms.forms import Customer_SignUpForm ,  Shop_SignUpForm
 
 # Create your views here.
 
 def top(request):
-   return render(request, 'relight/top.html',{})
+   template = loader.get_template('relight/top.html')
+   return HttpResponse(template.render(None, request))
 
-def create_aka_before(request):
-   return render(request, 'relight/create_aka_before.html',{})
+def create_account(request):
+   if request.method == 'GET':
+      form = Create_account_Form()
+   else:
+      form = Create_account_Form(data=request.POST)
+      if form.is_valid():
+         print('user_regist is_valid')
+         form.save(request.POST)
+         return redirect('/login/')
+      else:
+         print('user_regist false is_valid')
+         
+   template = loader.get_template('relight/create_account.html')
+   context = {
+      'form': form,
+   }
+   return HttpResponse(template.render(context, request))
 
-def create_aka_after(request):
-   '''if request.method == 'POST':
-        form = Customer_SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('index')
-    else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})'''
-   return render(request, 'relight/create_aka_after.html',{})
 
-def cus_login(request):
-   return render(request, 'relight/cus_login.html',{})
-
-def shop_login(request):
-   return render(request, 'relight/shop_login.html',{})
+def login(request):
+   return render(request, 'relight/login.html',{})
 
 def cus_profile(request):
    return render(request, 'relight/cus_profile.html',{})

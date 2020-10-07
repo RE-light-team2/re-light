@@ -1,32 +1,68 @@
 from django.db import models
+from django.contrib.auth.models import PermissionsMixin, BaseUserManager,AbstractBaseUser
 import datetime
 
 # Create your models here.
+class UserManager(BaseUserManager):
+    def create_user(self, email, s_or_c,name,gender,self_introduction,icons,headers,password):
+        if not email:
+            raise ValueError('Users must have an email address')
 
-class Image(models.Model):
-   id = models.IntegerField(primary_key=True)
-   objects = models.Manager
-   origin = models.ImageField(upload_to="photos/%y/%m/%d/")
+        user = self.model(
+            email=self.normalize_email(email),
+            password=password,
+            gender = gender,
+            name = name,
+            s_or_c = s_or_c,
+            icons = icons,
+            headers = headers,
+            self_introduction = self_introduction,
+        )
 
-class Shop(models.Model):
-    """企業側のモデル"""
-    name=models.CharField(max_length=256)
-    userid=models.CharField(max_length=256)
-    password=models.CharField(max_length=256)
-    self_introduction = models.CharField(max_length=500)
-    header = models.ImageField(upload_to='imgs/')
-    icon = models.ImageField(upload_to='imgs/')
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-class Customer(models.Model):
-    """顧客側のモデル"""
-    name=models.CharField(max_length=256)
-    userid=models.CharField(max_length=256)
-    password=models.CharField(max_length=256)
-    gender = models.CharField(max_length=2)
-    email = models.EmailField(max_length=75)
-    self_introduction = models.CharField(max_length=500)
-    header = models.ImageField(upload_to='imgs/')
-    icon = models.ImageField(upload_to='imgs/')
+def create_superuser(self, email,s_or_c,name,gender,self_introduction,icons,headers,password):
+        user = self.create_user(
+            email,
+            password=password,
+            gender = gender,
+            name = name,
+            s_or_c = s_or_c,
+            icons = icons,
+            headers = headers,
+            self_introduction = self_introduction,
+        )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+class UserInfo(AbstractBaseUser, PermissionsMixin):
+    """ユーザーのモデル"""  
+    s_or_c = models.CharField(max_length=2,unique=True)
+    email = models.EmailField(max_length=255,unique=True)
+    name=models.CharField(max_length=30,unique=True) 
+    gender = models.CharField(max_length=2,unique=True)
+    self_introduction = models.CharField(max_length=500,unique=True)
+    icons = models.ImageField(upload_to="icons/",verbose_name='アイコン',unique=True)
+    headers = models.ImageField(upload_to="headers/",verbose_name='アイコン',unique=True)
+    objects = UserManager()
+    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'email'
+
+    def __str__(self):
+        return self.email
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
+
+    @property
+    def is_staff(self):
+        return self.is_admin
 
 class Event(models.Model):
     """開催中のイベントのモデル"""
