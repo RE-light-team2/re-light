@@ -40,29 +40,21 @@ def create_superuser(self, email,s_or_c,name,gender,self_introduction,icons,head
 
 class UserInfo(AbstractBaseUser, PermissionsMixin):
     """ユーザーのモデル"""  
-    s_or_c = models.CharField(max_length=2,unique=True)
+    s_or_c = models.CharField(max_length=10)
     email = models.EmailField(max_length=255,unique=True)
     name=models.CharField(max_length=30,unique=True) 
-    gender = models.CharField(max_length=2,unique=True)
-    self_introduction = models.CharField(max_length=500,unique=True)
-    icons = models.ImageField(upload_to="icons/",verbose_name='アイコン',unique=True)
-    headers = models.ImageField(upload_to="headers/",verbose_name='アイコン',unique=True)
+    gender = models.CharField(max_length=10)
+    self_introduction = models.CharField(max_length=500)
+    icons = models.ImageField(upload_to="icons",unique=True)
+    headers = models.ImageField(upload_to="headers",unique=True)
+    is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
     objects = UserManager()
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'email'
-
-    def __str__(self):
-        return self.email
-
-    def has_perm(self, perm, obj=None):
-        return True
-
-    def has_module_perms(self, app_label):
-        return True
-
-    @property
-    def is_staff(self):
-        return self.is_admin
+    
 
 class Event(models.Model):
     """開催中のイベントのモデル"""

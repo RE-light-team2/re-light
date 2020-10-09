@@ -124,3 +124,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'relight.UserInfo' 
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/cus_profile/'

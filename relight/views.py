@@ -1,8 +1,9 @@
 from django.shortcuts import render, loader, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin 
+from django.contrib.auth.views import LoginView, LogoutView 
 from django.http import HttpResponse
 from relight.models import UserInfo
-from relight.forms.forms import Create_account_Form
+from relight.forms.forms import Create_account_Form , LoginForm
 # from relight.forms.forms import Customer_SignUpForm ,  Shop_SignUpForm
 
 # Create your views here.
@@ -15,10 +16,11 @@ def create_account(request):
    if request.method == 'GET':
       form = Create_account_Form()
    else:
-      form = Create_account_Form(data=request.POST)
+      print(request.FILES)
+      form = Create_account_Form(request.POST,request.FILES) 
       if form.is_valid():
          print('user_regist is_valid')
-         form.save(request.POST)
+         form.save(request.POST,request.FILES)
          return redirect('/login/')
       else:
          print('user_regist false is_valid')
@@ -30,8 +32,12 @@ def create_account(request):
    return HttpResponse(template.render(context, request))
 
 
-def login(request):
-   return render(request, 'relight/login.html',{})
+class Login(LoginView):
+   form_class = LoginForm
+   template_name = 'relight/login.html'
+
+class Logout(LoginRequiredMixin, LogoutView):
+   template_name = 'relight/top.html'
 
 def cus_profile(request):
    return render(request, 'relight/cus_profile.html',{})
