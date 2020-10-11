@@ -7,20 +7,35 @@
     </head>
     <body>
       <h1 class="title">ログイン</h1>
-      <form action="" method="POST">
-        {{ form.non_field_errors }}
-        {% for field in form %}
-            {{ field }}
-            {{ field.errors }}
-            <hr>
-        {% endfor %}
-        <div class="form-group">
-            <button type="submit" class="loginBtn">
-                ログインする
-            </button>
-            <input type="hidden" name="next" value="{{ next }}" />
-            {% csrf_token %}
-        </div>
-    </form>
+      {% if form.errors  %}
+    <p>ユーザーID, パスワードが一致しません．</p>
+    {% endif %}
+    <form enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
+      {% csrf_token %}
+      <label>ユーザーID</label>
+      {{ form.email }}
+      {{ form.email.errors }}
+      <label>パスワード</label>
+      {{ form.password }}
+      {{ form.password.errors }}
+      <button type = "submit">ログイン</button>
+      </form>
+      <div class="form-error">
+        {% if form.errors %} 
+        {% for field in form %} 
+         {% for error in field.errors %} 
+          <div class="alert alert-danger"> 
+           <strong>{{ error|escape }}</strong> 
+          </div> 
+         {% endfor %} 
+        {% endfor %} 
+        {% for error in form.non_field_errors %} 
+         <div class="alert alert-danger"> 
+          <strong>{{ error|escape }}</strong> 
+         </div> 
+        {% endfor %} 
+        {% endif %} 
+        </div> 
+        <a href="/">トップに戻る</a>    
     </body>
 </html>

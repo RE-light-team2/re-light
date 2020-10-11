@@ -25,7 +25,7 @@ class UserManager(BaseUserManager):
 
 def create_superuser(self, email,s_or_c,name,gender,self_introduction,icons,headers,password):
         user = self.create_user(
-            email,
+            email=self.normalize_email(email),
             password=password,
             gender = gender,
             name = name,
@@ -34,7 +34,7 @@ def create_superuser(self, email,s_or_c,name,gender,self_introduction,icons,head
             headers = headers,
             self_introduction = self_introduction,
         )
-        user.is_admin = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -48,12 +48,12 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
     icons = models.ImageField(upload_to="icons",unique=True)
     headers = models.ImageField(upload_to="headers",unique=True)
     is_staff = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     objects = UserManager()
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
     
 
 class Event(models.Model):

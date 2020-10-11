@@ -126,4 +126,7 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'relight.UserInfo' 
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/cus_profile/'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
