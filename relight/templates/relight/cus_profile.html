@@ -4,8 +4,22 @@
     <title>RElight</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
     </head>
     <body>
-        <p>1</p>
+        <p>customer login succeeded</p>
+        <div class="personal">
+          <h1>Name :{{ user.name }}</h1>
+          <h1>Email : {{ user.email }}</h1>
+          <div class="icon">
+            Icon :
+          <img src="/media/{{ user.icons }}" width="200">
+          </div>
+          <div class="header">
+            header :
+          <img src="/media/{{ user.headers }}" width="200"> 
+          </div>
+          <h1>Self_introduction : {{ user.self_introduction }}</h1>
+          </div>
     </body>
 </html>

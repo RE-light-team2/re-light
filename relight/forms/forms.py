@@ -25,22 +25,6 @@ class Create_account_Form(UserCreationForm):
     s_or_c = forms.ChoiceField(choices=S_OR_C, widget=forms.RadioSelect())
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION', max_length=1000,widget=forms.Textarea(attrs={'rows' : 5, 'class':'form-control'}))
     is_save = False
-    
-    def save(self, commit=True):
-    # Call save of the super of your own class,
-    # which is UserCreationForm.save() which calls user.set_password()
-        user = UserInfo()
-    # Add the things your super doesn't do for you
-        user.email = self.cleaned_data['email']
-        user.name = self.cleaned_data['name']
-        user.s_or_c = self.cleaned_data['s_or_c']
-        user.gender = self.cleaned_data['gender']
-        user.self_introduction = self.cleaned_data['self_introduction']
-        user.icons = self.cleaned_data['icons']
-        user.headers = self.cleaned_data['headers']
-        if commit:
-            user.save()
-        return user
 
 class LoginForm(AuthenticationForm):
     class Meta:

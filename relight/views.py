@@ -6,6 +6,7 @@ from relight.models import UserInfo
 from relight.forms.forms import Create_account_Form , LoginForm
 from django.contrib.auth import authenticate, login
 from django.views import View
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -21,7 +22,7 @@ def create_account(request):
       form = Create_account_Form(request.POST,request.FILES) 
       if form.is_valid():
          print('user_regist is_valid')
-         form.save(request.POST,request.FILES)
+         form.save()
          return redirect('/login/')
       else:
          print('user_regist false is_valid')
@@ -37,16 +38,15 @@ def Login(request):
       form = LoginForm()
    else:
       form = LoginForm(data=request.POST) 
-      print(form)
-      print(request)
-      print(request.POST)
       if form.is_valid():
          print('user_login is_valid')
          email = form.cleaned_data.get('email')
-         print(email)
          user = UserInfo.objects.get(email=email)
          login(request, user)
-         return redirect('/index/')
+         url = '/cus/profile/' + str(user.id)
+         if user.s_or_c == "shop":
+            url = '/shop/profile/' + str(user.id)   
+         return redirect(url)
          
    template = loader.get_template('relight/login.html')
    context = {
@@ -57,24 +57,45 @@ def Login(request):
 class Logout(LoginRequiredMixin, LogoutView):
    template_name = 'relight/top.html'
 
-def cus_profile(request):
-   return render(request, 'relight/cus_profile.html',{})
+@login_required
+def cus_profile(request,cus_id):
+   if request.method == 'GET':
+      user = UserInfo.objects.get(id=shop_id)
 
-def shop_profile(request):
-   return render(request, 'relight/shop_profile.html',{})
+   template = loader.get_template('relight/cus_profile.html')
+   context = {
+      'user': user,
+   }
+   return HttpResponse(template.render(context, request))
 
+@login_required
+def shop_profile(request,shop_id):
+   if request.method == 'GET':
+      user = UserInfo.objects.get(id=shop_id)
+
+   template = loader.get_template('relight/shop_profile.html')
+   context = {
+      'user': user,
+   }
+   return HttpResponse(template.render(context, request))
+
+@login_required
 def event_index(request):
    return render(request, 'relight/event_index.html',{})
 
+@login_required
 def event_detail(request):
    return render(request, 'relight/event_detail.html',{})
 
+@login_required
 def create_event(request):
    return render(request, 'relight/create_event.html',{})
 
+@login_required
 def shop_video(request):
    return render(request, 'relight/shop_video.html',{})
 
+@login_required
 def cus_video(request):
    return render(request, 'relight/cus_video.html',{})
 
