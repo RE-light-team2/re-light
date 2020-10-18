@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import authenticate,get_user_model
-from relight.models import UserInfo
+from relight.models import UserInfo , Event
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
@@ -39,3 +39,22 @@ class LoginForm(AuthenticationForm):
         for field in self.fields.values():
             print(field.widget)   
             field.widget.attrs['placeholder'] = field.label  
+
+class Create_Event_Form(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ("title","detail","questionnaire_url","image")
+
+    image = forms.ImageField()
+    title = forms.CharField(label='TITLE', max_length=256,widget=forms.TextInput(attrs={'placeholder':'タイトルを入力してください', 'class':'form-control'}))
+    detail = forms.CharField(label='DETAIL',  max_length=1000, widget=forms.Textarea(attrs={'rows' : 5, 'class':'form-control'}))
+    questionnaire_url = forms.CharField(label='URL', max_length=500,widget=forms.TextInput(attrs={'placeholder':'アンケート用のURLを入力してください', 'class':'form-control'}))
+
+    def save(self,post,file,user):
+        event = Event()
+        event.title = post["title"]
+        event.detail = post["detail"]
+        event.image = file["image"]
+        event.detail = self.cleaned_data["detail"]
+        event.user = user
+        event.save()

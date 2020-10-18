@@ -20,6 +20,8 @@
           <img src="/media/{{ user.headers }}" width="200"> 
           </div>
           <h1>Self_introduction : {{ user.self_introduction }}</h1>
+          <button type="button"><a href="{% url 'create_event' user.id %}">イベント作成ページへ</a></button>
+          <button type="button"><a href="{% url 'index' %}">イベント一覧ページへ</a></button>
           </div>
     </body>
 </html>

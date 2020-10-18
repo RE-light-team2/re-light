@@ -4,8 +4,19 @@
     <title>RElight</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
     </head>
     <body>
-        
+        <p>shop login succeeded</p>
+        <div class="personal">
+          <h1>Title : {{ event.title }}</h1>
+          <h1>Detail : {{ event.detail }}</h1>
+          <h1>Shop Name : {{ user.name }}</h1>
+          <div class="icon">
+            Icon :
+          <img src="/media/{{ event.image }}" width="200">
+          </div>
+          <button type="button"><a href="{% url 'create_event' user.id %}">イベント作成ページへ</a></button>
+          </div>
     </body>
 </html>

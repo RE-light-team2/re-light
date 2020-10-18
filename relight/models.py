@@ -49,7 +49,7 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
     headers = models.ImageField(upload_to="headers/",unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)   
     objects = UserManager()
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'email'
@@ -58,9 +58,12 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
 
 class Event(models.Model):
     """開催中のイベントのモデル"""
+    user = models.ForeignKey('UserInfo', on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to="event/",unique=True)
     title = models.CharField(max_length=256)
     detail = models.CharField(max_length=500)
-    created = models.DateTimeField(default=datetime.datetime.now)
+    questionnaire_url = models.CharField(max_length=500)
+    created_at = models.DateTimeField(default=datetime.datetime.now)
 
 
 

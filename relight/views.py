@@ -2,8 +2,8 @@ from django.shortcuts import render, loader, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.contrib.auth.views import LogoutView 
 from django.http import HttpResponse
-from relight.models import UserInfo
-from relight.forms.forms import Create_account_Form , LoginForm
+from relight.models import UserInfo , Event
+from relight.forms.forms import Create_account_Form , LoginForm , Create_Event_Form
 from django.contrib.auth import authenticate, login
 from django.views import View
 from django.contrib.auth.decorators import login_required
@@ -81,15 +81,46 @@ def shop_profile(request,shop_id):
 
 @login_required
 def event_index(request):
-   return render(request, 'relight/event_index.html',{})
+   events = Event.objects.all()
+   template = loader.get_template('relight/event_index.html')
+   context = {
+      'events': events,
+   }
+   return HttpResponse(template.render(context, request))
 
 @login_required
-def event_detail(request):
-   return render(request, 'relight/event_detail.html',{})
+def event_detail(request,event_title):
+   if request.method == 'GET':
+      event = Event.objects.get(title=event_title)
+      user = UserInfo.objects.get(id=event.user.id)
+
+   template = loader.get_template('relight/event_detail.html')
+   context = {
+      'user': user,
+      'event' : event,
+   }
+   return HttpResponse(template.render(context, request))
 
 @login_required
-def create_event(request):
-   return render(request, 'relight/create_event.html',{})
+def create_event(request,shop_id):
+   user = UserInfo.objects.get(id=shop_id)
+   if request.method == 'GET':
+      form = Create_Event_Form()      
+   else:
+      form = Create_Event_Form(request.POST,request.FILES) 
+      if form.is_valid():
+         print('user_login is_valid')
+         
+         form.save(request.POST,request.FILES,user)
+         ev_detail = '/event/' + request.POST["title"]
+         return redirect(ev_detail)
+
+   template = loader.get_template('relight/create_event.html')
+   context = {
+      'form': form,
+      'user': user,
+   }
+   return HttpResponse(template.render(context, request))
 
 @login_required
 def shop_video(request):

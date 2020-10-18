@@ -7,5 +7,10 @@
     </head>
     <body>
         <h1>suceess login!!</h1>
+        {% for event in events %}
+        <div class="event_title">
+          <p><a href="{% url 'detail' event.title %}" class="title">{{event.title}}</a></p>
+        </div>
+        {% endfor %}
     </body>
 </html>

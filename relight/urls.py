@@ -12,9 +12,9 @@ urlpatterns = [
     path('cus/profile/<int:cus_id>', views.cus_profile, name='cus_login'),
     path('cus/video/<int:cus_id>', views.cus_video, name='cus_video'),
     path('index/',views.event_index, name='index'),
-    path('index/<int:event_id>',views.event_detail, name='detail'),
+    path('event/<str:event_title>',views.event_detail, name='detail'),
     path('create_account',views.create_account, name='create_account'),
-    path('create_event',views.create_event, name='create_event'),
+    path('create_event/<int:shop_id>',views.create_event, name='create_event'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
