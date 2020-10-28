@@ -1,10 +1,19 @@
+body{
+    text-align: center;
+    margin:0;
+}
+
 .title{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: xx-large;
 }
 
 header{
-    background-color: burlywood;
+    background: linear-gradient(to right, #FFF55F, #E8FD95);;
+    font-size: x-large;
+    text-align:right;
+    padding: 30px;
+    padding-right:3%;
 }
 
 button{
@@ -22,6 +31,8 @@ button a:hover{
     color: orange;
 }
 
-body{
-    text-align: center;
+.logoM{
+    width:30%;
+    
 }
+
