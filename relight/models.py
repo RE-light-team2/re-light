@@ -42,7 +42,8 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
     """ユーザーのモデル"""  
     s_or_c = models.CharField(max_length=10)
     email = models.EmailField(max_length=255,unique=True)
-    name=models.CharField(max_length=30,unique=True) 
+    name=models.CharField(max_length=255,unique=True) 
+    userid=models.CharField(max_length=255,unique=True) 
     gender = models.CharField(max_length=10)
     self_introduction = models.CharField(max_length=500)
     icons = models.ImageField(upload_to="icons/",unique=True)
@@ -52,7 +53,7 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)   
     objects = UserManager()
     REQUIRED_FIELDS = []
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'userid'
     EMAIL_FIELD = 'email'
     
 

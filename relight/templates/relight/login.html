@@ -13,8 +13,8 @@
     <form enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
       {% csrf_token %}
       <label>ユーザーID</label>
-      {{ form.email }}
-      {{ form.email.errors }}
+      {{ form.userid }}
+      {{ form.userid.errors }}
       <label>パスワード</label>
       {{ form.password }}
       {{ form.password.errors }}

@@ -10,7 +10,7 @@ print(get_user_model())
 class Create_account_Form(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ['name', 'password1','password2', 'email', 'icons','headers','gender','s_or_c','self_introduction']
+        fields = ['userid','name', 'password1','password2', 'email', 'icons','headers','gender','s_or_c','self_introduction']
 
     password1 = forms.CharField(label='PASSWORD', max_length=128,widget=forms.PasswordInput(attrs={'placeholder':'パスワードを入力してください', 'class':'form-control', 'autocomplete' : 'off'}))
     password2 = forms.CharField(label='PASSWORDCONFIRM', max_length=128,widget=forms.PasswordInput(attrs={'placeholder':'パスワードを再度入力してください', 'class':'form-control', 'autocomplete' : 'off'}))
@@ -18,6 +18,7 @@ class Create_account_Form(UserCreationForm):
     headers = forms.ImageField()
     error_message = 'error'
     name = forms.CharField(label='NAME', max_length=30,widget=forms.TextInput(attrs={'placeholder':'名前を入力してください', 'class':'form-control'}))
+    userid = forms.CharField(label='NAME', max_length=30,widget=forms.TextInput(attrs={'placeholder':'利用者IDを入力してください', 'class':'form-control'}))
     email = forms.EmailField(max_length=255,label='EMAIL', required=True)   
     GENDER=[('man','男'),('woman','女')]
     S_OR_C=[('shop','企業様'),('customer','一般様')]
@@ -29,9 +30,9 @@ class Create_account_Form(UserCreationForm):
 class LoginForm(AuthenticationForm):
     class Meta:
         model = get_user_model()
-        fields = ['email', 'password']
+        fields = ['userid', 'password']
 
-    email = forms.EmailField(max_length=255,label='EMAIL', required=True)   
+    userid = forms.CharField(max_length=30,label='USER_ID', required=True)   
         
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs) 

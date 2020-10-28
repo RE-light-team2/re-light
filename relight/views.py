@@ -40,12 +40,12 @@ def Login(request):
       form = LoginForm(data=request.POST) 
       if form.is_valid():
          print('user_login is_valid')
-         email = form.cleaned_data.get('email')
-         user = UserInfo.objects.get(email=email)
+         userid = form.cleaned_data.get('userid')
+         user = UserInfo.objects.get(userid=userid)
          login(request, user)
-         url = '/cus/profile/' + str(user.id)
+         url = '/index/' + str(user.userid)
          if user.s_or_c == "shop":
-            url = '/shop/profile/' + str(user.id)   
+            url = '/shop/profile/' + str(user.userid)   
          return redirect(url)
          
    template = loader.get_template('relight/login.html')
@@ -60,7 +60,7 @@ class Logout(LoginRequiredMixin, LogoutView):
 @login_required
 def cus_profile(request,cus_id):
    if request.method == 'GET':
-      user = UserInfo.objects.get(id=shop_id)
+      user = UserInfo.objects.get(userid=cus_id)
 
    template = loader.get_template('relight/cus_profile.html')
    context = {
@@ -71,7 +71,7 @@ def cus_profile(request,cus_id):
 @login_required
 def shop_profile(request,shop_id):
    if request.method == 'GET':
-      user = UserInfo.objects.get(id=shop_id)
+      user = UserInfo.objects.get(userid=shop_id)
 
    template = loader.get_template('relight/shop_profile.html')
    context = {
@@ -80,11 +80,13 @@ def shop_profile(request,shop_id):
    return HttpResponse(template.render(context, request))
 
 @login_required
-def event_index(request):
+def event_index(request,user_id):
    events = Event.objects.all()
+   user = UserInfo.objects.get(userid=user_id) 
    template = loader.get_template('relight/event_index.html')
    context = {
       'events': events,
+      'user' : user,
    }
    return HttpResponse(template.render(context, request))
 
@@ -103,14 +105,13 @@ def event_detail(request,event_title):
 
 @login_required
 def create_event(request,shop_id):
-   user = UserInfo.objects.get(id=shop_id)
+   user = UserInfo.objects.get(userid=shop_id)
    if request.method == 'GET':
       form = Create_Event_Form()      
    else:
       form = Create_Event_Form(request.POST,request.FILES) 
       if form.is_valid():
          print('user_login is_valid')
-         
          form.save(request.POST,request.FILES,user)
          ev_detail = '/event/' + request.POST["title"]
          return redirect(ev_detail)
@@ -122,12 +123,14 @@ def create_event(request,shop_id):
    }
    return HttpResponse(template.render(context, request))
 
-@login_required
-def shop_video(request):
-   return render(request, 'relight/shop_video.html',{})
 
 @login_required
-def cus_video(request):
-   return render(request, 'relight/cus_video.html',{})
+def video(request,user_id):
+   user = UserInfo.objects.get(userid=user_id) 
+   template = loader.get_template('relight/video.html')
+   context = {
+      'user' : user,
+   }
+   return HttpResponse(template.render(context, request))
 
 

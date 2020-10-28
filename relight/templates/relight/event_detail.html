@@ -16,7 +16,8 @@
             Icon :
           <img src="/media/{{ event.image }}" width="200">
           </div>
-          <button type="button"><a href="{% url 'create_event' user.id %}">イベント作成ページへ</a></button>
+          <button type="button"><a href="{% url 'create_event' user.userid %}">イベント作成ページへ</a></button>
+          <button type="button"><a href="{% url 'video' user.userid %}">ビデオ通話ページへ</a></button>
           </div>
     </body>
 </html>
