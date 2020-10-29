@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <title>RElight</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    </head>
+    <body>
+    <h1>Your Profile</h1>
+      <div class="personal">
+        <h1>Name :{{ user.name }}</h1>
+        <h1>Email : {{ user.email }}</h1>
+        <div class="icon">
+          Icon :
+        <img src="/media/{{ user.icons }}" width="200">
+        </div>
+        <div class="header">
+          header :
+        <img src="/media/{{ user.headers }}" width="200"> 
+        </div>
+        <h1>Self_introduction : {{ user.self_introduction }}</h1>
+        <button type="button"><a href="{% url 'index' %}">イベント一覧ページへ</a></button>
+      {% ifequal user.s_or_c "shop" %}
+      <h1>あなたの作成したイベント一覧</h1>          
+          {% for event in events %}
+          <div class="event_title">
+            <p><a href="{% url 'detail' event.title %}" class="title">{{event.title}}</a></p>
+          </div>
+          {% endfor %}  
+          <button type="button"><a href="{% url 'create_event' %}">イベント作成ページへ</a></button>
+      {% endifequal %}
+      <button type="button"><a href="{% url 'logout' %}">ログアウトする</a></button> 
+      </div>
+    </body>
+</html>

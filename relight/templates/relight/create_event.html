@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body>
-      <h1>アカウントを作成</h1>
+      <h1>イベントを作成</h1>
       <form id="new_user" enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
       {% csrf_token %}
       <div class="form-group">
@@ -43,6 +43,6 @@
       {% endfor %} 
   {% endif %} 
     </div>
-    <a href="/shop/profile/{{ user.userid }}">プロフィールページに戻る</a>
+    <a href="{% url 'profile' %}">プロフィールページに戻る</a> 
     </body>
 </html>

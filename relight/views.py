@@ -43,10 +43,9 @@ def Login(request):
          userid = form.cleaned_data.get('userid')
          user = UserInfo.objects.get(userid=userid)
          login(request, user)
-         url = '/index/' + str(user.userid)
          if user.s_or_c == "shop":
-            url = '/shop/profile/' + str(user.userid)   
-         return redirect(url)
+            return redirect('/profile')   
+         return redirect('/index')
          
    template = loader.get_template('relight/login.html')
    context = {
@@ -58,31 +57,22 @@ class Logout(LoginRequiredMixin, LogoutView):
    template_name = 'relight/top.html'
 
 @login_required
-def cus_profile(request,cus_id):
+def profile(request):
    if request.method == 'GET':
-      user = UserInfo.objects.get(userid=cus_id)
+      user = request.user
+      events = Event.objects.filter(user_id=user.id)
 
-   template = loader.get_template('relight/cus_profile.html')
+   template = loader.get_template('relight/profile.html')
    context = {
       'user': user,
+      'events' : events,
    }
    return HttpResponse(template.render(context, request))
 
 @login_required
-def shop_profile(request,shop_id):
-   if request.method == 'GET':
-      user = UserInfo.objects.get(userid=shop_id)
-
-   template = loader.get_template('relight/shop_profile.html')
-   context = {
-      'user': user,
-   }
-   return HttpResponse(template.render(context, request))
-
-@login_required
-def event_index(request,user_id):
+def event_index(request):
    events = Event.objects.all()
-   user = UserInfo.objects.get(userid=user_id) 
+   user = request.user
    template = loader.get_template('relight/event_index.html')
    context = {
       'events': events,
@@ -94,18 +84,20 @@ def event_index(request,user_id):
 def event_detail(request,event_title):
    if request.method == 'GET':
       event = Event.objects.get(title=event_title)
-      user = UserInfo.objects.get(id=event.user.id)
+      user = request.user
+      auth_user = UserInfo.objects.get(id=event.user.id)
 
    template = loader.get_template('relight/event_detail.html')
    context = {
       'user': user,
       'event' : event,
+      'auth_user' : auth_user,
    }
    return HttpResponse(template.render(context, request))
 
 @login_required
-def create_event(request,shop_id):
-   user = UserInfo.objects.get(userid=shop_id)
+def create_event(request):
+   user = request.user
    if request.method == 'GET':
       form = Create_Event_Form()      
    else:
@@ -125,11 +117,24 @@ def create_event(request,shop_id):
 
 
 @login_required
-def video(request,user_id):
-   user = UserInfo.objects.get(userid=user_id) 
-   template = loader.get_template('relight/video.html')
+def shop_video(request,event_title):
+   user = request.user
+   event = Event.objects.get(title=event_title)
+   template = loader.get_template('relight/shop_video.html')
    context = {
       'user' : user,
+      'event' : event,
+   }
+   return HttpResponse(template.render(context, request))
+
+@login_required
+def cus_video(request,event_title):
+   user = request.user
+   event = Event.objects.get(title=event_title)
+   template = loader.get_template('relight/cus_video.html')
+   context = {
+      'user' : user,
+      'event' : event,
    }
    return HttpResponse(template.render(context, request))
 

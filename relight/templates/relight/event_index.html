@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body>
-        <h1>suceess login!!</h1>
+        <div class="user_profile">
+          <h1>プロフィール</h1>
+          <p>{{ user.name }}</p>
+          <img src="/media/{{ user.icons }}" width="200">
+          <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィールページへ</a></p>
+        </div>
+        <h1>イベント一覧</h1>
         {% for event in events %}
         <div class="event_title">
           <p><a href="{% url 'detail' event.title %}" class="title">{{event.title}}</a></p>
         </div>
-        {% endfor %}
+        {% endfor %}   
+        <button type="button"><a href="{% url 'logout' %}">ログアウトする</a></button>     
     </body>
 </html>
