@@ -10,15 +10,14 @@
         <div class="personal">
           <h1>Title : {{ event.title }}</h1>
           <h1>Detail : {{ event.detail }}</h1>
-          <h1>Auth Name : {{ auth_user.name }}</h1>
+          <h1>Auth Name : {{ auth_user.name }} {{event.user}}</h1>
           <div class="icon">
             Icon :
           <img src="/media/{{ event.image }}" width="200">
           </div>
-          {% ifequal user.s_or_c "shop" %}
+          {% ifequal user.id event.user.id %}
           <button type="button"><a href="{% url 'shop_video' event.title %}">ビデオ通話ページへ</a></button>
-          {% endifequal %}
-          {% ifequal user.s_or_c "customer" %}
+          {% else %}
           <button type="button"><a href="{% url 'cus_video' event.title %}">ビデオ通話ページへ</a></button>
           {% endifequal %}
           <div class="user_profile">

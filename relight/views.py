@@ -120,10 +120,12 @@ def create_event(request):
 def shop_video(request,event_title):
    user = request.user
    event = Event.objects.get(title=event_title)
+   auth_user = UserInfo.objects.get(id=event.user.id)
    template = loader.get_template('relight/shop_video.html')
    context = {
       'user' : user,
       'event' : event,
+      'auth_user' : auth_user,
    }
    return HttpResponse(template.render(context, request))
 
@@ -131,10 +133,12 @@ def shop_video(request,event_title):
 def cus_video(request,event_title):
    user = request.user
    event = Event.objects.get(title=event_title)
+   auth_user = UserInfo.objects.get(id=event.user.id)
    template = loader.get_template('relight/cus_video.html')
    context = {
       'user' : user,
       'event' : event,
+      'auth_user' : auth_user,
    }
    return HttpResponse(template.render(context, request))
 

@@ -12,28 +12,36 @@
     <!-- Video area -->
     <p>{{ user.name }}</p>
     <div class="video" id="video-container">
-        <video id="their-video" autoplay></video>
-        <video id="my-video" muted="true" autoplay></video>
+        <video id="their-video"></video>
+        <video id="my-video"></video>
+    </div>
+    <div class="toggle-mute">
+        <button id="js-toggle-camera">Toggle Camera</button>
+        <span id="camera-status"></span>
+        <br>
+      
+        <button id="js-toggle-microphone">Toggle Microphone</button>
+        <span id="microphone-status"></span>
+        <br>
     </div>
 
     <!-- Steps -->
     <div class="video-info">
         <h2>SkyWay Video Chat</h2>
 
-        <p>Your id: <span id="my-id">...</span></p>
+        <div hidden id="my-id">{{user.name}}</div>
         <p>Share this id with others so they can call you.</p>
         <h3>Make a call</h3>
-        <form id="make-call" class="info-form">
-            <input type="text" placeholder="Call user id..." id="callto-id">
+        <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
+        <form id="make-call" class="info-form">            
             <button href="#" class="pure-button pure-button-success" type="submit">Call</button>
         </form>
         <form id="end-call" class="info-form">
-            <p>Currently in call with <span id="their-id">...</span></p>
             <button href="#" type="submit">End Call</button>
         </form>
     </div>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
-<script type="text/javascript" src="{% static 'relight/js/video.js' %}"></script>
+<script type="text/javascript" src="{% static 'relight/js/cus_video.js' %}"></script>
 </html>
