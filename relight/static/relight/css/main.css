@@ -9,7 +9,7 @@ body{
 }
 
 header{
-    background: linear-gradient(to right, #FFF55F, #E8FD95);;
+    background: linear-gradient(to right, #FFF55F, #E8FD95);
     font-size: x-large;
     text-align:right;
     padding: 30px;
@@ -32,7 +32,7 @@ button a:hover{
     color: orange;
 }
 .yellow{
-    background-color: #FFF55F;
+    background: linear-gradient(to right, #FFF55F, #E8FD95);
 }
 .white{
     background-color: white;
