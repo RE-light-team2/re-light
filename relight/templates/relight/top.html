@@ -9,11 +9,16 @@
     </head>
     <body>
       <header>
-sample-text
+<ul>
+  <li><a href="#">マイページ</a></li>
+  <li><a href="{% url 'create_account' %}">新規会員登録</a></li>
+</ul>
       </header>
-      <img class="logoM" src="{% static 'relight/img/logo_main.png' %}">
-        <h2 class="title">STAY HOMEしながらお店へ行こう<br>RE lightなら自宅にいながらショッピングが楽しめます</h2>
+
+      <img class="logoM" src="{% static 'relight/img/logo_main.png' %}"><br>
         <button class="white" type="button"><a href="{% url 'login' %}">ログイン</a></button>
         <button class="yellow" type="button"><a href="{% url 'create_account' %}">新規会員登録</a></button>
+        
+        <h2 class="title">STAY HOMEしながらお店へ行こう<br>RE lightなら自宅にいながらショッピングが楽しめます</h2>
     </body>
 </html>
