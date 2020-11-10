@@ -6,30 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body>
-      <h1>アカウントを作成</h1>
+      <h1>プロフィールを作成</h1>
       <form id="new_user" enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
       {% csrf_token %}
       <div class="form-group">
-        <label>あなたは企業様、それとも、一般様</label>
-        {{ form.s_or_c }}
+        <label>性別</label>
+        {{ form.gender }}
       </div>
       <div class="form-group">
-        <label>メールアドレス</label>
-        {{ form.email }}
+        <label>名前</label>
+        {{ form.name }}
       </div>
-      <div class="form-group">
-        <label>利用者ID</label>
-        {{ form.userid }}
-      </div>
-      <div class="form-group">
-        <label>パスワード</label>
-        <em>{{ form.password_error_message }}</em>
-        <br />
-        {{ form.password1 }}
+    <div class="form-group">
+      <label>アイコン</label>
+      {{ form.icons }}
     </div>
     <div class="form-group">
-        <label>確認用パスワード</label>
-        {{ form.password2 }}
+      <label>ヘッダー</label>
+      {{ form.headers }}
+    </div>
+    <div class="form-group">
+      <label>自己紹介(任意)</label>
+      {{ form.self_introduction }}
     </div>
     <button type="submit" value="create">登録</button>
     </form>

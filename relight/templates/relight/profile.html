@@ -9,17 +9,17 @@
     <body>
     <h1>Your Profile</h1>
       <div class="personal">
-        <h1>Name :{{ user.name }}</h1>
+        <h1>Name :{{ profile.name }}</h1>
         <h1>Email : {{ user.email }}</h1>
         <div class="icon">
           Icon :
-        <img src="/media/{{ user.icons }}" width="200">
+        <img src="/media/{{ profile.icons }}" width="200">
         </div>
         <div class="header">
           header :
-        <img src="/media/{{ user.headers }}" width="200"> 
+        <img src="/media/{{ profile.headers }}" width="200"> 
         </div>
-        <h1>Self_introduction : {{ user.self_introduction }}</h1>
+        <h1>Self_introduction : {{ profile.self_introduction }}</h1>
         <button type="button"><a href="{% url 'index' %}">イベント一覧ページへ</a></button>
       {% ifequal user.s_or_c "shop" %}
       <h1>あなたの作成したイベント一覧</h1>          

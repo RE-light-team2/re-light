@@ -4,50 +4,37 @@ import datetime
 
 # Create your models here.
 class UserManager(BaseUserManager):
-    def create_user(self, email, s_or_c,name,gender,self_introduction,icons,headers,password):
+    def create_user(self, email, s_or_c,password):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=self.normalize_email(email),
-            password=password,
-            gender = gender,
-            name = name,
             s_or_c = s_or_c,
-            icons = icons,
-            headers = headers,
-            self_introduction = self_introduction,
+            email=self.normalize_email(email),
+            userid = userid,
+            password=password,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-def create_superuser(self, email,s_or_c,name,gender,self_introduction,icons,headers,password):
+    def create_superuser(self, email, s_or_c,password):
         user = self.create_user(
-            email=self.normalize_email(email),
-            password=password,
-            gender = gender,
-            name = name,
             s_or_c = s_or_c,
-            icons = icons,
-            headers = headers,
-            self_introduction = self_introduction,
+            email=self.normalize_email(email),
+            userid = userid,
+            password=password,
         )
         user.is_superuser = True
         user.save(using=self._db)
         return user
 
 class UserInfo(AbstractBaseUser, PermissionsMixin):
-    """ユーザーのモデル"""  
-    s_or_c = models.CharField(max_length=10)
+    """顧客のモデル"""  
     email = models.EmailField(max_length=255,unique=True)
-    name=models.CharField(max_length=255,unique=True) 
-    userid=models.CharField(max_length=255,unique=True) 
-    gender = models.CharField(max_length=10)
-    self_introduction = models.CharField(max_length=500)
-    icons = models.ImageField(upload_to="icons/",unique=True)
-    headers = models.ImageField(upload_to="headers/",unique=True)
+    s_or_c = models.CharField(max_length=10) 
+    userid=models.CharField(max_length=255,unique=True)     
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)   
@@ -55,7 +42,24 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'userid'
     EMAIL_FIELD = 'email'
-    
+
+class Shop_Profile(models.Model):
+    """企業のモデル"""
+    shop = models.ForeignKey('UserInfo', on_delete=models.CASCADE, null=True)
+    name=models.CharField(max_length=255,unique=True) 
+    self_introduction = models.CharField(max_length=500)
+    icons = models.ImageField(upload_to="icons/",unique=True)
+    headers = models.ImageField(upload_to="headers/", unique=True)
+    online_address = models.URLField(max_length=255)
+
+class Cus_Profile(models.Model):
+    """顧客のモデル"""
+    cus = models.ForeignKey('UserInfo', on_delete=models.CASCADE, null=True)
+    name=models.CharField(max_length=255,unique=True) 
+    self_introduction = models.CharField(max_length=500)
+    icons = models.ImageField(upload_to="icons/",unique=True)
+    headers = models.ImageField(upload_to="headers/", unique=True)
+    gender = models.CharField(max_length=10)
 
 class Event(models.Model):
     """開催中のイベントのモデル"""

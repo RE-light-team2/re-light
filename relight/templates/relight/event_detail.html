@@ -21,8 +21,8 @@
           <button type="button"><a href="{% url 'cus_video' event.title %}">ビデオ通話ページへ</a></button>
           {% endifequal %}
           <div class="user_profile">
-            <p>{{ user.name }}</p>
-            <img src="/media/{{ user.icons }}" width="200">
+            <p>{{ profile.name }}</p>
+            <img src="/media/{{ profile.icons }}" width="200">
             <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィールページへ</a></p>
             <button type="button"><a href="{% url 'index' %}">イベント一覧ページへ</a></button>
           </div>

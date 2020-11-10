@@ -1,57 +1,112 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
-from django.contrib.auth import authenticate,get_user_model
-from relight.models import UserInfo , Event
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate, get_user_model
+from relight.models import UserInfo, Shop_Profile, Cus_Profile, Event
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
 
-print(get_user_model())
-class Create_account_Form(UserCreationForm):
+class Create_UserInfo_Form(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ['userid','name', 'password1','password2', 'email', 'icons','headers','gender','s_or_c','self_introduction']
+        fields = ['s_or_c', 'userid', 'password1', 'password2', 'email']
 
-    password1 = forms.CharField(label='PASSWORD', max_length=128,widget=forms.PasswordInput(attrs={'placeholder':'パスワードを入力してください', 'class':'form-control', 'autocomplete' : 'off'}))
-    password2 = forms.CharField(label='PASSWORDCONFIRM', max_length=128,widget=forms.PasswordInput(attrs={'placeholder':'パスワードを再度入力してください', 'class':'form-control', 'autocomplete' : 'off'}))
+    S_OR_C = [('shop', '企業'), ('cus', '顧客')]
+    s_or_c = forms.ChoiceField(
+        required=True, choices=S_OR_C, widget=forms.RadioSelect())
+    password1 = forms.CharField(label='PASSWORD', max_length=128, widget=forms.PasswordInput(
+        attrs={'placeholder': 'パスワードを入力してください', 'class': 'form-control', 'autocomplete': 'off'}))
+    password2 = forms.CharField(label='PASSWORDCONFIRM', max_length=128, widget=forms.PasswordInput(
+        attrs={'placeholder': 'パスワードを再度入力してください', 'class': 'form-control', 'autocomplete': 'off'}))
+    error_message = 'error'
+    userid = forms.CharField(required=True, label='NAME', max_length=30, widget=forms.TextInput(
+        attrs={'placeholder': '利用者IDを入力してください', 'class': 'form-control'}))
+    email = forms.EmailField(max_length=255, label='EMAIL', required=True)
+    is_save = False
+
+
+class Create_Shop_Form(forms.ModelForm):
+    class Meta:
+        model = Shop_Profile
+        fields = ['name', 'icons', 'headers',
+                  'online_address', 'self_introduction']
+    name = forms.CharField(label='NAME', max_length=30, widget=forms.TextInput(
+        attrs={'placeholder': '名前を入力してください', 'class': 'form-control'}))
     icons = forms.ImageField()
     headers = forms.ImageField()
     error_message = 'error'
-    name = forms.CharField(label='NAME', max_length=30,widget=forms.TextInput(attrs={'placeholder':'名前を入力してください', 'class':'form-control'}))
-    userid = forms.CharField(label='NAME', max_length=30,widget=forms.TextInput(attrs={'placeholder':'利用者IDを入力してください', 'class':'form-control'}))
-    email = forms.EmailField(max_length=255,label='EMAIL', required=True)   
-    GENDER=[('man','男'),('woman','女')]
-    S_OR_C=[('shop','企業様'),('customer','一般様')]
-    gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
-    s_or_c = forms.ChoiceField(choices=S_OR_C, widget=forms.RadioSelect())
-    self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION', max_length=1000,widget=forms.Textarea(attrs={'rows' : 5, 'class':'form-control'}))
+    online_address = forms.URLField()
+    self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
+                                        max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
+
+    def save(self, post, file, user):
+        profile = Shop_Profile()
+        profile.name = post["name"]
+        profile.icons = file["icons"]
+        profile.headers = file["headers"]
+        profile.self_introduction = post["self_introduction"]
+        profile.online_address = post["online_address"]
+        profile.shop = user
+        profile.save()
+
+
+class Create_Cus_Form(forms.ModelForm):
+    class Meta:
+        model = Cus_Profile
+        fields = ['name', 'icons', 'headers', 'gender', 'self_introduction']
+
+    name = forms.CharField(label='NAME', max_length=30, widget=forms.TextInput(
+        attrs={'placeholder': '名前を入力してください', 'class': 'form-control'}))
+    icons = forms.ImageField()
+    headers = forms.ImageField()
+    error_message = 'error'
+    GENDER = [('man', '男'), ('woman', '女')]
+    gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
+    self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
+                                        max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
+    is_save = False
+
+    def save(self, post, file, user):
+        profile = Cus_Profile()
+        profile.name = post["name"]
+        profile.icons = file["icons"]
+        profile.headers = file["headers"]
+        profile.self_introduction = post["self_introduction"]
+        profile.gender = post["gender"]
+        profile.cus = user
+        profile.save()
+
 
 class LoginForm(AuthenticationForm):
     class Meta:
         model = get_user_model()
         fields = ['userid', 'password']
 
-    userid = forms.CharField(max_length=30,label='USER_ID', required=True)   
-        
+    userid = forms.CharField(max_length=30, label='USER_ID', required=True)
+
     def __init__(self, *args, **kwargs):
-        super(LoginForm, self).__init__(*args, **kwargs) 
-        self.fields.pop('username') 
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.fields.pop('username')
         for field in self.fields.values():
-            print(field.widget)   
-            field.widget.attrs['placeholder'] = field.label  
+            print(field.widget)
+            field.widget.attrs['placeholder'] = field.label
+
 
 class Create_Event_Form(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ("title","detail","questionnaire_url","image")
+        fields = ("title", "detail", "questionnaire_url", "image")
 
     image = forms.ImageField()
-    title = forms.CharField(label='TITLE', max_length=256,widget=forms.TextInput(attrs={'placeholder':'タイトルを入力してください', 'class':'form-control'}))
-    detail = forms.CharField(label='DETAIL',  max_length=1000, widget=forms.Textarea(attrs={'rows' : 5, 'class':'form-control'}))
-    questionnaire_url = forms.CharField(label='URL', max_length=500,widget=forms.TextInput(attrs={'placeholder':'アンケート用のURLを入力してください', 'class':'form-control'}))
+    title = forms.CharField(label='TITLE', max_length=256, widget=forms.TextInput(
+        attrs={'placeholder': 'タイトルを入力してください', 'class': 'form-control'}))
+    detail = forms.CharField(label='DETAIL',  max_length=1000, widget=forms.Textarea(
+        attrs={'rows': 5, 'class': 'form-control'}))
+    questionnaire_url = forms.CharField(label='URL', max_length=500, widget=forms.TextInput(
+        attrs={'placeholder': 'アンケート用のURLを入力してください', 'class': 'form-control'}))
 
-    def save(self,post,file,user):
+    def save(self, post, file, user):
         event = Event()
         event.title = post["title"]
         event.detail = post["detail"]
