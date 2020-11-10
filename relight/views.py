@@ -211,3 +211,8 @@ def cus_video(request, event_title):
         'auth_user': auth_user,
     }
     return HttpResponse(template.render(context, request))
+
+
+def privacy(request):
+    template = loader.get_template('relight/privacy.html')
+    return HttpResponse(template.render(None, request))
