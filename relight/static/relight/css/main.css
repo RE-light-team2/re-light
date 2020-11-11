@@ -15,20 +15,31 @@ header{
     background: linear-gradient(to right, #FFF55F, #E8FD95);
     font-size: x-large;
     padding: 10px;
-    padding-right:3%;
 }
 header a{
     text-decoration:none;
 }
 header ul{
-    text-align:right;
+    text-align: left;
     margin: 10px;
+    margin-left:80px;
 }
 header li{
     list-style: none;
     display:inline-block;
     padding:0 10px;
 }
+.Lmenu{
+    border-right:solid 1px;
+    padding-right: 20px;
+}/* mypage */
+.logoH{
+    text-align:right;
+    padding-left: 68vw;
+    font-weight: bold;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+}/* header logo */
 .humberger{
     height: 24px;
     width: 24px;

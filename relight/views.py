@@ -216,3 +216,8 @@ def cus_video(request, event_title):
 def privacy(request):
     template = loader.get_template('relight/privacy.html')
     return HttpResponse(template.render(None, request))
+
+
+def about(request):
+    template = loader.get_template('relight/about.html')
+    return HttpResponse(template.render(None, request))

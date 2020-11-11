@@ -10,7 +10,6 @@ localVideo.playsInline = true;
 localVideo.autoplay = true;
 
 ChatVideo.playsInline = true;
-ChatVideo.autoplay = true;
 
 navigator.mediaDevices.getUserMedia({video: true, audio: true})
     .then(function (stream) {
