@@ -10,24 +10,40 @@
     <body>
       <header>
 
-  <div id="humberger">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
+        <button class="humberger">
+          <div></div>
+          <div></div>
+          <div></div>
+       </button>
 
   <ul>
   <li><a href="{% url 'profile' %}">マイページ</a></li>
   <li><a href="{% url 'create_account' %}">新規会員登録</a></li>
 </ul>
       </header>
+
+      <div class="hidden_show">
+        <nav>
+          <ul>
+            <li><a href="#">TOP</a></li>
+            <li><a href="#">SHOP</a></li>
+            <li><a href="#">EVENT</a></li>
+            <li><a href="#">LOGIN</a></li>
+            <li><a href="#">SIGN UP</a></li>
+            <li><a href="#">CART</a></li>
+          </ul>
+  
+        </nav>
+        </div>
+
       <a href="#">
       <img class="logoM" src="{% static 'relight/img/logo_main.png' %}">
       </a><br>
-        <button class="white" type="button"><a href="{% url 'login' %}">ログイン</a></button>
-        <button class="yellow" type="button"><a href="{% url 'create_account' %}">新規会員登録</a></button>
+        <button class="top" id="white" type="button"><a href="{% url 'login' %}">ログイン</a></button>
+        <button class="top" id="yellow" type="button"><a href="{% url 'create_account' %}">新規会員登録</a></button>
         
         <h2 class="title">STAY HOMEしながらお店へ行こう<br>RE lightなら自宅にいながらショッピングが楽しめます</h2>
+       
         <footer>
           <a href="{% url 'privacy' %}">プライバシーポリシー</a>
           <p>©RElight, 2020</p>

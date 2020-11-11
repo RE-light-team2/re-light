@@ -1,3 +1,4 @@
+/* all */
 body{
     text-align: center;
     margin:0;
@@ -7,10 +8,9 @@ body{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: xx-large;
 }
-
-
 /* all */
 
+/* header */
 header{
     background: linear-gradient(to right, #FFF55F, #E8FD95);
     font-size: x-large;
@@ -28,7 +28,7 @@ header li{
     display:inline-block;
     padding:0 10px;
 }
-#humberger{
+.humberger{
     height: 24px;
     width: 24px;
     display: inline-block;
@@ -36,7 +36,7 @@ header li{
     position: relative;
     float: left;
 }
-#humberger div {
+.humberger div {
     position: absolute;
     margin-left:15%;
     height: 4px;
@@ -46,30 +46,26 @@ header li{
     display: inline-block;
     box-sizing: border-box;
   }
-  #humberger div:nth-of-type(1) {
+  .humberger div:nth-of-type(1) {
     top: 20px;
   }
-  #humberger div:nth-of-type(2) {
+  .humberger div:nth-of-type(2) {
     top: 40px;
   }
-  #humberger div:nth-of-type(3) {
+  .humberger div:nth-of-type(3) {
     top: 60px;
   }
 /* header */
 
+/* button */
 button{
-    border-radius: 20%;
-    font-size: x-large;
-    padding: 20px;
-    width:250px;
-    margin:0 15px;
+    background: none;
+    border:none;
 }
 button a{
     text-decoration:none;
 }
-button:hover{
-    transform: translate3d(0, 5px, 0);
-}
+
 
 a{
     color:black;
@@ -77,19 +73,57 @@ a{
 a:hover{
     color: orange;
 }
-.yellow{
+.top{
+    border-radius: 20%;
+    font-size: x-large;
+    padding: 20px;
+    width:250px;
+    margin:0 15px;
+}
+.top:hover{
+    transform: translate3d(0, 5px, 0);
+}
+#yellow{
     background: linear-gradient(to right, #FFF55F, #E8FD95);
     border: none;
 }
-.white{
+#white{
     background-color: white;
     border: solid #FFF55F 5px;
     padding:15px;
 }
+/* button */
 
+/* logoING */
 .logoM{
     width:30%;
 }
+/* logoING */
+
+/* nav */
+nav{
+    text-align:left;
+    margin-top:0;
+    width:10%;
+    height:100vw;
+    background-color: rgb(251, 253, 199);
+    z-index:30;
+}
+nav ul{
+    list-style: none;
+}
+nav a{
+    text-decoration:none;
+    
+}
+nav li{
+    padding:20px 0;
+}
+
+.hidden_show{
+    display:none;
+}
+
 
 
 
