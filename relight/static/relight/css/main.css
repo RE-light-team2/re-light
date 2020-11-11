@@ -32,13 +32,14 @@ header li{
 .Lmenu{
     border-right:solid 1px;
     padding-right: 20px;
-}
+}/* mypage */
 .logoH{
     text-align:right;
     padding-left: 70vw;
     font-weight: bold;
     font-size: 25px;
-}
+    font-family: 'Times New Roman', Times, serif;
+}/* header logo */
 .humberger{
     height: 24px;
     width: 24px;
