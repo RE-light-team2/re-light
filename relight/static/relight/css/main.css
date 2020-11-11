@@ -22,6 +22,7 @@ header a{
 }
 header ul{
     text-align:right;
+    margin: 10px;
 }
 header li{
     list-style: none;
@@ -40,20 +41,20 @@ header li{
     position: absolute;
     margin-left:15%;
     height: 4px;
-    width: 70px;
+    width: 50px;
     background-color: rgb(160, 160, 160);
     border-radius: 2px;
     display: inline-block;
     box-sizing: border-box;
   }
   .humberger div:nth-of-type(1) {
-    top: 20px;
+    top: 15px;
   }
   .humberger div:nth-of-type(2) {
-    top: 40px;
+    top: 25px;
   }
   .humberger div:nth-of-type(3) {
-    top: 60px;
+    top: 35px;
   }
 /* header */
 
@@ -65,7 +66,6 @@ button{
 button a{
     text-decoration:none;
 }
-
 
 a{
     color:black;
