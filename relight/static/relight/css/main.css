@@ -33,6 +33,12 @@ header li{
     border-right:solid 1px;
     padding-right: 20px;
 }
+.logoH{
+    text-align:right;
+    padding-left: 70vw;
+    font-weight: bold;
+    font-size: 25px;
+}
 .humberger{
     height: 24px;
     width: 24px;
