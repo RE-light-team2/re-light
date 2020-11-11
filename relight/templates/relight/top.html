@@ -25,12 +25,11 @@
       <div class="hidden_show">
         <nav>
           <ul>
-            <li><a href="#">TOP</a></li>
+            <li><a href="{% url 'top' %}">TOP</a></li>
             <li><a href="#">SHOP</a></li>
-            <li><a href="#">EVENT</a></li>
-            <li><a href="#">LOGIN</a></li>
-            <li><a href="#">SIGN UP</a></li>
-            <li><a href="#">CART</a></li>
+            <li><a href="{% url 'index' %}">EVENT</a></li>
+            <li><a href="{% url 'login' %}">LOGIN</a></li>
+            <li><a href="{% url 'logout' %}">SIGN UP</a></li>
           </ul>
   
         </nav>
