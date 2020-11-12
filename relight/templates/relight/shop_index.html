@@ -12,13 +12,12 @@
           <img src="/media/{{ profile.icons }}" width="200">
           <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィールページへ</a></p>
         </div>
-        <h1>イベント一覧</h1>
-        {% for event in events %}
-        <div class="event_title">
-          <p><a href="{% url 'detail' event.title %}" class="title">{{event.title}}</a></p>
-        </div>
-        {% endfor %} 
-        <button type="button"><a href="{% url 'shop_index' %}">ショップ一覧へ</a></button>      
+        <h1>ショップ一覧</h1>
+        {% for shop in shops %}
+        <div class="shop_name">
+          <p><a href="{% url 'shop_profile' shop.name %}" class="title">{{shop.name}}</a></p>
+        </div>  
+        {% endfor %}   
         <button type="button"><a href="{% url 'logout' %}">ログアウトする</a></button>     
     </body>
 </html>

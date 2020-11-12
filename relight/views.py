@@ -95,7 +95,7 @@ def Login(request):
             login(request, user)
             if (user.s_or_c == 'shop'):
                 return redirect('/profile')
-            return redirect('/index')
+            return redirect('/event_index')
 
     template = loader.get_template('relight/login.html')
     context = {
@@ -221,3 +221,43 @@ def privacy(request):
 def about(request):
     template = loader.get_template('relight/about.html')
     return HttpResponse(template.render(None, request))
+
+
+@login_required
+def shop_index(request):
+    shops = Shop_Profile.objects.all()
+    user = request.user
+    if (user.s_or_c == 'shop'):
+        profile = Shop_Profile.objects.get(shop_id=user.id)
+    if (user.s_or_c == 'cus'):
+        profile = Cus_Profile.objects.get(cus_id=user.id)
+    template = loader.get_template('relight/shop_index.html')
+    context = {
+        'profile': profile,
+        'shops': shops,
+        'user': user,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def shop_profile(request, shop_name):
+    if request.method == 'GET':
+        user = request.user
+        shop_profile = Shop_Profile.objects.get(name=shop_name)
+        shop = UserInfo.objects.get(id=shop_profile.shop_id)
+        if (user.s_or_c == 'shop'):
+            profile = Shop_Profile.objects.get(shop_id=user.id)
+        if (user.s_or_c == 'cus'):
+            profile = Cus_Profile.objects.get(cus_id=user.id)
+        events = Event.objects.filter(user_id=shop.id)
+
+    template = loader.get_template('relight/shop_profile.html')
+    context = {
+        'user': user,
+        'events': events,
+        'profile': profile,
+        'shop': shop,
+        'shop_profile': shop_profile,
+    }
+    return HttpResponse(template.render(context, request))
