@@ -15,12 +15,14 @@
           <div></div>
           <div></div>
        </button>
-
+<div class="inline">
   <ul>
-  <li class="Lmenu"><a href="{% url 'profile' %}">マイページ</a></li>
-  <li><a href="{% url 'create_account' %}">新規会員登録</a></li>
-    <li class="logoH"><a href="{% url 'about' %}">About RE light</a></li>
-</ul>
+  <li><a href="{% url 'profile' %}">マイページ</a></li>
+  <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
+  </ul>
+  <ul class="logoH">
+    <li><a href="{% url 'about' %}">About RE light</a></li>
+</ul></div>
       </header>
 
       <div class="hidden_show">
@@ -39,8 +41,8 @@
       <a href="#">
       <img class="logoM" src="{% static 'relight/img/logo_main.png' %}">
       </a><br>
-        <button class="top" id="white" type="button"><a href="{% url 'login' %}">ログイン</a></button>
-        <button class="top" id="yellow" type="button"><a href="{% url 'create_account' %}">新規会員登録</a></button>
+      <a href="{% url 'login' %}"><button class="top white trans" type="button">ログイン</button></a>
+      <a href="{% url 'create_account' %}"> <button class="top yellow trans" type="button">新規会員登録</button></a>
         
         <h2 class="title">STAY HOMEしながらお店へ行こう<br>RE lightなら自宅にいながらショッピングが楽しめます</h2>
        
