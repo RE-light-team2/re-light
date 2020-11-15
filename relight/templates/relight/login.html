@@ -15,7 +15,7 @@
           <div></div>
           <div></div>
        </button>
-<div class="inline">
+<div class="flex">
   <ul>
   <li><a href="{% url 'create_account' %}">新規会員登録</a></li>
   </ul>
@@ -45,7 +45,7 @@
     <p>ユーザーID, パスワードが一致しません．</p>
     {% endif %}
     <form enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
-      <div>
+      <div class="square">
       {% csrf_token %}
       <label>ユーザーID　</label>
       {{ form.userid }}

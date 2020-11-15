@@ -9,7 +9,7 @@ body{
     font-size: xx-large;
 }
 
-.inline{
+.flex{
     display:flex;
 }
 /* all */
@@ -109,7 +109,7 @@ a:hover{
 }
 .submit{
     margin:15px;
-    font-size:15px;
+    font-size:20px;
     width:15%;
 }
 /* button */
@@ -149,14 +149,17 @@ nav li{
 /* nav */
 
 /* form  */
-form div{
+.square{
     border:solid 1px;
     margin: 0 30%;
     padding:30px;
     font-size: x-large;
     border-radius: 30px;
+    list-style: none;
 }
-
+.form-groupe{
+    display: flex;
+}
 
 
 
