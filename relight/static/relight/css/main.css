@@ -2,10 +2,10 @@
 body{
     text-align: center;
     margin:0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .title{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: xx-large;
 }
 
@@ -160,6 +160,29 @@ nav li{
 .form-groupe{
     display: flex;
 }
+/* form */
 
+/* img */
+.header img{
+    width:100%;
+}
+.icon img{
+    border-radius: 50%; 
+    width:20vw;
+}
+/* img */
 
+/* profile */
+.personal{
+    margin-left: 10vw;
+    text-align: center;
+    margin:0 30%;
+}
+.prof{
+    border:solid 1px;
+    padding:30px;
+    font-size: x-large;
+    border-radius: 30px;
+    width:40%;
+}
 
