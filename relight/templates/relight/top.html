@@ -1,54 +1,58 @@
 {% load static %}
 <!doctype html>
 <html lang="ja">
-  <head>
-    <title>RElight</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
-    </head>
-    <body>
-      <header>
 
-        <button class="humberger">
-          <div></div>
-          <div></div>
-          <div></div>
-       </button>
-<div class="flex">
-  <ul>
-  <li><a href="{% url 'profile' %}">マイページ</a></li>
-  <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
-  </ul>
-  <ul class="logoH">
-    <li><a href="{% url 'about' %}">About RE light</a></li>
-</ul></div>
-      </header>
+<head>
+  <title>RElight</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
+</head>
 
-      <div class="hidden_show">
-        <nav>
-          <ul>
-            <li><a href="{% url 'top' %}">TOP</a></li>
-            <li><a href="{% url 'shop_index' %}">SHOP</a></li>
-            <li><a href="{% url 'event_index' %}">EVENT</a></li>
-            <li><a href="{% url 'login' %}">LOGIN</a></li>
-            <li><a href="{% url 'logout' %}">SIGN UP</a></li>
-          </ul>
-  
-        </nav>
-        </div>
+<body>
+  <header>
 
-      <a href="#">
-      <img class="logoM" src="{% static 'relight/img/logo_main.png' %}">
-      </a><br>
-      <a href="{% url 'login' %}"><button class="top white trans" type="button">ログイン</button></a>
-      <a href="{% url 'create_account' %}"> <button class="top yellow trans" type="button">新規会員登録</button></a>
-        
-        <h2 class="title">STAY HOMEしながらお店へ行こう<br>RE lightなら自宅にいながらショッピングが楽しめます</h2>
-       
-        <footer>
-          <a href="{% url 'privacy' %}">プライバシーポリシー</a>
-          <p>©RElight, 2020</p>
-        </footer>
-    </body>
+    <button class="humberger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </button>
+    <div class="flex">
+      <ul>
+        <li><a href="{% url 'profile' %}">マイページ</a></li>
+        <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
+      </ul>
+      <ul class="logoH">
+        <li><a href="{% url 'about' %}">About RE light</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="hidden_show">
+    <nav>
+      <ul>
+        <li><a href="{% url 'top' %}">TOP</a></li>
+        <li><a href="{% url 'shop_index' %}">SHOP</a></li>
+        <li><a href="{% url 'event_index' %}">EVENT</a></li>
+        <li><a href="{% url 'login' %}">LOGIN</a></li>
+        <li><a href="{% url 'logout' %}">SIGN UP</a></li>
+      </ul>
+
+    </nav>
+  </div>
+
+  <a href="#">
+    <img class="logoM" src="{% static 'relight/img/logo_main.png' %}">
+  </a><br>
+  <a href="{% url 'login' %}"><button class="top white trans" type="button">ログイン</button></a>
+  <a href="{% url 'create_account' %}"> <button class="top yellow trans" type="button">新規会員登録</button></a>
+
+  <h2 class="title">STAY HOMEしながらお店へ行こう<br>RE lightなら自宅にいながらショッピングが楽しめます</h2>
+
+  <footer class="noColor">
+    <a href="{% url 'privacy' %}">プライバシーポリシー</a>
+    <p>©RElight, 2020</p>
+  </footer>
+</body>
+
 </html>

@@ -73,6 +73,18 @@ header li{
   }
 /* header */
 
+/* footer */
+footer{
+    background: linear-gradient(to right, rgba(255, 244, 95, 0.6), rgba(232, 253, 149, 0.6));
+    margin-bottom:-15px;
+    margin-top:50px;
+    padding-bottom:5px;
+}
+.noColor{
+    background: none;
+}
+/* footer */
+
 /* button */
 button{
     background: none;
@@ -165,6 +177,9 @@ nav li{
 /* img */
 .header img{
     width:100%;
+    height:250px;
+    object-fit: cover;
+    opacity:0.5;
 }
 .icon img{
     border-radius: 50%; 
@@ -176,13 +191,49 @@ nav li{
 .personal{
     margin-left: 10vw;
     text-align: center;
-    margin:0 30%;
+    margin:0 20%;
 }
 .prof{
+    margin-left:40px;
     border:solid 1px;
     padding:30px;
     font-size: x-large;
     border-radius: 30px;
+    width:50%;
+    text-align: left;
+}
+.minProf{
     width:40%;
 }
+.user_profile img{
+    border-radius: 50%; 
+    width:10vw;
+}
+.personal button{
+    width:250px;
+}
 
+/* profile */
+
+/* call */
+.call{
+    width:500px;
+    height:100px;
+    font-size: xx-large;
+    margin:80px 0;
+}
+/* call */
+
+/* event */
+.eventI{
+    width:60%;
+    margin:0 30vw;
+}
+.idx{
+    text-align: left;
+    list-style: none;
+    font-size: larger;
+}
+.event{
+    margin-left:150px;
+}

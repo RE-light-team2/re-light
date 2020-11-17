@@ -1,31 +1,91 @@
+{% load static %}
 <!doctype html>
 <html lang="ja">
-  <head>
-    <title>RElight</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    </head>
-    <body>
-        <div class="personal">
-          <h1>Title : {{ event.title }}</h1>
-          <h1>Detail : {{ event.detail }}</h1>
-          <h1>Auth Name : {{ auth_user.name }} {{event.user}}</h1>
-          <div class="icon">
-            Icon :
-          <img src="/media/{{ event.image }}" width="200">
-          </div>
-          {% ifequal user.id event.user.id %}
-          <button type="button"><a href="{% url 'shop_video' event.title %}">ビデオ通話ページへ</a></button>
-          {% else %}
-          <button type="button"><a href="{% url 'cus_video' event.title %}">ビデオ通話ページへ</a></button>
-          {% endifequal %}
-          <div class="user_profile">
-            <p>{{ profile.name }}</p>
-            <img src="/media/{{ profile.icons }}" width="200">
-            <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィールページへ</a></p>
-            <button type="button"><a href="{% url 'event_index' %}">イベント一覧ページへ</a></button>
-          </div>
-          </div>
-    </body>
+
+<head>
+  <title>RElight</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
+</head>
+
+<body>
+  <header>
+
+    <button class="humberger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </button>
+    <div class="flex">
+      <ul>
+        <li><a href="{% url 'profile' %}">マイページ</a></li>
+        <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
+      </ul>
+      <ul class="logoH">
+        <li><a href="{% url 'about' %}">About RE light</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="hidden_show">
+    <nav>
+      <ul>
+        <li><a href="{% url 'top' %}">TOP</a></li>
+        <li><a href="{% url 'shop_index' %}">SHOP</a></li>
+        <li><a href="{% url 'event_index' %}">EVENT</a></li>
+        <li><a href="{% url 'login' %}">LOGIN</a></li>
+        <li><a href="{% url 'logout' %}">SIGN UP</a></li>
+      </ul>
+
+    </nav>
+  </div>
+
+  <div class="header">
+    <img src="/media/{{ profile.headers }}" width="200">
+  </div>
+
+  <div class="personal">
+    <div class="flex">
+      <span class="icon">
+        <img src="/media/{{ event.image }}" width="200">
+      </span>
+      <span class="prof">
+        <h1> {{ event.title }}</h1>
+        <h3> {{ event.detail }}</h3>
+        <p>Auth Name : {{ auth_user.name }} {{event.user}}</p>
+      </span>
+    </div><br>
+
+
+
+    <div class="flex">
+      <div class="user_profile minProf">
+        <span>
+          <img src="/media/{{ profile.icons }}" width="200">
+          <p>{{ profile.name }}</p>
+        </span>
+        <span>
+          <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィール</a></p>
+          <p><a href="{% url 'event_index' %}">イベント一覧</a></p>
+        </span>
+      </div>
+      <span>
+        {% ifequal user.id event.user.id %}
+        <button class="call yellow trans submit" type="button"><a
+            href="{% url 'shop_video' event.title %}">ビデオ通話ページへ</a></button>
+        {% else %}
+        <button class="call yellow trans submit" type="button"><a
+            href="{% url 'cus_video' event.title %}">ビデオ通話ページへ</a></button>
+        {% endifequal %}
+      </span>
+    </div>
+  </div>
+  <footer>
+    <br>
+    <a href="{% url 'privacy' %}">プライバシーポリシー</a>
+    <p>©RElight, 2020</p>
+  </footer>
+</body>
+
 </html>

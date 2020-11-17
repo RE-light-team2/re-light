@@ -53,14 +53,15 @@
       <span class="icon">
         <img src="/media/{{ profile.icons }}" width="200"></span>
       <span class="prof">
-        <h3>Name :{{ profile.name }}</h3>
-        <h3>Email : {{ user.email }}</h3>
+        <h3>Name :　{{ profile.name }}</h3>
+        <h3>Email :　 {{ user.email }}</h3>
       </span>
     </div>
 
 
     <h1>Self_introduction </h1>
     {{ profile.self_introduction }}
+    <br><br>
     <button type="button"><a href="{% url 'event_index' %}">イベント一覧ページへ</a></button>
     {% ifequal user.s_or_c "shop" %}
     <h1>あなたの作成したイベント一覧</h1>
@@ -69,10 +70,15 @@
       <p><a href="{% url 'detail' event.title %}" class="title">{{event.title}}</a></p>
     </div>
     {% endfor %}
-    <button type="button"><a href="{% url 'create_event' %}">イベント作成ページへ</a></button>
+    <button class="white trans submit" type="button"><a href="{% url 'create_event' %}">イベント作成</a></button>
     {% endifequal %}
-    <button type="button"><a href="{% url 'logout' %}">ログアウトする</a></button>
+    <button class="white trans submit" type="button"><a href="{% url 'logout' %}">ログアウト</a></button>
   </div>
+  <footer>
+    <br>
+    <a href="{% url 'privacy' %}">プライバシーポリシー</a>
+    <p>©RElight, 2020</p>
+  </footer>
 </body>
 
 </html>
