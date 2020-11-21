@@ -17,68 +17,56 @@ def top(request):
 
 
 def create_account(request):
-    if request.method == 'GET':
-        form = Create_UserInfo_Form()
-    else:
-        print(request.FILES)
-        form = Create_UserInfo_Form(request.POST, request.FILES)
-        if form.is_valid():
-            print('user_regist is_valid')
-            form.save()
-            s_or_c = form.cleaned_data.get('s_or_c')
-            user_id = form.cleaned_data.get('userid')
-            url = 'cus/create/' + user_id
-            if (s_or_c == "shop"):
-                url = 'shop/create/' + user_id
-            return redirect(url)
-        else:
-            print('user_regist false is_valid')
-
     template = loader.get_template('relight/create_account.html')
-    context = {
-        'form': form,
-    }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(None, request))
 
 
-def create_customer(request, user_id):
-    user = UserInfo.objects.get(userid=user_id)
+def create_customer(request):
     if request.method == 'GET':
-        form = Create_Cus_Form()
+        form_cus = Create_Cus_Form()
+        form_user = Create_UserInfo_Form()
     else:
-        print(request.FILES, user_id)
-        form = Create_Cus_Form(request.POST, request.FILES)
-        if form.is_valid():
-            print('user_regist is_valid')
-            form.save(request.POST, request.FILES, user)
-            return redirect('/login/')
+        form_user = Create_UserInfo_Form(request.POST, request.FILES)
+        user_id = request.POST["userid"]
+        form_cus = Create_Cus_Form(request.POST, request.FILES)
+        if form_user.is_valid():
+            if form_cus.is_valid():
+                print('user_regist is_valid')
+                form_user.save(request.POST, "cus")
+                form_cus.save(request.POST, request.FILES, user_id)
+                return redirect('/login/')
         else:
             print('user_regist false is_valid')
 
     template = loader.get_template('relight/create_customer.html')
     context = {
-        'form': form,
+        'form_cus': form_cus,
+        'form_user': form_user,
     }
     return HttpResponse(template.render(context, request))
 
 
-def create_shop(request, user_id):
-    user = UserInfo.objects.get(userid=user_id)
+def create_shop(request):
     if request.method == 'GET':
-        form = Create_Shop_Form()
+        form_shop = Create_Shop_Form()
+        form_user = Create_UserInfo_Form()
     else:
-        print(request.FILES)
-        form = Create_Shop_Form(request.POST, request.FILES)
-        if form.is_valid():
-            print('user_regist is_valid')
-            form.save(request.POST, request.FILES, user)
-            return redirect('/login/')
+        form_user = Create_UserInfo_Form(request.POST, request.FILES)
+        user_id = request.POST["userid"]
+        form_shop = Create_Shop_Form(request.POST, request.FILES)
+        if form_user.is_valid():
+            if form_shop.is_valid():
+                print('user_regist is_valid')
+                form_user.save(request.POST, "shop")
+                form_shop.save(request.POST, request.FILES, user_id)
+                return redirect('/login/')
         else:
             print('user_regist false is_valid')
 
     template = loader.get_template('relight/create_shop.html')
     context = {
-        'form': form,
+        'form_shop': form_shop,
+        'form_user': form_user,
     }
     return HttpResponse(template.render(context, request))
 
@@ -113,9 +101,9 @@ def profile(request):
     if request.method == 'GET':
         user = request.user
         if (user.s_or_c == 'shop'):
-            profile = Shop_Profile.objects.get(shop_id=user.id)
+            profile = Shop_Profile.objects.get(shop=user.userid)
         if (user.s_or_c == 'cus'):
-            profile = Cus_Profile.objects.get(cus_id=user.id)
+            profile = Cus_Profile.objects.get(cus=user.userid)
         events = Event.objects.filter(user_id=user.id)
 
     template = loader.get_template('relight/profile.html')
@@ -132,9 +120,9 @@ def event_index(request):
     events = Event.objects.all()
     user = request.user
     if (user.s_or_c == 'shop'):
-        profile = Shop_Profile.objects.get(shop_id=user.id)
+        profile = Shop_Profile.objects.get(shop=user.userid)
     if (user.s_or_c == 'cus'):
-        profile = Cus_Profile.objects.get(cus_id=user.id)
+        profile = Cus_Profile.objects.get(cus=user.userid)
     template = loader.get_template('relight/event_index.html')
     context = {
         'profile': profile,
@@ -150,10 +138,10 @@ def event_detail(request, event_title):
         event = Event.objects.get(title=event_title)
         user = request.user
         if (user.s_or_c == 'shop'):
-            profile = Shop_Profile.objects.get(shop_id=user.id)
+            profile = Shop_Profile.objects.get(shop=user.userid)
         if (user.s_or_c == 'cus'):
-            profile = Cus_Profile.objects.get(cus_id=user.id)
-        auth_user = Shop_Profile.objects.get(shop_id=event.user.id)
+            profile = Cus_Profile.objects.get(cus=user.userid)
+        auth_user = Shop_Profile.objects.get(shop=event.user.userid)
 
     template = loader.get_template('relight/event_detail.html')
     context = {
@@ -189,7 +177,7 @@ def create_event(request):
 @login_required
 def shop_video(request, event_title):
     event = Event.objects.get(title=event_title)
-    auth_user = Shop_Profile.objects.get(shop_id=event.user.id)
+    auth_user = Shop_Profile.objects.get(shop=event.user.userid)
     template = loader.get_template('relight/shop_video.html')
     context = {
         'event': event,
@@ -202,8 +190,8 @@ def shop_video(request, event_title):
 def cus_video(request, event_title):
     user = request.user
     event = Event.objects.get(title=event_title)
-    auth_user = Shop_Profile.objects.get(shop_id=event.user.id)
-    profile = Cus_Profile.objects.get(cus_id=user.id)
+    auth_user = Shop_Profile.objects.get(shop=event.user.userid)
+    profile = Cus_Profile.objects.get(cus=user.userid)
     template = loader.get_template('relight/cus_video.html')
     context = {
         'profile': profile,
@@ -228,9 +216,9 @@ def shop_index(request):
     shops = Shop_Profile.objects.all()
     user = request.user
     if (user.s_or_c == 'shop'):
-        profile = Shop_Profile.objects.get(shop_id=user.id)
+        profile = Shop_Profile.objects.get(shop=user.userid)
     if (user.s_or_c == 'cus'):
-        profile = Cus_Profile.objects.get(cus_id=user.id)
+        profile = Cus_Profile.objects.get(cus=user.userid)
     template = loader.get_template('relight/shop_index.html')
     context = {
         'profile': profile,
@@ -245,11 +233,11 @@ def shop_profile(request, shop_name):
     if request.method == 'GET':
         user = request.user
         shop_profile = Shop_Profile.objects.get(name=shop_name)
-        shop = UserInfo.objects.get(id=shop_profile.shop_id)
+        shop = UserInfo.objects.get(userid=shop_profile.shop)
         if (user.s_or_c == 'shop'):
-            profile = Shop_Profile.objects.get(shop_id=user.id)
+            profile = Shop_Profile.objects.get(shop=user.userid)
         if (user.s_or_c == 'cus'):
-            profile = Cus_Profile.objects.get(cus_id=user.id)
+            profile = Cus_Profile.objects.get(cus=user.userid)
         events = Event.objects.filter(user_id=shop.id)
 
     template = loader.get_template('relight/shop_profile.html')

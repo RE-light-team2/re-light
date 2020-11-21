@@ -18,8 +18,8 @@ urlpatterns = [
          views.shop_profile, name='shop_profile'),
     path('event/<str:event_title>', views.event_detail, name='detail'),
     path('create_account', views.create_account, name='create_account'),
-    path('cus/create/<str:user_id>', views.create_customer, name='create_customer'),
-    path('shop/create/<str:user_id>', views.create_shop, name='create_shop'),
+    path('cus/create', views.create_customer, name='create_customer'),
+    path('shop/create', views.create_shop, name='create_shop'),
     path('create_event', views.create_event, name='create_event'),
 ]
 

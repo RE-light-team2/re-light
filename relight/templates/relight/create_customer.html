@@ -45,32 +45,51 @@
     <img class="logoO" src="{% static 'relight/img/logo_main.png' %}">
   </a><br>
 
-  <h1></h1>
+  <h1>企業ユーザー登録</h1>
   <form id="new_user" enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
+        <div class="square">
+          {% csrf_token %}
+      <div class="form-group">
+        <label>メールアドレス</label>
+        {{ form_user.email }}
+      </div>
+      <div class="form-group">
+        <label>利用者ID</label>
+        {{ form_user.userid }}
+      </div>
+      <div class="form-group">
+        <label>パスワード</label>
+        <em>{{ form_user.password_error_message }}</em>
+        <br />
+        {{ form_user.password1 }}
+    </div>
+    <div class="form-group">
+        <label>確認用パスワード</label>
+        {{ form_user.password2 }}
+    </div>
     <div class="square">
       {% csrf_token %}
       <div class="form-group">
         <label>性別</label>
-        {{ form.gender }}
+        {{ form_cus.gender }}
       </div>
       <div class="form-group">
         <label>名前</label>
-        {{ form.name }}
+        {{ form_cus.name }}
       </div>
       <div class="form-group">
         <label>アイコン</label>
-        {{ form.icons }}
+        {{ form_cus.icons }}
       </div>
       <div class="form-group">
         <label>ヘッダー</label>
-        {{ form.headers }}
+        {{ form_cus.headers }}
       </div>
       <div class="form-group">
         <label>自己紹介(任意)</label>
-        {{ form.self_introduction }}
+        {{ form_cus.self_introduction }}
       </div>
     </div>
-
     <button class="white trans submit" type="submit" value="create">登録</button>
   </form>
   <div class="form-error">

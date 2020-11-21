@@ -9,11 +9,8 @@ from django.utils.translation import gettext_lazy as _
 class Create_UserInfo_Form(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ['s_or_c', 'userid', 'password1', 'password2', 'email']
+        fields = ['userid', 'password1', 'password2', 'email']
 
-    S_OR_C = [('shop', '企業'), ('cus', '顧客')]
-    s_or_c = forms.ChoiceField(
-        required=True, choices=S_OR_C, widget=forms.RadioSelect())
     password1 = forms.CharField(label='PASSWORD', max_length=128, widget=forms.PasswordInput(
         attrs={'placeholder': 'パスワードを入力してください', 'class': 'form-control', 'autocomplete': 'off'}))
     password2 = forms.CharField(label='PASSWORDCONFIRM', max_length=128, widget=forms.PasswordInput(
@@ -23,6 +20,16 @@ class Create_UserInfo_Form(UserCreationForm):
         attrs={'placeholder': '利用者IDを入力してください', 'class': 'form-control'}))
     email = forms.EmailField(max_length=255, label='EMAIL', required=True)
     is_save = False
+
+    def save(self, post, s_c):
+        user = UserInfo()
+        user.userid = post["userid"]
+        user.email = post["email"]
+        if s_c == "shop":
+            user.s_or_c = "shop"
+        else:
+            user.s_or_c = "cus"
+        user.save()
 
 
 class Create_Shop_Form(forms.ModelForm):

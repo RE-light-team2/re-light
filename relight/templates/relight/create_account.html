@@ -43,50 +43,8 @@
       </a><br>
 
       <h1>アカウントを作成</h1>
-      <form id="new_user" enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
-        <div class="square">
-          {% csrf_token %}
-      <div class="form-group">
-        <label>あなたは企業様、それとも、一般様</label>
-        {{ form.s_or_c }} 
-      </div>
-      <div class="form-group">
-        <label>メールアドレス</label>
-        {{ form.email }}
-      </div>
-      <div class="form-group">
-        <label>利用者ID</label>
-        {{ form.userid }}
-      </div>
-      <div class="form-group">
-        <label>パスワード</label>
-        <em>{{ form.password_error_message }}</em>
-        <br />
-        {{ form.password1 }}
-    </div>
-    <div class="form-group">
-        <label>確認用パスワード</label>
-        {{ form.password2 }}
-    </div></div>
-
-    <button class="white trans submit" type="submit" value="create">登録</button>
-    </form>
-    <div class="form-error">
-      {% if form.errors %} 
-      {% for field in form %} 
-       {% for error in field.errors %} 
-        <div class="alert alert-danger"> 
-         <strong>{{ error|escape }}</strong> 
-        </div> 
-       {% endfor %} 
-      {% endfor %} 
-      {% for error in form.non_field_errors %} 
-       <div class="alert alert-danger"> 
-        <strong>{{ error|escape }}</strong> 
-       </div> 
-      {% endfor %} 
-  {% endif %} 
-    </div>
+      <button type="button"><a href="{% url 'create_customer' %}">一般の方はこちら</a></button>
+      <button type="button"><a href="{% url 'create_shop' %}">企業の方はこちら</a></button>
     <a href="/">トップに戻る</a>
     <footer>
       <br>

@@ -49,7 +49,7 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
 
 class Shop_Profile(models.Model):
     """企業のモデル"""
-    shop = models.ForeignKey('UserInfo', on_delete=models.CASCADE, null=True)
+    shop = models.CharField(max_length=255)
     name = models.CharField(max_length=255, unique=True)
     self_introduction = models.CharField(max_length=500)
     icons = models.ImageField(upload_to="icons/", unique=True)
@@ -59,7 +59,7 @@ class Shop_Profile(models.Model):
 
 class Cus_Profile(models.Model):
     """顧客のモデル"""
-    cus = models.ForeignKey('UserInfo', on_delete=models.CASCADE, null=True)
+    cus = models.CharField(max_length=255)
     name = models.CharField(max_length=255, unique=True)
     self_introduction = models.CharField(max_length=500)
     icons = models.ImageField(upload_to="icons/", unique=True)
