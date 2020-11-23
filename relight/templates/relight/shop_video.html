@@ -34,6 +34,7 @@
         <p>Share this id with others so they can call you.</p>
         <h3>Make a call</h3>
         <div hidden id="callto-id">{{auth_user.name}}{{event.title}</div>
+        <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">御社のショッピングサイトへ</button></a>
         <form id="end-call" class="info-form">
             <p>Currently in call with <span id="their-id">...</span></p>
             <button href="#" type="submit">End Call</button>

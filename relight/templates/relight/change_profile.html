@@ -1,0 +1,129 @@
+{% load static %}
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <title>RElight</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
+</head>
+
+<body>
+  <header>
+
+    <button class="humberger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </button>
+    <div class="flex">
+      <ul>
+        <li><a href="{% url 'profile' %}">マイページ</a></li>
+        <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
+      </ul>
+      <ul class="logoH">
+        <li><a href="{% url 'about' %}">About RE light</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="hidden_show">
+    <nav>
+      <ul>
+        <li><a href="{% url 'top' %}">TOP</a></li>
+        <li><a href="{% url 'shop_index' %}">SHOP</a></li>
+        <li><a href="{% url 'event_index' %}">EVENT</a></li>
+        <li><a href="{% url 'login' %}">LOGIN</a></li>
+        <li><a href="{% url 'logout' %}">SIGN UP</a></li>
+      </ul>
+
+    </nav>
+  </div>
+
+  <a href="/">
+    <img class="logoO" src="{% static 'relight/img/logo_main.png' %}">
+  </a><br>
+
+  <h1>ユーザー情報の変更</h1>
+  <form id="new_user" enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
+        <div class="square">
+          {% csrf_token %}
+      <div class="form-group">
+        <label>メールアドレス</label>
+        {{ form_user.email }}
+      </div>
+      <div class="form-group">
+        <label>利用者ID</label>
+        {{ form_user.userid }}
+      </div>
+      <div class="form-group">
+        <label>名前</label>
+        {{ form_prof.name }}
+      </div>
+      <div class="form-group">
+        <label>アイコン</label>
+        {{ form_prof.icons }}
+      </div>
+      <div class="form-group">
+        <label>ヘッダー</label>
+        {{ form_prof.headers }}
+      </div>
+      <div class="form-group">
+        <label>自己紹介(任意)</label>
+        {{ form_prof.self_introduction }}
+      </div>
+      {% ifequal user.s_or_c "shop" %}
+      <div class="form-group">
+        <label>御社のオンラインショッピングサイトのURL</label>
+        {{ form_prof.online_address }}
+      </div>
+      {% endifequal %}
+      {% ifequal user.s_or_c "cus" %}
+      <div class="form-group">
+        <label>性別</label>
+        {{ form_prof.gender }}
+      </div>
+      {% endifequal %}
+    </div>
+    <button class="white trans submit" type="submit" value="update">変更</button>
+  </form>
+  <div class="form-error">
+    {% if form_prof.errors %}
+    {% for field in form_prof %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% if form_user.errors %}
+    {% for field in form_user %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+  <a href="/">トップに戻る</a>
+  <footer>
+    <br>
+    <a href="{% url 'privacy' %}">プライバシーポリシー</a>
+    <p>©RElight, 2020</p>
+  </footer>
+</body>
+
+</html>

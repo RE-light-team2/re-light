@@ -33,6 +33,7 @@
         <p>Share this id with others so they can call you.</p>
         <h3>Make a call</h3>
         <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
+        <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">このお店のショッピングサイトへ</button></a>
         <form id="make-call" class="info-form">            
             <button href="#" class="pure-button pure-button-success" type="submit">Call</button>
         </form>

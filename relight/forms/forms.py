@@ -121,3 +121,78 @@ class Create_Event_Form(forms.ModelForm):
         event.detail = self.cleaned_data["detail"]
         event.user = user
         event.save()
+
+
+class Change_UserInfo_Form(forms.ModelForm):
+    class Meta:
+        model = UserInfo
+        fields = ['userid', 'email']
+    error_message = 'error'
+    userid = forms.CharField(required=True, label='NAME', max_length=30, widget=forms.TextInput(
+        attrs={'placeholder': '利用者IDを入力してください', 'class': 'form-control'}))
+    email = forms.EmailField(max_length=255, label='EMAIL', required=True)
+    is_save = False
+
+    def save(self, post, user):
+        if user.userid == post["userid"]:
+            user.userid = post["userid"]
+        if user.userid == post["email"]:
+            user.email = post["email"]
+        user.save()
+
+
+class Change_Shop_Form(forms.ModelForm):
+    class Meta:
+        model = Shop_Profile
+        fields = ['name', 'icons', 'headers',
+                  'online_address', 'self_introduction']
+    name = forms.CharField(label='NAME', max_length=30, widget=forms.TextInput(
+        attrs={'placeholder': '名前を入力してください', 'class': 'form-control'}))
+    icons = forms.ImageField(required=False)
+    headers = forms.ImageField(required=False)
+    error_message = 'error'
+    online_address = forms.URLField()
+    self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
+                                        max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
+    is_save = False
+
+    def save(self, post, file, user, profile):
+        profile.name = post["name"]
+        if file:
+            if 'icons' in file:
+                profile.icons = file["icons"]
+            if 'headers' in file:
+                profile.headers = file["headers"]
+        profile.self_introduction = post["self_introduction"]
+        profile.online_address = post["online_address"]
+        profile.shop = user
+        profile.save()
+
+
+class Change_Cus_Form(forms.ModelForm):
+    class Meta:
+        model = Cus_Profile
+        fields = ['name', 'icons', 'headers', 'gender', 'self_introduction']
+
+    name = forms.CharField(label='NAME', max_length=30, widget=forms.TextInput(
+        attrs={'placeholder': '名前を入力してください', 'class': 'form-control'}))
+    icons = forms.ImageField(required=False)
+    headers = forms.ImageField(required=False)
+    error_message = 'error'
+    GENDER = [('man', '男'), ('woman', '女')]
+    gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
+    self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
+                                        max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
+    is_save = False
+
+    def save(self, post, file, user, profile):
+        profile.name = post["name"]
+        if file:
+            if 'icons' in file:
+                profile.icons = file["icons"]
+            if 'headers' in file:
+                profile.headers = file["headers"]
+        profile.self_introduction = post["self_introduction"]
+        profile.gender = post["gender"]
+        profile.cus = user
+        profile.save()

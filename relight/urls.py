@@ -20,6 +20,7 @@ urlpatterns = [
     path('create_account', views.create_account, name='create_account'),
     path('cus/create', views.create_customer, name='create_customer'),
     path('shop/create', views.create_shop, name='create_shop'),
+    path('change_profile', views.change_profile, name='change_profile'),
     path('create_event', views.create_event, name='create_event'),
 ]
 
