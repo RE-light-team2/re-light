@@ -8,7 +8,10 @@ body{
 
 .title{
     font-size: xx-large;
+    padding-top: 100px;
+    margin-top:-5px;
 }
+
 
 .flex{
     display:flex;
@@ -21,6 +24,7 @@ header{
     font-size: x-large;
     padding: 10px;
     width:100vw;
+    margin:0;
     position: fixed;
 }
 header a{
@@ -75,8 +79,8 @@ header ul{
   .humberger div:nth-of-type(3) {
     top: 35px;
   }
-  .humberger div:hover{
-    background-color: orange;
+  .humberger:hover{
+    cursor : pointer;
 }
 /* header */
 
