@@ -7,6 +7,7 @@ const ChatVideo = document.getElementById('their-video');
 
 localVideo.muted = true; // 自分の音声を自分のスピーカーから聞こえなくする。相手には届く。
 localVideo.playsInline = true;
+localVideo.autoplay = true;
 
 ChatVideo.playsInline = true;
 ChatVideo.autoplay = true;
