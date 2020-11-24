@@ -19,6 +19,7 @@
   <ul>
     <li><a href="/">HOME</a></li>
     <li class="Rmenu"><a href="{% url 'profile' %}">マイページ</a></li>
+    <li class="Rmenu"><a href="{% url 'login' %}">ログイン</a></li>
   </ul>
   <ul class="logoH">
     <li><a href="{% url 'about' %}">About RE light</a></li>
@@ -43,8 +44,9 @@
       </a><br>
 
       <h1>アカウントを作成</h1>
-      <button type="button"><a href="{% url 'create_customer' %}">一般の方はこちら</a></button>
-      <button type="button"><a href="{% url 'create_shop' %}">企業の方はこちら</a></button>
+      <a href="{% url 'create_customer' %}"><button class="top white trans" type="button">利用者アカウント</button></a>
+      <a href="{% url 'create_shop' %}"><button class="top white trans" type="button">販売者アカウント</button></a>
+    <br><br><br>
     <a href="/">トップに戻る</a>
     <footer>
       <br>

@@ -20,6 +20,7 @@
     <div class="flex">
       <ul>
         <li><a href="{% url 'profile' %}">マイページ</a></li>
+        <li class="Rmenu"><a href="{% url 'login' %}">ログイン</a></li>
         <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
       </ul>
       <ul class="logoH">
@@ -45,7 +46,7 @@
     <img class="logoO" src="{% static 'relight/img/logo_main.png' %}">
   </a><br>
 
-  <h1>顧客ユーザー登録</h1>
+  <h1>販売ユーザー登録</h1>
   <form id="new_user" enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
         <div class="square">
           {% csrf_token %}
