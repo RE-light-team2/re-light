@@ -12,14 +12,16 @@
 <body>
   <header>
 
-    <button class="humberger">
+    <div class="humberger">
+
       <div></div>
       <div></div>
       <div></div>
-    </button>
+
+    </div>
     <div class="flex">
-      <ul>
-        <li><a href="{% url 'profile' %}">マイページ</a></li>
+      <ul class="header">
+        <li><a href="/">HOME</a></li>
         <li class="Rmenu"><a href="{% url 'login' %}">ログイン</a></li>
         <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
       </ul>
@@ -29,7 +31,7 @@
     </div>
   </header>
 
-  <div class="hidden_show">
+  <div id="slideL" class="off">
     <nav>
       <ul>
         <li><a href="{% url 'top' %}">TOP</a></li>
