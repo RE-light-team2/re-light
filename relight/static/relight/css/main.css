@@ -82,6 +82,9 @@ header ul{
   .humberger:hover{
     cursor : pointer;
 }
+.cancel{
+    margin:15px 18px;
+}
 /* header */
 
 /* footer */
