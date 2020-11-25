@@ -6,13 +6,9 @@ import datetime
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, s_or_c, password):
-        if not email:
-            raise ValueError('Users must have an email address')
+    def create_user(self, password, userid):
 
         user = self.model(
-            s_or_c=s_or_c,
-            email=self.normalize_email(email),
             userid=userid,
             password=password,
         )
@@ -21,10 +17,8 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, s_or_c, password):
+    def create_superuser(self, password, userid):
         user = self.create_user(
-            s_or_c=s_or_c,
-            email=self.normalize_email(email),
             userid=userid,
             password=password,
         )
