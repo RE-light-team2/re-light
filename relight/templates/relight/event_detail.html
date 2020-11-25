@@ -50,10 +50,10 @@
     </nav>
   </div>
 
-  <div class="header">
+  <div class="headI">
     <img src="/media/{{ profile.headers }}" width="200">
   </div>
-
+<br>
   <div class="personal">
     <div class="flex">
       <span class="icon">
@@ -82,10 +82,10 @@
       <span>
         {% ifequal user.id event.user.id %}
         <button class="call yellow trans submit" type="button"><a
-            href="{% url 'shop_video' event.title %}">ビデオ通話ページへ</a></button>
+            href="{% url 'shop_video' event.title %}">ビデオ通話</a></button>
         {% else %}
         <button class="call yellow trans submit" type="button"><a
-            href="{% url 'cus_video' event.title %}">ビデオ通話ページへ</a></button>
+            href="{% url 'cus_video' event.title %}">ビデオ通話</a></button>
         {% endifequal %}
       </span>
     </div>
