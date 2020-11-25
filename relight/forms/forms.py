@@ -68,7 +68,7 @@ class Create_Cus_Form(forms.ModelForm):
     icons = forms.ImageField()
     headers = forms.ImageField()
     error_message = 'error'
-    GENDER = [('man', '男'), ('woman', '女')]
+    GENDER = [('man', '男性'), ('woman', '女性'), ('No', '未回答')]
     gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
@@ -179,7 +179,7 @@ class Change_Cus_Form(forms.ModelForm):
     icons = forms.ImageField(required=False)
     headers = forms.ImageField(required=False)
     error_message = 'error'
-    GENDER = [('man', '男'), ('woman', '女')]
+    GENDER = [('man', '男性'), ('woman', '女性'), ('No', '未回答')]
     gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
