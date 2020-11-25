@@ -52,7 +52,7 @@
     </nav>
   </div>
 
-  <div class="header">
+  <div class="headI">
     <img src="/media/{{ profile.headers }}" width="200">
   </div>
 
@@ -65,14 +65,17 @@
       <span class="prof">
         <h3>Name :　{{ profile.name }}</h3>
         <h3>Email :　 {{ user.email }}</h3>
+        <br><br>
+        <h3>Self_introduction</h3>
+        {{ profile.self_introduction }}
       </span>
     </div>
 
 
-    <h1>Self_introduction </h1>
-    {{ profile.self_introduction }}
+    <h1> </h1>
+    
     <br><br>
-    <button type="button"><a href="{% url 'event_index' %}">イベント一覧ページへ</a></button>
+    <button class="white trans submit" type="button"><a href="{% url 'event_index' %}">イベント一覧ページへ</a></button>
     {% ifequal user.s_or_c "shop" %}
     <h1>あなたの作成したイベント一覧</h1>
     {% for event in events %}
@@ -82,7 +85,7 @@
     {% endfor %}
     <button class="white trans submit" type="button"><a href="{% url 'create_event' %}">イベント作成</a></button>
     {% endifequal %}
-    <button class="white trans submit" type="button"><a href="{% url 'change_profile' %}">アカウント情報の変更はこちら</a></button>
+    <button class="white trans submit" type="button"><a href="{% url 'change_profile' %}">アカウント情報の変更</a></button>
     <button class="white trans submit" type="button"><a href="{% url 'logout' %}">ログアウト</a></button>
   </div>
   <footer>
