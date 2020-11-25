@@ -22,7 +22,8 @@
     </div>
     <div class="flex">
       <ul class="header">
-        <li><a href="{% url 'profile' %}">マイページ</a></li>
+        <li><a href="/">HOME</a></li>
+        <li class="Rmenu"><a href="{% url 'profile' %}">マイページ</a></li>
         <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
       </ul>
       <ul class="logoH">
@@ -86,7 +87,8 @@
     <button class="white trans submit" type="button"><a href="{% url 'create_event' %}">イベント作成</a></button>
     {% endifequal %}
     <button class="white trans submit" type="button"><a href="{% url 'change_profile' %}">アカウント情報の変更</a></button>
-    <button class="white trans submit" type="button"><a href="{% url 'logout' %}">ログアウト</a></button>
+   <br>
+    <button class="yellow trans submit" type="button"><a href="{% url 'logout' %}">ログアウト</a></button>
   </div>
   <footer>
     <br>
