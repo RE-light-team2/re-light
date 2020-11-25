@@ -1,52 +1,67 @@
 {% load static %}
 <!doctype html>
 <html lang="ja">
-  <head>
-    <title>RElight - Login</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
-    </head>
-    <body>
-      <header>
 
-        <button class="humberger">
-          <div></div>
-          <div></div>
-          <div></div>
-       </button>
-<div class="flex">
-  <ul>
-    <li><a href="/">HOME</a></li>
-    <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
-  </ul>
-  <ul class="logoH">
-    <li><a href="{% url 'about' %}">About RE light</a></li>
-</ul></div>
-      </header>
+<head>
+  <title>RElight - Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
+</head>
 
-      <div class="hidden_show">
-        <nav>
-          <ul>
-            <li><a href="{% url 'top' %}">TOP</a></li>
-            <li><a href="{% url 'shop_index' %}">SHOP</a></li>
-            <li><a href="{% url 'event_index' %}">EVENT</a></li>
-            <li><a href="{% url 'login' %}">LOGIN</a></li>
-            <li><a href="{% url 'logout' %}">SIGN UP</a></li>
-          </ul>
+<body>
+  <header>
+
+    <div class="humberger">
+
+      <div></div>
+      <div></div>
+      <div></div>
+
+    </div>
+
+    <div class="flex">
+      <ul class="header">
+        <li><a href="/">HOME</a></li>
+        <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
+      </ul>
+      <ul class="logoH">
+        <li><a href="{% url 'about' %}">About RE light</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div id="slideL" class="off">
+    <nav>
+      <div class="humberger cancel">
+
+        <div></div>
+        <div></div>
+        <div></div>
   
-        </nav>
-        </div>
-        <a href="/">
-          <img class="logoO" src="{% static 'relight/img/logo_main.png' %}">
-          </a>
+      </div>
+      <br>
+      <ul>
+        <li><a href="{% url 'top' %}">TOP</a></li>
+        <li><a href="{% url 'shop_index' %}">SHOP</a></li>
+        <li><a href="{% url 'event_index' %}">EVENT</a></li>
+        <li><a href="{% url 'login' %}">LOGIN</a></li>
+        <li><a href="{% url 'logout' %}">SIGN UP</a></li>
+      </ul>
 
-      <h1 class="title">ログイン</h1>
-      {% if form.errors  %}
-    <p>ユーザーID, パスワードが一致しません．</p>
-    {% endif %}
-    <form enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
-      <div class="square">
+    </nav>
+  </div>
+
+  <a href="/">
+    <img class="logoO" src="{% static 'relight/img/logo_main.png' %}">
+  </a>
+
+  <h1 class="title">ログイン</h1>
+  {% if form.errors  %}
+  <p>ユーザーID, パスワードが一致しません．</p>
+  {% endif %}
+  <form enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
+    <div class="square">
       {% csrf_token %}
       <label>ユーザーID　</label>
       {{ form.userid }}
@@ -56,30 +71,34 @@
       {{ form.password }}
       {{ form.password.errors }}
       <br></div>
-      <button class="white trans submit" type = "submit">ログイン</button>
-      </form>
-      <div class="form-error">
-        {% if form.errors %} 
-        {% for field in form %} 
-         {% for error in field.errors %} 
-          <div class="alert alert-danger"> 
-           <strong>{{ error|escape }}</strong> 
-          </div> 
-         {% endfor %} 
-        {% endfor %} 
-        {% for error in form.non_field_errors %} 
-         <div class="alert alert-danger"> 
-          <strong>{{ error|escape }}</strong> 
-         </div> 
-        {% endfor %} 
-        {% endif %} 
-        </div> 
-        
-        <footer>
-          <br>
-          <a href="/">トップに戻る</a>    <br>
-          <a href="{% url 'privacy' %}">プライバシーポリシー</a>
-          <p>©RElight, 2020</p>
-        </footer>
-    </body>
+    <button class="white trans submit" type="submit">ログイン</button>
+  </form>
+  <div class="form-error">
+    {% if form.errors %}
+    {% for field in form %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+
+  <footer>
+    <br>
+    <a href="/">トップに戻る</a> <br>
+    <a href="{% url 'privacy' %}">プライバシーポリシー</a>
+    <p>©RElight, 2020</p>
+  </footer>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="{% static 'relight/js/query.js' %}"></script>
+  
+</body>
+
 </html>

@@ -1,5 +1,6 @@
 /* all */
 body{
+    z-index: 10;
     text-align: center;
     margin:0;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -7,7 +8,10 @@ body{
 
 .title{
     font-size: xx-large;
+    padding-top: 100px;
+    margin-top:-5px;
 }
+
 
 .flex{
     display:flex;
@@ -19,6 +23,9 @@ header{
     background: linear-gradient(to right, #FFF55F, #E8FD95);
     font-size: x-large;
     padding: 10px;
+    width:100vw;
+    margin:0;
+    position: fixed;
 }
 header a{
     text-decoration:none;
@@ -27,9 +34,9 @@ header ul{
     text-align: left;
     margin: 10px;
     margin-left:80px;
-}
-header li{
     list-style: none;
+}
+.header li{
     display:inline-block;
     padding:0 10px;
 }
@@ -43,6 +50,7 @@ header li{
     font-weight: bold;
     font-size: 25px;
     font-family: 'Times New Roman', Times, serif;
+    padding:0 20px;
 }/* header logo */
 .humberger{
     height: 24px;
@@ -52,7 +60,7 @@ header li{
     position: relative;
     float: left;
 }
-.humberger div {
+.humberger div{
     position: absolute;
     margin-left:15%;
     height: 4px;
@@ -71,6 +79,12 @@ header li{
   .humberger div:nth-of-type(3) {
     top: 35px;
   }
+  .humberger:hover{
+    cursor : pointer;
+}
+.cancel{
+    margin:15px 18px;
+}
 /* header */
 
 /* footer */
@@ -129,20 +143,25 @@ a:hover{
 /* logoING */
 .logoM{
     width:30%;
+    margin-top:70px;
 }
 .logoO{
     width:20%;
+    margin-top:70px;
 }
 /* logoING */
 
 /* nav */
 nav{
+    z-index:100;
     text-align:left;
-    margin-top:0;
-    width:10%;
+    margin-top:-100px;
     height:100vw;
+    width:15%;
+    padding: 100px 0;
+    font-size: x-large;
     background-color: rgb(251, 253, 199);
-    z-index:30;
+    position: fixed;
 }
 nav ul{
     list-style: none;
@@ -155,9 +174,14 @@ nav li{
     padding:20px 0;
 }
 
-.hidden_show{
+.off{
     display:none;
 }
+.slideL {
+    z-index:100;
+    cursor: pointer;
+    top: 0;
+  }
 /* nav */
 
 /* form  */
