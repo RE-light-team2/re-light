@@ -13,11 +13,11 @@
         <h1>Email : {{ shop.email }}</h1>
         <div class="icon">
           Icon :
-        <img src="/media/{{ shop_profile.icons }}" width="200">
+        <img src="{{ shop_profile.icons.url }}" width="200">
         </div>
         <div class="header">
           header :
-        <img src="/media/{{ shop_profile.headers }}" width="200"> 
+        <img src="{{ shop_profile.headers.url }}" width="200"> 
         </div>
         <h1>Self_introduction : {{ shop_profile.self_introduction }}</h1>
         <button type="button"><a href="{% url 'event_index' %}">イベント一覧ページへ</a></button>

@@ -51,13 +51,13 @@
   </div>
 
   <div class="headI">
-    <img src="/media/{{ profile.headers }}" width="200">
+    <img src="{{ profile.headers.url }}" width="200">
   </div>
 <br>
   <div class="personal">
     <div class="flex">
       <span class="icon">
-        <img src="/media/{{ event.image }}" width="200">
+        <img src="{{ event.image.url }}" width="200">
       </span>
       <span class="prof">
         <h1> {{ event.title }}</h1>
@@ -71,7 +71,7 @@
     <div class="flex">
       <div class="user_profile minProf">
         <span>
-          <img src="/media/{{ profile.icons }}" width="200">
+          <img src="{{ profile.icons.url }}" width="200">
           <p>{{ profile.name }}</p>
         </span>
         <span>

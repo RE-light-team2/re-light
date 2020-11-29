@@ -9,7 +9,7 @@
         <div class="user_profile">
           <h1>プロフィール</h1>
           <p>{{ profile.name }}</p>
-          <img src="/media/{{ profile.icons }}" width="200">
+          <img src="{{ profile.icons.url }}" width="200">
           <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィールページへ</a></p>
         </div>
         <h1>ショップ一覧</h1>
