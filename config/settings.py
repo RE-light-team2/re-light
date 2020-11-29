@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -161,3 +163,11 @@ if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
     import django_heroku  # 追加
     django_heroku.settings(locals())  # 追加
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dxhmv6321',
+    'API_KEY': '788881827468641',
+    'API_SECRET': 'tut_K9IGJtNFvwvhDtLjqbM9BwQ'
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
