@@ -54,7 +54,7 @@
   </div>
 
   <div class="headI">
-    <img src="/media/{{ profile.headers }}" width="200">
+    <img src="{{ profile.headers.url }}" width="200">
   </div>
 
   <h1>Your Profile</h1>
@@ -62,7 +62,7 @@
   <div class="personal">
     <div class="flex">
       <span class="icon">
-        <img src="/media/{{ profile.icons }}" width="200"></span>
+        <img src="/{{ profile.icons.url }}" width="200"></span>
       <span class="prof">
         <h3>Name :　{{ profile.name }}</h3>
         <h3>Email :　 {{ user.email }}</h3>
