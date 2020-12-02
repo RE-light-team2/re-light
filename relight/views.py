@@ -156,6 +156,7 @@ def event_detail(request, event_title):
 @login_required
 def create_event(request):
     user = request.user
+    profile = Shop_Profile.objects.get(shop=user.userid)
     if request.method == 'GET':
         form = Create_Event_Form()
     else:
@@ -170,6 +171,7 @@ def create_event(request):
     context = {
         'form': form,
         'user': user,
+        'profile': profile,
     }
     return HttpResponse(template.render(context, request))
 
