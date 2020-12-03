@@ -7,7 +7,6 @@ from relight.forms.forms import Create_UserInfo_Form, Create_Cus_Form, LoginForm
 from django.contrib.auth import authenticate, login
 from django.views import View
 from django.contrib.auth.decorators import login_required
-
 # Create your views here.
 
 

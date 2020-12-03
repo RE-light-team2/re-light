@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <div class="video-body">
-    <h1>企業側のビデオページ</h1>
+    <h1 id="event_name">{{event.title}}</h1>
 
     <!-- Video area -->
     <div class="video" id="video-container">
@@ -30,16 +30,23 @@
     <div class="video-info">
         <h2>SkyWay Video Chat</h2>
 
-        <div hidden id="my-id">{{auth_user.name}}{{event.title}}</div>
+        <div hidden id="my-id">{{auth_user.name}}_{{event.title}}</div>
         <p>Share this id with others so they can call you.</p>
         <h3>Make a call</h3>
-        <div hidden id="callto-id">{{auth_user.name}}{{event.title}</div>
+        <div hidden id="callto-id">{{auth_user.name}}_{{event.title}}</div>
         <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">御社のショッピングサイトへ</button></a>
         <form id="end-call" class="info-form">
             <p>Currently in call with <span id="their-id">...</span></p>
             <button href="#" type="submit">End Call</button>
         </form>
     </div>
+</div>
+<h3>Chat</h3>
+<div class="form-group">
+    <br/>
+    <input id="chat-message-input" type="text" size="100"/><br/>
+    <input id="chat-message-submit" type="button" value="Send"/>
+    <div id="messages"></div>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>

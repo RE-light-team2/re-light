@@ -1,6 +1,7 @@
 var localStream = null;
 var peer = null;
 var existingCall = null;
+var conn;
 
 const localVideo = document.getElementById('my-video');
 const ChatVideo = document.getElementById('their-video');
@@ -27,7 +28,17 @@ peer = new Peer($('#my-id').text(),{
     key: '0dd47d22-8623-4292-84b2-8a7b3b800889',
     debug: 3
 });
-    
+
+peer.on('connection', function(connection){
+    conn = connection;
+    // メッセージ受信イベントの設定
+    conn.on("data", onRecvMessage);
+});
+ 
+function onRecvMessage(data) {
+    // 画面に受信したメッセージを表示
+    $("#messages").append($("<p>").text(conn.id + ": " + data).css("font-weight", "bold"));
+} 
 
 peer.on('open', function(){
     $('#my-id').text(peer.id);
@@ -77,7 +88,22 @@ peer.on('call', function(call){
 
 $('#end-call').click(function(){
     existingCall.close();
+    conn.close();
 });
+
+$("#chat-message-submit").click(function() {
+        // 送信テキストの取得
+        var message = $("#chat-message-input").val();
+ 
+        // 送信
+        conn.send(message);
+ 
+        // 自分の画面に表示
+        $("#messages").append($("<p>").html(peer.id + ": " + message));
+ 
+        // 送信テキストボックスをクリア
+        $("#message").val("");
+    });
 
 function setupMakeCallUI(){
     $('#make-call').show();
