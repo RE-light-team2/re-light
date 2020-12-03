@@ -1,3 +1,7 @@
+aioredis==1.3.1
+asgi-redis==1.4.3
+asgiref==3.3.1
+async-timeout==3.0.1
 attrs==20.3.0
 autobahn==20.7.1
 Automat==20.2.0
@@ -32,6 +36,8 @@ pycparser==2.20
 PyHamcrest==2.0.2
 pyOpenSSL==20.0.0
 pytz==2018.7
+pywin32==300
+redis==2.10.6
 requests==2.25.0
 service-identity==18.1.0
 six==1.15.0
