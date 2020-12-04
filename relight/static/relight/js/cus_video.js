@@ -35,12 +35,18 @@ peer = new Peer($('#my-id').text(), {
 
 function onRecvMessage(data) {
     // 画面に受信したメッセージを表示
-    $("#messages").append($("<p>").text(conn.id + ": " + data).css("font-weight", "bold"));
+    var name = ($('#callto-id').text()).split("_");
+    $("#messages").append($("<p>").text(name[0] + ": " + data).css("font-weight", "bold"));
 }
 
 peer.on('connection', function(connection){
     // データ通信用に connectionオブジェクトを保存しておく
     conn = connection;
+    conn.on("open", function() {
+        // 相手のIDを表示する
+        // - 相手のIDはconnectionオブジェクトのidプロパティに存在する
+        console.log("Connection_id :" + conn.id);
+    });
 
     // メッセージ受信イベントの設定
     conn.on("data", onRecvMessage);

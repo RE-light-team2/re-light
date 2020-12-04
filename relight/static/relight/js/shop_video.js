@@ -32,12 +32,18 @@ peer = new Peer($('#my-id').text(),{
 peer.on('connection', function(connection){
     conn = connection;
     // メッセージ受信イベントの設定
+    conn.on("open", function() {
+        // 相手のIDを表示する
+        // - 相手のIDはconnectionオブジェクトのidプロパティに存在する
+        console.log("Connection_id :" + conn.id);
+    });
     conn.on("data", onRecvMessage);
 });
  
 function onRecvMessage(data) {
     // 画面に受信したメッセージを表示
-    $("#messages").append($("<p>").text(conn.id + ": " + data).css("font-weight", "bold"));
+    var name = (call.remoteId).split('_');
+    $("#messages").append($("<p>").text(name[0]+": " + data).css("font-weight", "bold"));
 } 
 
 peer.on('open', function(){
@@ -97,9 +103,11 @@ $("#chat-message-submit").click(function() {
  
         // 送信
         conn.send(message);
+
+        var name = (peer.id).split('_');
  
         // 自分の画面に表示
-        $("#messages").append($("<p>").html(peer.id + ": " + message));
+        $("#messages").append($("<p>").html(name[0] + ": " + message));
  
         // 送信テキストボックスをクリア
         $("#message").val("");
