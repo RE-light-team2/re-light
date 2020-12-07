@@ -43,17 +43,18 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
 
 class Shop_Profile(models.Model):
     """企業のモデル"""
-    shop = models.CharField(max_length=255)
+    shop = models.ForeignKey('UserInfo', on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=255, unique=True)
     self_introduction = models.CharField(max_length=500)
     icons = models.ImageField(upload_to="icons/", unique=True)
     headers = models.ImageField(upload_to="headers/", unique=True)
     online_address = models.URLField(max_length=255)
+    plan = models.CharField(max_length=10)
 
 
 class Cus_Profile(models.Model):
     """顧客のモデル"""
-    cus = models.CharField(max_length=255)
+    cus = models.ForeignKey('UserInfo', on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=255, unique=True)
     self_introduction = models.CharField(max_length=500)
     icons = models.ImageField(upload_to="icons/", unique=True)

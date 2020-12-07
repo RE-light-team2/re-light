@@ -1,12 +1,18 @@
+from django.conf import settings
 from django.shortcuts import render, loader, redirect
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from relight.models import UserInfo, Shop_Profile, Cus_Profile, Event
 from relight.forms.forms import Create_UserInfo_Form, Create_Cus_Form, LoginForm, Create_Shop_Form, Create_Event_Form, Change_UserInfo_Form, Change_Cus_Form, Change_Shop_Form
 from django.contrib.auth import authenticate, login
-from django.views import View
+from django.views import View, generic
+from django.core.signing import BadSignature, SignatureExpired, dumps, loads
 from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.contrib.auth import get_user_model
 # Create your views here.
 
 
@@ -26,14 +32,32 @@ def create_customer(request):
         form_user = Create_UserInfo_Form()
     else:
         form_user = Create_UserInfo_Form(request.POST)
-        user_id = request.POST["userid"]
         form_cus = Create_Cus_Form(request.POST, request.FILES)
         if form_user.is_valid():
             if form_cus.is_valid():
                 print('user_regist is_valid')
-                form_user.save(request.POST, "cus")
-                form_cus.save(request.POST, request.FILES, user_id)
-                return redirect('/login/')
+                user = form_user.save(request.POST, "cus", commit=False)
+                user.is_active = False
+                user.save()
+                prof = form_cus.save(
+                    request.POST, request.FILES, user, commit=False)
+                prof.save()
+                current_site = get_current_site(request)
+                domain = current_site.domain
+                mail_context = {
+                    'protocol': request.scheme,
+                    'domain': domain,
+                    'token': dumps(user.userid),
+                    'prof': prof,
+                }
+                subject = render_to_string(
+                    'relight/mail_template/subject.txt', mail_context)
+                message = render_to_string(
+                    'relight/mail_template/message.txt', mail_context)
+                from_email = 'remote.enter.light@gmail.com'  # 送信者
+                recipient_list = [user.email]  # 宛先リスト
+                send_mail(subject, message, from_email, recipient_list)
+                return redirect('/user_create/done')
         else:
             print('user_regist false is_valid')
 
@@ -51,14 +75,31 @@ def create_shop(request):
         form_user = Create_UserInfo_Form()
     else:
         form_user = Create_UserInfo_Form(request.POST)
-        user_id = request.POST["userid"]
         form_shop = Create_Shop_Form(request.POST, request.FILES)
         if form_user.is_valid():
             if form_shop.is_valid():
-                print('user_regist is_valid')
-                form_user.save(request.POST, "shop")
-                form_shop.save(request.POST, request.FILES, user_id)
-                return redirect('/login/')
+                user = form_user.save(request.POST, "shop", commit=False)
+                user.is_active = False
+                user.save()
+                prof = form_shop.save(
+                    request.POST, request.FILES, user, commit=False)
+                prof.save()
+                current_site = get_current_site(request)
+                domain = current_site.domain
+                mail_context = {
+                    'protocol': request.scheme,
+                    'domain': domain,
+                    'token': dumps(user.userid),
+                    'prof': prof,
+                }
+                subject = render_to_string(
+                    'relight/mail_template/subject.txt', mail_context)
+                message = render_to_string(
+                    'relight/mail_template/message.txt', mail_context)
+                from_email = 'remote.enter.light@gmail.com'  # 送信者
+                recipient_list = [user.email]  # 宛先リスト
+                send_mail(subject, message, from_email, recipient_list)
+                return redirect('/user_create/done')
         else:
             print('user_regist false is_valid')
 
@@ -100,9 +141,9 @@ def profile(request):
     if request.method == 'GET':
         user = request.user
         if (user.s_or_c == 'shop'):
-            profile = Shop_Profile.objects.get(shop=user.userid)
+            profile = Shop_Profile.objects.get(shop=user.id)
         if (user.s_or_c == 'cus'):
-            profile = Cus_Profile.objects.get(cus=user.userid)
+            profile = Cus_Profile.objects.get(cus=user.id)
         events = Event.objects.filter(user_id=user.id)
 
     template = loader.get_template('relight/profile.html')
@@ -119,9 +160,9 @@ def event_index(request):
     events = Event.objects.all()
     user = request.user
     if (user.s_or_c == 'shop'):
-        profile = Shop_Profile.objects.get(shop=user.userid)
+        profile = Shop_Profile.objects.get(shop=user.id)
     if (user.s_or_c == 'cus'):
-        profile = Cus_Profile.objects.get(cus=user.userid)
+        profile = Cus_Profile.objects.get(cus=user.id)
     template = loader.get_template('relight/event_index.html')
     context = {
         'profile': profile,
@@ -137,10 +178,10 @@ def event_detail(request, event_title):
         event = Event.objects.get(title=event_title)
         user = request.user
         if (user.s_or_c == 'shop'):
-            profile = Shop_Profile.objects.get(shop=user.userid)
+            profile = Shop_Profile.objects.get(shop=user.id)
         if (user.s_or_c == 'cus'):
-            profile = Cus_Profile.objects.get(cus=user.userid)
-        auth_user = Shop_Profile.objects.get(shop=event.user.userid)
+            profile = Cus_Profile.objects.get(cus=user.id)
+        auth_user = Shop_Profile.objects.get(shop=event.user.id)
 
     template = loader.get_template('relight/event_detail.html')
     context = {
@@ -155,15 +196,16 @@ def event_detail(request, event_title):
 @login_required
 def create_event(request):
     user = request.user
-    profile = Shop_Profile.objects.get(shop=user.userid)
+    profile = Shop_Profile.objects.get(shop=user.id)
     if request.method == 'GET':
         form = Create_Event_Form()
     else:
         form = Create_Event_Form(request.POST, request.FILES)
         if form.is_valid():
             print('user_login is_valid')
-            form.save(request.POST, request.FILES, user)
-            ev_detail = '/event/' + request.POST["title"]
+            event_ins = form.save(
+                request.POST, request.FILES, user, commit=False)
+            ev_detail = '/event/' + event_ins.title
             return redirect(ev_detail)
 
     template = loader.get_template('relight/create_event.html')
@@ -178,7 +220,7 @@ def create_event(request):
 @login_required
 def shop_video(request, event_title):
     event = Event.objects.get(title=event_title)
-    auth_user = Shop_Profile.objects.get(shop=event.user.userid)
+    auth_user = Shop_Profile.objects.get(shop=event.user.id)
     template = loader.get_template('relight/shop_video.html')
     context = {
         'event': event,
@@ -191,8 +233,8 @@ def shop_video(request, event_title):
 def cus_video(request, event_title):
     user = request.user
     event = Event.objects.get(title=event_title)
-    auth_user = Shop_Profile.objects.get(shop=event.user.userid)
-    profile = Cus_Profile.objects.get(cus=user.userid)
+    auth_user = Shop_Profile.objects.get(shop=event.user.id)
+    profile = Cus_Profile.objects.get(cus=user.id)
     template = loader.get_template('relight/cus_video.html')
     context = {
         'profile': profile,
@@ -217,9 +259,9 @@ def shop_index(request):
     shops = Shop_Profile.objects.all()
     user = request.user
     if (user.s_or_c == 'shop'):
-        profile = Shop_Profile.objects.get(shop=user.userid)
+        profile = Shop_Profile.objects.get(shop=user.id)
     if (user.s_or_c == 'cus'):
-        profile = Cus_Profile.objects.get(cus=user.userid)
+        profile = Cus_Profile.objects.get(cus=user.id)
     template = loader.get_template('relight/shop_index.html')
     context = {
         'profile': profile,
@@ -236,9 +278,9 @@ def shop_profile(request, shop_name):
         shop_profile = Shop_Profile.objects.get(name=shop_name)
         shop = UserInfo.objects.get(userid=shop_profile.shop)
         if (user.s_or_c == 'shop'):
-            profile = Shop_Profile.objects.get(shop=user.userid)
+            profile = Shop_Profile.objects.get(shop=user.id)
         if (user.s_or_c == 'cus'):
-            profile = Cus_Profile.objects.get(cus=user.userid)
+            profile = Cus_Profile.objects.get(cus=user.id)
         events = Event.objects.filter(user_id=shop.id)
 
     template = loader.get_template('relight/shop_profile.html')
@@ -255,9 +297,9 @@ def shop_profile(request, shop_name):
 def change_profile(request):
     user = request.user
     if user.s_or_c == "cus":
-        profile = Cus_Profile.objects.get(cus=user.userid)
+        profile = Cus_Profile.objects.get(cus=user.id)
     else:
-        profile = Shop_Profile.objects.get(shop=user.userid)
+        profile = Shop_Profile.objects.get(shop=user.id)
 
     if request.method == 'GET':
         initial_user = {
@@ -284,23 +326,21 @@ def change_profile(request):
 
     else:
         form_user = Change_UserInfo_Form(request.POST, instance=user)
-        user_id = request.POST["userid"]
+
         if user.s_or_c == "cus":
             form_prof = Change_Cus_Form(
                 request.POST, request.FILES or None, instance=profile)
         else:
             form_prof = Change_Shop_Form(
                 request.POST, request.FILES or None, instance=profile)
-        print(request.POST)
-        print(request.FILES or None)
         if form_prof.is_valid():
-            print('user is_valid')
             if form_user.is_valid():
-                print('user_regist is_valid')
-                form_user.save(request.POST, user)
-                form_prof.save(
-                    request.POST, request.FILES or None, user_id, profile)
-                login(request, user)
+                user_changed = form_user.save(request.POST, user, commit=False)
+                user_changed.save()
+                changed_prof = form_prof.save(
+                    request.POST, request.FILES or None, user_changed, profile, commit=False)
+                changed_prof.save()
+                login(request, user_changed)
                 return redirect('/profile')
         else:
             print('user_regist false is_valid')
@@ -313,3 +353,44 @@ def change_profile(request):
         'profile': profile,
     }
     return HttpResponse(template.render(context, request))
+
+
+def UserCreateDone(request):
+    template = loader.get_template('relight/create_user_done.html')
+    return HttpResponse(template.render(None, request))
+
+
+def UserCreateComplete(request, token):
+    """メール内URLアクセス後のユーザー本登録"""
+    User = get_user_model()
+    template = loader.get_template('relight/create_user_complete.html')
+    timeout_seconds = getattr(
+        settings, 'ACTIVATION_TIMEOUT_SECONDS', 60 * 60 * 24)  # デフォルトでは1日以内
+    try:
+        user_id = loads(token, max_age=timeout_seconds)
+        # 期限切れ
+    except SignatureExpired:
+        print("Error1")
+        return HttpResponseBadRequest()
+
+        # tokenが間違っている
+    except BadSignature:
+        print("Error2")
+        return HttpResponseBadRequest()
+
+        # tokenは問題なし
+    else:
+        try:
+            user = User.objects.get(userid=user_id)
+        except User.DoesNotExist:
+            print("Error3")
+            return HttpResponseBadRequest()
+        else:
+            print("Error4")
+            if not user.is_active:
+                # 問題なければ本登録とする
+                user.is_active = True
+                user.save()
+                return HttpResponse(template.render(None, request))
+    print("Error5")
+    return HttpResponseBadRequest()

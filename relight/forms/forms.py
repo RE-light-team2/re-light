@@ -19,17 +19,18 @@ class Create_UserInfo_Form(UserCreationForm):
     userid = forms.CharField(required=True, label='NAME', max_length=30, widget=forms.TextInput(
         attrs={'placeholder': '利用者IDを入力してください', 'class': 'form-control'}))
     email = forms.EmailField(max_length=255, label='EMAIL', required=True)
-    is_save = False
 
-    def save(self, post, s_c):
-        user = UserInfo()
+    def save(self, post, s_c, commit=True):
+        user = super(Create_UserInfo_Form, self).save(commit=False)
         user.userid = post["userid"]
         user.email = post["email"]
         if s_c == "shop":
             user.s_or_c = "shop"
         else:
             user.s_or_c = "cus"
-        user.save()
+        if commit:
+            user.save()
+        return user
 
 
 class Create_Shop_Form(forms.ModelForm):
@@ -43,19 +44,25 @@ class Create_Shop_Form(forms.ModelForm):
     headers = forms.ImageField()
     error_message = 'error'
     online_address = forms.URLField()
+    PLAN = [('Light Plan', 'ライトプラン'), ('Basic Plan',
+                                       'ベーシックプラン'), ('Premium Plan', 'プレミアムプラン')]
+    plan = forms.ChoiceField(choices=PLAN, widget=forms.RadioSelect())
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
 
-    def save(self, post, file, user):
-        profile = Shop_Profile()
+    def save(self, post, file, user, commit=True):
+        profile = super(Create_Shop_Form, self).save(commit=False)
         profile.name = post["name"]
         profile.icons = file["icons"]
         profile.headers = file["headers"]
         profile.self_introduction = post["self_introduction"]
         profile.online_address = post["online_address"]
+        profile.plan = post["plan"]
         profile.shop = user
-        profile.save()
+        if commit:
+            profile.save()
+        return profile
 
 
 class Create_Cus_Form(forms.ModelForm):
@@ -74,15 +81,17 @@ class Create_Cus_Form(forms.ModelForm):
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
 
-    def save(self, post, file, user):
-        profile = Cus_Profile()
+    def save(self, post, file, user, commit=True):
+        profile = super(Create_Cus_Form, self).save(commit=False)
         profile.name = post["name"]
         profile.icons = file["icons"]
         profile.headers = file["headers"]
         profile.self_introduction = post["self_introduction"]
         profile.gender = post["gender"]
         profile.cus = user
-        profile.save()
+        if commit:
+            profile.save()
+        return profile
 
 
 class LoginForm(AuthenticationForm):
@@ -113,14 +122,16 @@ class Create_Event_Form(forms.ModelForm):
     questionnaire_url = forms.CharField(label='URL', max_length=500, widget=forms.TextInput(
         attrs={'placeholder': 'アンケート用のURLを入力してください', 'class': 'form-control'}))
 
-    def save(self, post, file, user):
-        event = Event()
+    def save(self, post, file, user, commit=True):
+        event = super(Create_Event_Form, self).save(commit=False)
         event.title = post["title"]
         event.detail = post["detail"]
         event.image = file["image"]
         event.detail = self.cleaned_data["detail"]
         event.user = user
-        event.save()
+        if commit:
+            event.save()
+        return event
 
 
 class Change_UserInfo_Form(forms.ModelForm):
@@ -133,12 +144,14 @@ class Change_UserInfo_Form(forms.ModelForm):
     email = forms.EmailField(max_length=255, label='EMAIL', required=True)
     is_save = False
 
-    def save(self, post, user):
+    def save(self, post, user, commit=True):
         if user.userid == post["userid"]:
             user.userid = post["userid"]
         if user.userid == post["email"]:
             user.email = post["email"]
-        user.save()
+        if commit:
+            user.save()
+        return user
 
 
 class Change_Shop_Form(forms.ModelForm):
@@ -156,7 +169,7 @@ class Change_Shop_Form(forms.ModelForm):
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
 
-    def save(self, post, file, user, profile):
+    def save(self, post, file, user, profile, commit=True):
         profile.name = post["name"]
         if file:
             if 'icons' in file:
@@ -166,7 +179,9 @@ class Change_Shop_Form(forms.ModelForm):
         profile.self_introduction = post["self_introduction"]
         profile.online_address = post["online_address"]
         profile.shop = user
-        profile.save()
+        if commit:
+            profile.save()
+        return profile
 
 
 class Change_Cus_Form(forms.ModelForm):
@@ -185,7 +200,7 @@ class Change_Cus_Form(forms.ModelForm):
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
 
-    def save(self, post, file, user, profile):
+    def save(self, post, file, user, profile, commit=True):
         profile.name = post["name"]
         if file:
             if 'icons' in file:
@@ -195,4 +210,6 @@ class Change_Cus_Form(forms.ModelForm):
         profile.self_introduction = post["self_introduction"]
         profile.gender = post["gender"]
         profile.cus = user
-        profile.save()
+        if commit:
+            profile.save()
+        return profile
