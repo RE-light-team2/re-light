@@ -176,3 +176,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'gmailアカウント名'
 EMAIL_HOST_PASSWORD = 'gmailパスワード'
 EMAIL_USE_TLS = True
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
