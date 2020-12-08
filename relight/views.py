@@ -47,7 +47,7 @@ def create_customer(request):
                 mail_context = {
                     'protocol': request.scheme,
                     'domain': domain,
-                    'token': dumps(user.userid),
+                    'token': dumps(user.pk),
                     'prof': prof,
                 }
                 subject = render_to_string(
@@ -89,7 +89,7 @@ def create_shop(request):
                 mail_context = {
                     'protocol': request.scheme,
                     'domain': domain,
-                    'token': dumps(user.userid),
+                    'token': dumps(user.pk),
                     'prof': prof,
                 }
                 subject = render_to_string(
@@ -367,7 +367,7 @@ def UserCreateComplete(request, token):
     timeout_seconds = getattr(
         settings, 'ACTIVATION_TIMEOUT_SECONDS', 60 * 60 * 24)  # デフォルトでは1日以内
     try:
-        user_id = loads(token, max_age=timeout_seconds)
+        user_pk = loads(token, max_age=timeout_seconds)
         # 期限切れ
     except SignatureExpired:
         print("Error1")
@@ -381,7 +381,7 @@ def UserCreateComplete(request, token):
         # tokenは問題なし
     else:
         try:
-            user = User.objects.get(userid=user_id)
+            user = User.objects.get(pk=user_pk)
         except User.DoesNotExist:
             print("Error3")
             return HttpResponseBadRequest()
