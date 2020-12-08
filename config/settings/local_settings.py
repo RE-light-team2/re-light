@@ -57,7 +57,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 SECRET_KEY = '!6rz8gx38ci27@(2pqu#wz8crc1$(0wc4+2is=u@n8do2^vn$$'
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
 # settings.pyからそのままコピー
 DATABASES = {
