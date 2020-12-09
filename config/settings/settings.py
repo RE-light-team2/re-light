@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 
+import django_heroku  # 追加
 import os
 import dj_database_url
 import cloudinary
@@ -21,7 +22,7 @@ import cloudinary.api
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
 
-DEBUG = True
+DEBUG = False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -147,6 +148,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+
 db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
 DATABASES['default'].update(db_from_env)
 
@@ -170,3 +172,6 @@ DEFAULT_FROM_EMAIL = 'remote.enter.light@gmail.com'
 EMAIL_USE_TLS = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+SECRET_KEY = os.environ['SECRET_KEY']
+django_heroku.settings(locals())  # 追加
