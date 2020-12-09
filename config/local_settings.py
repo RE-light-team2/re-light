@@ -13,8 +13,7 @@ import os
 # Application definition
 print("Debug mode")
 
-BASE_DIR = os.path.dirname(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '!6rz8gx38ci27@(2pqu#wz8crc1$(0wc4+2is=u@n8do2^vn$$'
 

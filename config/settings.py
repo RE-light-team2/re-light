@@ -19,8 +19,7 @@ import cloudinary.uploader
 import cloudinary.api
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DEBUG = False
 
@@ -37,6 +36,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'relight',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -175,3 +175,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 SECRET_KEY = os.environ['SECRET_KEY']
 django_heroku.settings(locals())  # 追加
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

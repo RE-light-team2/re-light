@@ -1,3 +1,4 @@
 -e __pycache__\\ndb.sqlite3\\n.DS_Store
 /media
 db.sqlite3
+local_settings
