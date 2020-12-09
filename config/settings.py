@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 
-import django_heroku  # 追加
 import os
 import dj_database_url
 import cloudinary
@@ -175,6 +174,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 SECRET_KEY = os.environ['SECRET_KEY']
 django_heroku.settings(locals())  # 追加
+
+if not DEBUG:
+    SECRET_KEY = os.environ['SECRET_KEY']
+    import django_heroku  # 追加
+    django_heroku.settings(locals())  # 追加
 
 try:
     from local_settings import *
