@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin, BaseUserManager, AbstractBaseUser
 import datetime
+from django.core.mail import send_mail, EmailMessage
 
 # Create your models here.
 
@@ -39,6 +40,11 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'userid'
     EMAIL_FIELD = 'email'
+
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        """Send an email to this user."""
+        send_mail(subject, message, from_email, [self.email], **kwargs)
+
 
 
 class Shop_Profile(models.Model):

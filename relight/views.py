@@ -11,7 +11,6 @@ from django.views import View, generic
 from django.core.signing import BadSignature, SignatureExpired, dumps, loads
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
-from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
 # Create your views here.
 
@@ -54,9 +53,7 @@ def create_customer(request):
                     'relight/mail_template/subject.txt', mail_context)
                 message = render_to_string(
                     'relight/mail_template/message.txt', mail_context)
-                from_email = 'remote.enter.light@gmail.com'  # 送信者
-                recipient_list = [user.email]  # 宛先リスト
-                send_mail(subject, message, from_email, recipient_list)
+                user.email_user(subject, message)
                 return redirect('/user_create/done')
         else:
             print('user_regist false is_valid')
@@ -96,9 +93,7 @@ def create_shop(request):
                     'relight/mail_template/subject.txt', mail_context)
                 message = render_to_string(
                     'relight/mail_template/message.txt', mail_context)
-                from_email = 'remote.enter.light@gmail.com'  # 送信者
-                recipient_list = [user.email]  # 宛先リスト
-                send_mail(subject, message, from_email, recipient_list)
+                user.email_user(subject, message)
                 return redirect('/user_create/done')
         else:
             print('user_regist false is_valid')
