@@ -148,10 +148,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-DATABASES['default'].update(db_from_env)
-
-
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dxhmv6321',
     'API_KEY': '788881827468641',
@@ -161,7 +157,7 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # メールを実際に送らず、コンソール画面へ表示する
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -172,12 +168,15 @@ EMAIL_USE_TLS = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
 if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
     import django_heroku  # 追加
     django_heroku.settings(locals())  # 追加
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
+db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default'].update(db_from_env)

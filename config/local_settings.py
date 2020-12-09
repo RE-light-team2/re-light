@@ -13,11 +13,9 @@ import os
 # Application definition
 print("Debug mode")
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 SECRET_KEY = '!6rz8gx38ci27@(2pqu#wz8crc1$(0wc4+2is=u@n8do2^vn$$'
 
-ALLOWED_HOSTS = ['localhost']
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # settings.pyからそのままコピー
 DATABASES = {
@@ -26,14 +24,5 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'remote.enter.light@gmail.com'
-EMAIL_HOST_PASSWORD = 'kogyokakmlattdal'
-DEFAULT_FROM_EMAIL = 'remote.enter.light@gmail.com'
-EMAIL_USE_TLS = True
 
 DEBUG = True  # ローカルでDebugできるようになります
