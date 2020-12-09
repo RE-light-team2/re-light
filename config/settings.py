@@ -172,9 +172,6 @@ EMAIL_USE_TLS = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-SECRET_KEY = os.environ['SECRET_KEY']
-django_heroku.settings(locals())  # 追加
-
 if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
     import django_heroku  # 追加
