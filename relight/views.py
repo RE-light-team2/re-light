@@ -114,11 +114,14 @@ def Login(request):
         if form.is_valid():
             print('user_login is_valid')
             userid = form.cleaned_data.get('userid')
-            user = UserInfo.objects.get(userid=userid)
-            login(request, user)
-            if (user.s_or_c == 'shop'):
-                return redirect('/profile')
-            return redirect('/event_index')
+            password = form.cleaned_data.get('password')
+            user = authenticate(userid=userid, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    if (user.s_or_c == 'shop'):
+                        return redirect('/profile')
+                    return redirect('/event_index')
 
     template = loader.get_template('relight/login.html')
     context = {
