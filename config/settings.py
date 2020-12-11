@@ -115,8 +115,8 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# メールを実際に送らず、コンソール画面へ表示する
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# メールを実際に送る設定
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
