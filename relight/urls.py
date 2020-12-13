@@ -26,6 +26,8 @@ urlpatterns = [
          name='user_create_complete'),
     path('change_profile', views.change_profile, name='change_profile'),
     path('create_event', views.create_event, name='create_event'),
+    path('event_searched', views.event_searched, name='event_searched'),
+    path('shop_searched', views.shop_searched, name='shop_searched'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

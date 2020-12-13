@@ -13,11 +13,20 @@
           <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィールページへ</a></p>
         </div>
         <h1>ショップ一覧</h1>
+        <form method="GET" action="{% url 'shop_searched' %}">
+            <input type="text" name="keyword">
+            <button type="submit">検索</button>
+        </form>
+        <div class="shop">
         {% for shop in shops %}
-        <div class="shop_name">
-          <p><a href="{% url 'shop_profile' shop.name %}" class="title">{{shop.name}}</a></p>
-        </div>  
-        {% endfor %}   
+        <ul>
+            <li>
+                {{ shop.name }}
+                <a href="{% url 'shop_profile' shop.name %}">詳細</a>
+            </li>
+        </ul>  
+        {% endfor %}
+        </div>
         <button type="button"><a href="{% url 'logout' %}">ログアウトする</a></button>     
     </body>
 </html>

@@ -58,24 +58,20 @@
           <img src="{{ profile.icons.url }}" width="200">
           <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィール</a></p>
         </div>
-        <div class="event">
-        <h1>イベント一覧</h1>
-        <form method="GET" action="{% url 'event_searched' %}">
-            <input type="text" name="keyword">
-            <button type="submit">検索</button>
-        </form>
-        {% for event in events %}
+        <div class="shop">
+        {% if messages %}
+        <h1>{{ messages }}</h1>
+        {% for shop in shops %}
         <ul>
             <li>
-                {{ event.created_at }}
-                {{ event.title }}
-                <a href="{% url 'event_detail' event.title %}">詳細</a>
+                {{ shop.name }}
+                <a href="{% url 'shop_profile' shop.name %}">詳細</a>
             </li>
         </ul>
         {% endfor %}
-      </div>
-      </div>
-
+        {% endif %}
+        </div>
+        </div>
         <button class="white trans submit" type="button"><a href="{% url 'shop_index' %}">ショップ一覧へ</a></button>      
         <button class="white trans submit" type="button"><a href="{% url 'logout' %}">ログアウトする</a></button>     
     <footer>
