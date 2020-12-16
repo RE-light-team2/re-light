@@ -1,6 +1,6 @@
 
 
-$('.humberger').on('click',function(){
+$('.hum').on('click',function(){
     if($('#slideL').hasClass('off')){
       $('#slideL').removeClass('off');
       $('#slideL').animate({'marginLeft':'0px'},500).addClass('on');
@@ -11,3 +11,12 @@ $('.humberger').on('click',function(){
   });
 
   
+$('.hum2').on('click',function(){
+  if($('#slideL').hasClass('off')){
+    $('#slideL').removeClass('off');
+    $('#slideL').animate({'marginLeft':'400px'},500).addClass('on');
+  }else{
+    $('#slideL').addClass('off');
+    $('#slideL').animate({'marginLeft':'0px'},500);
+  }
+});
