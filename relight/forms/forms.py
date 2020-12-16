@@ -20,6 +20,29 @@ class Create_UserInfo_Form(UserCreationForm):
         attrs={'placeholder': '利用者IDを入力してください', 'class': 'form-control'}))
     email = forms.EmailField(max_length=255, label='EMAIL', required=True)
 
+    def clean_userid(self):
+        userid1 = self.cleaned_data['userid']
+        if ' ' in userid:
+            raise forms.ValidationError('Userid should not contain any space')
+        if '　' in userid:
+            raise forms.ValidationError('Userid should not contain any space')
+        return userid
+
+    def clean_email(self):
+        userid1 = self.cleaned_data['email']
+        if ' ' in email:
+            raise forms.ValidationError('Email should not contain any space')
+        if '　' in email:
+            raise forms.ValidationError('Email should not contain any space')
+        return email
+
+    def clean_password1(self):
+        password1 = self.cleaned_data['password1']
+        if ' ' in password1:
+            raise forms.ValidationError(
+                'Password should not contain any space')
+        return password1
+
     def save(self, post, s_c, commit=True):
         user = super(Create_UserInfo_Form, self).save(commit=False)
         user.userid = post["userid"]
@@ -51,6 +74,24 @@ class Create_Shop_Form(forms.ModelForm):
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
 
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if ' ' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        if '　' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        return name
+
+    def clean_online_address(self):
+        address = self.cleaned_data['online_address']
+        if ' ' in address:
+            raise forms.ValidationError(
+                'OnlineAddress should not contain any space')
+        if '　' in address:
+            raise forms.ValidationError(
+                'OnlineAddress should not contain any space')
+        return address
+
     def save(self, post, file, user, commit=True):
         profile = super(Create_Shop_Form, self).save(commit=False)
         profile.name = post["name"]
@@ -80,6 +121,14 @@ class Create_Cus_Form(forms.ModelForm):
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if ' ' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        if '　' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        return name
 
     def save(self, post, file, user, commit=True):
         profile = super(Create_Cus_Form, self).save(commit=False)
@@ -122,6 +171,24 @@ class Create_Event_Form(forms.ModelForm):
     questionnaire_url = forms.CharField(label='URL', max_length=500, widget=forms.TextInput(
         attrs={'placeholder': 'アンケート用のURLを入力してください', 'class': 'form-control'}))
 
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if ' ' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        if '　' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        return name
+
+    def clean_online_address(self):
+        questionnaire_url = self.cleaned_data['questionnaire_url']
+        if ' ' in questionnaire_url:
+            raise forms.ValidationError(
+                'questionnaire_url should not contain any space')
+        if '　' in questionnaire_url:
+            raise forms.ValidationError(
+                'questionnaire_url should not contain any space')
+        return questionnaire_url
+
     def save(self, post, file, user, commit=True):
         event = super(Create_Event_Form, self).save(commit=False)
         event.title = post["title"]
@@ -143,6 +210,22 @@ class Change_UserInfo_Form(forms.ModelForm):
         attrs={'placeholder': '利用者IDを入力してください', 'class': 'form-control'}))
     email = forms.EmailField(max_length=255, label='EMAIL', required=True)
     is_save = False
+
+    def clean_userid(self):
+        userid1 = self.cleaned_data['userid']
+        if ' ' in userid:
+            raise forms.ValidationError('Userid should not contain any space')
+        if '　' in userid:
+            raise forms.ValidationError('Userid should not contain any space')
+        return userid
+
+    def clean_email(self):
+        userid1 = self.cleaned_data['email']
+        if ' ' in email:
+            raise forms.ValidationError('Email should not contain any space')
+        if '　' in email:
+            raise forms.ValidationError('Email should not contain any space')
+        return email
 
     def save(self, post, user, commit=True):
         if user.userid == post["userid"]:
@@ -168,6 +251,24 @@ class Change_Shop_Form(forms.ModelForm):
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if ' ' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        if '　' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        return name
+
+    def clean_online_address(self):
+        address = self.cleaned_data['online_address']
+        if ' ' in address:
+            raise forms.ValidationError(
+                'OnlineAddress should not contain any space')
+        if '　' in address:
+            raise forms.ValidationError(
+                'OnlineAddress should not contain any space')
+        return address
 
     def save(self, post, file, user, profile, commit=True):
         profile.name = post["name"]
@@ -199,6 +300,14 @@ class Change_Cus_Form(forms.ModelForm):
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if ' ' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        if '　' in name:
+            raise forms.ValidationError('Name should not contain any space')
+        return name
 
     def save(self, post, file, user, profile, commit=True):
         profile.name = post["name"]

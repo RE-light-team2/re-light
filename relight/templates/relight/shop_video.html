@@ -30,10 +30,10 @@
     <div class="video-info">
         <h2>SkyWay Video Chat</h2>
 
-        <div hidden id="my-id">{{auth_user.name}}_{{event.title}}</div>
+        <div hidden id="my-id">{{auth_user.name}}{{event.title}}</div>
         <p>Share this id with others so they can call you.</p>
         <h3>Make a call</h3>
-        <div hidden id="callto-id">{{auth_user.name}}_{{event.title}}</div>
+        <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
         <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">御社のショッピングサイトへ</button></a>
         <form id="end-call" class="info-form">
             <p>Currently in call with <span id="their-id">...</span></p>
@@ -46,7 +46,8 @@
     <br/>
     <input id="chat-message-input" type="text" size="100"/><br/>
     <input id="chat-message-submit" type="button" value="Send"/>
-    <div id="messages"></div>
+    <div id="cus_messages"></div>
+    <div id="shop_messages"></div>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>

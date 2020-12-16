@@ -28,15 +28,16 @@ navigator.mediaDevices.getUserMedia({
         return;
     });
 
-peer = new Peer($('#my-id').text(), {
+peer = new Peer($('#my-id').val(), {
     key: '0dd47d22-8623-4292-84b2-8a7b3b800889',
     debug: 3
 });
 
 function onRecvMessage(data) {
     // 画面に受信したメッセージを表示
-    var name = ($('#callto-id').text()).split("_");
-    $("#messages").append($("<p>").text(name[0] + ": " + data).css("font-weight", "bold"));
+    var event = $('#event_name').val(); 
+    var name = (call.remoteId).replace(event,"");
+    $("#shop_messages").append($("<p>").text(name + ": " + data).css("font-weight", "bold"));
 }
 
 peer.on('connection', function(connection){
@@ -113,13 +114,14 @@ $("#chat-message-submit").click(function() {
         // 送信
         conn.send(message);
 
-        var name = (peer.id).split('_');
+        var event = $('#event_name').val(); 
+        var name = (peer.id).replace(event,"");
  
         // 自分の画面に表示
-        $("#messages").append($("<p>").html(name[0] + ": " + message));
+        $("#cus_messages").append($("<p>").html(name + ": " + message));
  
         // 送信テキストボックスをクリア
-        $("#message").val("");
+        $("#chat-message-input").val("");
     });
 
 $('#end-call').click(function () {
