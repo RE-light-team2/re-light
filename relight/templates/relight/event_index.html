@@ -61,7 +61,7 @@
             <li>
                 {{ event.created_at }}
                 {{ event.title }}
-                <a href="{% url 'event_detail' event.title %}">詳細</a>
+                <a href="{% url 'detail' event.title %}">詳細</a>
             </li>
         </ul>
         {% endfor %}
