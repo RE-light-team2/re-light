@@ -12,3 +12,5 @@ DATABASES = {
 }
 
 DEBUG = True
+
+# local環境用のテストに必要なセッティングかも
