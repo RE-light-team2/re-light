@@ -207,6 +207,7 @@ def create_event(request):
             print('user_login is_valid')
             event_ins = form.save(
                 request.POST, request.FILES, user, commit=False)
+            event_ins.save()
             ev_detail = '/event/' + event_ins.title
             return redirect(ev_detail)
 
