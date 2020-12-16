@@ -1,5 +1,5 @@
 /media
-__pycache__
+*.pyc
 db.sqlite3
 .DS_Store
 local_settings.py
