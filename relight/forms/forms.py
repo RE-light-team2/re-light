@@ -21,7 +21,7 @@ class Create_UserInfo_Form(UserCreationForm):
     email = forms.EmailField(max_length=255, label='EMAIL', required=True)
 
     def clean_userid(self):
-        userid1 = self.cleaned_data['userid']
+        userid = self.cleaned_data['userid']
         if ' ' in userid:
             raise forms.ValidationError('Userid should not contain any space')
         if '　' in userid:
@@ -29,7 +29,7 @@ class Create_UserInfo_Form(UserCreationForm):
         return userid
 
     def clean_email(self):
-        userid1 = self.cleaned_data['email']
+        email = self.cleaned_data['email']
         if ' ' in email:
             raise forms.ValidationError('Email should not contain any space')
         if '　' in email:
@@ -173,11 +173,11 @@ class Create_Event_Form(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data['title']
-        if ' ' in name:
+        if ' ' in title:
             raise forms.ValidationError('Name should not contain any space')
-        if '　' in name:
+        if '　' in title:
             raise forms.ValidationError('Name should not contain any space')
-        return name
+        return title
 
     def clean_online_address(self):
         questionnaire_url = self.cleaned_data['questionnaire_url']
@@ -212,7 +212,7 @@ class Change_UserInfo_Form(forms.ModelForm):
     is_save = False
 
     def clean_userid(self):
-        userid1 = self.cleaned_data['userid']
+        userid = self.cleaned_data['userid']
         if ' ' in userid:
             raise forms.ValidationError('Userid should not contain any space')
         if '　' in userid:
@@ -220,7 +220,7 @@ class Change_UserInfo_Form(forms.ModelForm):
         return userid
 
     def clean_email(self):
-        userid1 = self.cleaned_data['email']
+        email = self.cleaned_data['email']
         if ' ' in email:
             raise forms.ValidationError('Email should not contain any space')
         if '　' in email:
