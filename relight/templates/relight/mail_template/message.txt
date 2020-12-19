@@ -4,4 +4,4 @@
 まだ会員登録手続きは完了しておりませんので、ご注意ください。
 
 本登録用URL
-{{ protocol}}://{{ domain }}{% url 'user_create_complete' token %}
+{{ protocol}}://{{ domain }}{% url 'relight:user_create_complete' token %}
