@@ -3,7 +3,7 @@
 
 下記URLよりサイトにアクセスの上、新しいパスワードの登録をお願いいたします。
 
-本登録用URL
+新パスワード登録用URL
 
 {{ protocol }}://{{ domain }}{% url 'relight:password_reset_confirm' uidb64=uid token=token %}
 
