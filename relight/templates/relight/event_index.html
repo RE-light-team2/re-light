@@ -15,11 +15,11 @@
         </div>
         <div class="flex">
           <ul class="header">
-            <li><a href="{% url 'profile' %}">マイページ</a></li>
-            <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
+            <li><a href="{% url 'relight:profile' %}">マイページ</a></li>
+            <li class="Rmenu"><a href="{% url 'relight:create_account' %}">新規会員登録</a></li>
           </ul>
           <ul class="logoH">
-            <li><a href="{% url 'about' %}">About RE light</a></li>
+            <li><a href="{% url 'relight:about' %}">About RE light</a></li>
           </ul>
         </div>
       </header>
@@ -31,11 +31,11 @@
           </div>
           <br>
           <ul>
-            <li><a href="{% url 'top' %}">TOP</a></li>
-            <li><a href="{% url 'shop_index' %}">SHOP</a></li>
-            <li><a href="{% url 'event_index' %}">EVENT</a></li>
-            <li><a href="{% url 'login' %}">LOGIN</a></li>
-            <li><a href="{% url 'logout' %}">SIGN UP</a></li>
+            <li><a href="{% url 'relight:top' %}">TOP</a></li>
+            <li><a href="{% url 'relight:shop_index' %}">SHOP</a></li>
+            <li><a href="{% url 'relight:event_index' %}">EVENT</a></li>
+            <li><a href="{% url 'relight:login' %}">LOGIN</a></li>
+            <li><a href="{% url 'relight:logout' %}">SIGN UP</a></li>
           </ul>
     
         </nav>
@@ -48,11 +48,11 @@
         <div class="user_profile">
           <p>{{ profile.name }}</p>
           <img src="{{ profile.icons.url }}" width="200">
-          <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィール</a></p>
+          <p><a href="{% url 'relight:profile' %}" class="user_prof">あなたのプロフィール</a></p>
         </div>
         <div class="event">
         <h1>イベント一覧</h1>
-        <form method="GET" action="{% url 'event_searched' %}">
+        <form method="GET" action="{% url 'relight:event_searched' %}">
             <input type="text" name="keyword">
             <button type="submit">検索</button>
         </form>
@@ -61,18 +61,18 @@
             <li>
                 {{ event.created_at }}
                 {{ event.title }}
-                <a href="{% url 'detail' event.title %}">詳細</a>
+                <a href="{% url 'relight:detail' event.title %}">詳細</a>
             </li>
         </ul>
         {% endfor %}
       </div>
       </div>
 
-        <button class="white trans submit" type="button"><a href="{% url 'shop_index' %}">ショップ一覧へ</a></button>      
-        <button class="white trans submit" type="button"><a href="{% url 'logout' %}">ログアウトする</a></button>     
+        <button class="white trans submit" type="button"><a href="{% url 'relight:shop_index' %}">ショップ一覧へ</a></button>      
+        <button class="white trans submit" type="button"><a href="{% url 'relight:logout' %}">ログアウトする</a></button>     
     <footer>
     <br>
-    <a href="{% url 'privacy' %}">プライバシーポリシー</a>
+    <a href="{% url 'relight:privacy' %}">プライバシーポリシー</a>
     <p>©RElight, 2020</p>
   </footer>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

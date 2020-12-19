@@ -2,7 +2,8 @@ from django.conf import settings
 from django.shortcuts import render, loader, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LogoutView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from relight.models import UserInfo, Shop_Profile, Cus_Profile, Event
 from relight.forms.forms import Create_UserInfo_Form, Create_Cus_Form, LoginForm, Create_Shop_Form, Create_Event_Form, Change_UserInfo_Form, Change_Cus_Form, Change_Shop_Form
@@ -16,6 +17,11 @@ from django.contrib import messages
 from django.db.models import Q
 from functools import reduce
 from operator import and_
+from django.urls import reverse_lazy
+from django.core.mail import send_mail, BadHeaderError
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
 # Create your views here.
 
 
@@ -53,8 +59,7 @@ def create_customer(request):
                     'token': dumps(user.pk),
                     'prof': prof,
                 }
-                subject = render_to_string(
-                    'relight/mail_template/subject.txt', mail_context)
+                subject = "RE-light一般ユーザー登録のためのメール"
                 message = render_to_string(
                     'relight/mail_template/message.txt', mail_context)
                 user.email_user(subject, message)
@@ -93,8 +98,7 @@ def create_shop(request):
                     'token': dumps(user.pk),
                     'prof': prof,
                 }
-                subject = render_to_string(
-                    'relight/mail_template/subject.txt', mail_context)
+                subject = "RE-light企業ユーザー登録のためのメール"
                 message = render_to_string(
                     'relight/mail_template/message.txt', mail_context)
                 user.email_user(subject, message)
@@ -470,3 +474,50 @@ def shop_searched(request):
     }
     template = loader.get_template('relight/shop_searched.html')
     return HttpResponse(template.render(context, request))
+
+
+def password_reset_request(request):
+    if request.method == "POST":
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = UserInfo.objects.filter(Q(email=data))
+            if associated_users.exists():
+                for user in associated_users:
+                    email_template_name = "relight/mail_template/reset_message.txt"
+                    subject = "RE-lightパスワードリセットのためのメール"
+                    current_site = get_current_site(request)
+                    domain = current_site.domain
+                    c = {
+                        "email": user.email,
+                        'domain': domain,
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "user": user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': request.scheme,
+                    }
+                    message = render_to_string(email_template_name, c)
+                    try:
+                        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
+                                  [user.email], fail_silently=False)
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found.')
+                    return redirect("/password_reset/done/")
+    password_reset_form = PasswordResetForm()
+    return render(request=request, template_name="relight/password_reset.html", context={"password_reset_form": password_reset_form})
+
+
+class PasswordResetDone(PasswordResetDoneView):
+    """パスワード変更用URLを送りましたページ"""
+    template_name = 'relight/password_reset_done.html'
+
+
+class PasswordResetConfirm(PasswordResetConfirmView):
+    """新パスワード入力ページ"""
+    success_url = reverse_lazy('relight:password_reset_complete')
+    template_name = 'relight/password_reset_confirm.html'
+
+
+class PasswordResetComplete(PasswordResetCompleteView):
+    """新パスワード設定しましたページ"""
+    template_name = 'relight/password_reset_complete.html'

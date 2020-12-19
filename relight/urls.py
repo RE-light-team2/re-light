@@ -3,6 +3,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from .import views
 
+app_name = "relight"
+
 urlpatterns = [
     path('', views.top, name='top'),
     path('login/', views.Login, name='login'),
@@ -28,6 +30,14 @@ urlpatterns = [
     path('create_event', views.create_event, name='create_event'),
     path('event_searched', views.event_searched, name='event_searched'),
     path('shop_searched', views.shop_searched, name='shop_searched'),
+    path('password_reset/', views.password_reset_request,
+         name='password_reset'),  # 追加
+    path('password_reset/done/', views.PasswordResetDone.as_view(),
+         name='password_reset_done'),  # 追加
+    path('reset/<uidb64>/<token>/', views.PasswordResetConfirm.as_view(),
+         name='password_reset_confirm'),  # 追加
+    path('reset/done/', views.PasswordResetComplete.as_view(),
+         name='password_reset_complete'),  # 追加
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

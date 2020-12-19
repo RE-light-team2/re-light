@@ -20,14 +20,14 @@
         <img src="{{ shop_profile.headers.url }}" width="200"> 
         </div>
         <h1>Self_introduction : {{ shop_profile.self_introduction }}</h1>
-        <button type="button"><a href="{% url 'event_index' %}">イベント一覧ページへ</a></button>
+        <button type="button"><a href="{% url 'relight:event_index' %}">イベント一覧ページへ</a></button>
         <h1>{{ shop_profile.name }}さんが作成したイベント一覧</h1>          
           {% for event in events %}
           <div class="event_title">
-            <p><a href="{% url 'detail' event.title %}" class="title">{{event.title}}</a></p>
+            <p><a href="{% url 'relight:detail' event.title %}" class="title">{{event.title}}</a></p>
           </div>
           {% endfor %}  
-      <button type="button"><a href="{% url 'logout' %}">ログアウトする</a></button> 
+      <button type="button"><a href="{% url 'relight:logout' %}">ログアウトする</a></button> 
       </div>
     </body>
 </html>

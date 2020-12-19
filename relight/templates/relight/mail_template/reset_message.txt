@@ -1,0 +1,15 @@
+{% autoescape off %}
+{{ user.email }} 様 あなたのアカウントでパスワードリセットがリクエストされました。
+
+下記URLよりサイトにアクセスの上、新しいパスワードの登録をお願いいたします。
+
+本登録用URL
+
+{{ protocol }}://{{ domain }}{% url 'relight:password_reset_confirm' uidb64=uid token=token %}
+
+このリンクは一度しか使えません。 もし、もう一度リセットページに飛びたい場合は,
+{{ protocol }}://{{domain}}こちらにアクセスしもう一度リセットのメールを送ってください。
+
+RE-light公式より
+
+{% endautoescape %}

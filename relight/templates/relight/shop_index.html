@@ -10,10 +10,10 @@
           <h1>プロフィール</h1>
           <p>{{ profile.name }}</p>
           <img src="{{ profile.icons.url }}" width="200">
-          <p><a href="{% url 'profile' %}" class="user_prof">あなたのプロフィールページへ</a></p>
+          <p><a href="{% url 'relight:profile' %}" class="user_prof">あなたのプロフィールページへ</a></p>
         </div>
         <h1>ショップ一覧</h1>
-        <form method="GET" action="{% url 'shop_searched' %}">
+        <form method="GET" action="{% url 'relight:shop_searched' %}">
             <input type="text" name="keyword">
             <button type="submit">検索</button>
         </form>
@@ -22,11 +22,11 @@
         <ul>
             <li>
                 {{ shop.name }}
-                <a href="{% url 'shop_profile' shop.name %}">詳細</a>
+                <a href="{% url 'relight:shop_profile' shop.name %}">詳細</a>
             </li>
         </ul>  
         {% endfor %}
         </div>
-        <button type="button"><a href="{% url 'logout' %}">ログアウトする</a></button>     
+        <button type="button"><a href="{% url 'relight:logout' %}">ログアウトする</a></button>     
     </body>
 </html>

@@ -19,11 +19,11 @@
     </div>
     <div class="flex">
       <ul class="header">
-        <li><a href="{% url 'profile' %}">マイページ</a></li>
-        <li class="Rmenu"><a href="{% url 'create_account' %}">新規会員登録</a></li>
+        <li><a href="{% url 'relight:profile' %}">マイページ</a></li>
+        <li class="Rmenu"><a href="{% url 'relight:create_account' %}">新規会員登録</a></li>
       </ul>
       <ul class="logoH">
-        <li><a href="{% url 'about' %}">About RE light</a></li>
+        <li><a href="{% url 'relight:about' %}">About RE light</a></li>
       </ul>
     </div>
   </header>
@@ -31,15 +31,15 @@
   <div id="slideL" class="off">
     <nav>
       <div class="humberger cancel">
-        <button class="hum trans"><img src="{% static 'relight/img/hamburger.png' %}"></button> 
+        <button class="hum trans"><img src="{% static 'relight:relight/img/hamburger.png' %}"></button> 
       </div>
       <br>
       <ul>
-        <li><a href="{% url 'top' %}">TOP</a></li>
-        <li><a href="{% url 'shop_index' %}">SHOP</a></li>
-        <li><a href="{% url 'event_index' %}">EVENT</a></li>
-        <li><a href="{% url 'login' %}">LOGIN</a></li>
-        <li><a href="{% url 'logout' %}">SIGN UP</a></li>
+        <li><a href="{% url 'relight:top' %}">TOP</a></li>
+        <li><a href="{% url 'relight:shop_index' %}">SHOP</a></li>
+        <li><a href="{% url 'relight:event_index' %}">EVENT</a></li>
+        <li><a href="{% url 'relight:login' %}">LOGIN</a></li>
+        <li><a href="{% url 'relight:logout' %}">SIGN UP</a></li>
       </ul>
 
     </nav>
@@ -90,10 +90,10 @@
     {% endfor %}
     {% endif %}
   </div>
-  <a href="{% url 'profile' %}">プロフィールページに戻る</a>
+  <a href="{% url 'relight:profile' %}">プロフィールページに戻る</a>
   <footer>
     <br>
-    <a href="{% url 'privacy' %}">プライバシーポリシー</a>
+    <a href="{% url 'relight:privacy' %}">プライバシーポリシー</a>
     <p>©RElight, 2020</p>
   </footer>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
