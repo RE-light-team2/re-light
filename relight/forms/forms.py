@@ -45,8 +45,8 @@ class Create_UserInfo_Form(UserCreationForm):
 
     def save(self, post, s_c, commit=True):
         user = super(Create_UserInfo_Form, self).save(commit=False)
-        user.userid = post["userid"]
-        user.email = post["email"]
+        user.userid = (post["userid"]).strip()
+        user.email = (post["email"]).strip()
         if s_c == "shop":
             user.s_or_c = "shop"
         else:
@@ -94,11 +94,11 @@ class Create_Shop_Form(forms.ModelForm):
 
     def save(self, post, file, user, commit=True):
         profile = super(Create_Shop_Form, self).save(commit=False)
-        profile.name = post["name"]
+        profile.name = (post["name"]).strip()
         profile.icons = file["icons"]
         profile.headers = file["headers"]
         profile.self_introduction = post["self_introduction"]
-        profile.online_address = post["online_address"]
+        profile.online_address = (post["online_address"]).strip()
         profile.plan = post["plan"]
         profile.shop = user
         if commit:
@@ -132,7 +132,7 @@ class Create_Cus_Form(forms.ModelForm):
 
     def save(self, post, file, user, commit=True):
         profile = super(Create_Cus_Form, self).save(commit=False)
-        profile.name = post["name"]
+        profile.name = (post["name"]).strip()
         profile.icons = file["icons"]
         profile.headers = file["headers"]
         profile.self_introduction = post["self_introduction"]
@@ -191,10 +191,9 @@ class Create_Event_Form(forms.ModelForm):
 
     def save(self, post, file, user, commit=True):
         event = super(Create_Event_Form, self).save(commit=False)
-        event.title = post["title"]
+        event.title = (post["title"]).strip()
         event.detail = post["detail"]
         event.image = file["image"]
-        event.detail = self.cleaned_data["detail"]
         event.user = user
         if commit:
             event.save()
@@ -229,9 +228,9 @@ class Change_UserInfo_Form(forms.ModelForm):
 
     def save(self, post, user, commit=True):
         if user.userid == post["userid"]:
-            user.userid = post["userid"]
+            user.userid = (post["userid"]).strip()
         if user.userid == post["email"]:
-            user.email = post["email"]
+            user.email = (post["email"]).strip()
         if commit:
             user.save()
         return user
@@ -271,7 +270,7 @@ class Change_Shop_Form(forms.ModelForm):
         return address
 
     def save(self, post, file, user, profile, commit=True):
-        profile.name = post["name"]
+        profile.name = (post["name"]).strip()
         if file:
             if 'icons' in file:
                 profile.icons = file["icons"]
@@ -310,7 +309,7 @@ class Change_Cus_Form(forms.ModelForm):
         return name
 
     def save(self, post, file, user, profile, commit=True):
-        profile.name = post["name"]
+        profile.name = (post["name"]).strip()
         if file:
             if 'icons' in file:
                 profile.icons = file["icons"]
@@ -322,3 +321,45 @@ class Change_Cus_Form(forms.ModelForm):
         if commit:
             profile.save()
         return profile
+
+
+class Change_Event_Form(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ("title", "detail", "questionnaire_url", "image")
+
+    image = forms.ImageField(required=False)
+    title = forms.CharField(label='TITLE', max_length=256, widget=forms.TextInput(
+        attrs={'placeholder': 'タイトルを入力してください', 'class': 'form-control'}))
+    detail = forms.CharField(label='DETAIL',  max_length=1000, widget=forms.Textarea(
+        attrs={'rows': 5, 'class': 'form-control'}))
+    questionnaire_url = forms.CharField(label='URL', max_length=500, widget=forms.TextInput(
+        attrs={'placeholder': 'アンケート用のURLを入力してください', 'class': 'form-control'}))
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if ' ' in title:
+            raise forms.ValidationError('Name should not contain any space')
+        if '　' in title:
+            raise forms.ValidationError('Name should not contain any space')
+        return title
+
+    def clean_online_address(self):
+        questionnaire_url = self.cleaned_data['questionnaire_url']
+        if ' ' in questionnaire_url:
+            raise forms.ValidationError(
+                'questionnaire_url should not contain any space')
+        if '　' in questionnaire_url:
+            raise forms.ValidationError(
+                'questionnaire_url should not contain any space')
+        return questionnaire_url
+
+    def save(self, post, file, event, commit=True):
+        event.title = (post["title"]).strip()
+        event.detail = post["detail"]
+        if file:
+            if 'image' in file:
+                event.image = file["image"]
+        if commit:
+            event.save()
+        return event

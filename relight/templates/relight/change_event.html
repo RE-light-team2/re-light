@@ -1,0 +1,108 @@
+{% load static %}
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <title>RElight</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
+</head>
+
+<body>
+  <header>
+
+    <div class="humberger">
+
+      <button class="hum trans"><img src="{% static 'relight/img/hamburger.png' %}"></button>
+
+    </div>
+    <div class="flex">
+      <ul class="header">
+        <li><a href="{% url 'relight:profile' %}">マイページ</a></li>
+        <li class="Rmenu"><a href="{% url 'relight:create_account' %}">新規会員登録</a></li>
+      </ul>
+      <ul class="logoH">
+        <li><a href="{% url 'relight:about' %}">About RE light</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div id="slideL" class="off">
+    <nav>
+      <div class="humberger cancel">
+        <button class="hum trans"><img src="{% static 'relight:relight/img/hamburger.png' %}"></button> 
+      </div>
+      <br>
+      <ul>
+        <li><a href="{% url 'relight:top' %}">TOP</a></li>
+        <li><a href="{% url 'relight:shop_index' %}">SHOP</a></li>
+        <li><a href="{% url 'relight:event_index' %}">EVENT</a></li>
+        <li><a href="{% url 'relight:login' %}">LOGIN</a></li>
+        <li><a href="{% url 'relight:logout' %}">SIGN UP</a></li>
+      </ul>
+
+    </nav>
+  </div>
+
+  <div class="headI">
+    <img src="{{ profile.headers.url }}" width="200">
+    header area ↑
+  </div>
+
+  <h1>イベント内容を変更</h1>
+  <form id="new_user" enctype="multipart/form-data" accept-charset="UTF-8" method="POST">
+    <div class="square">
+      {% csrf_token %}
+      <div class="form-group">
+        <label>タイトル : </label>
+        {{ form.title }}
+      </div>
+      <div class="former-image">
+        <label>前の画像</label>
+        <img src="{{ event.img.url }}" width="200">
+      </div>
+      <div class="form-group">
+        <label>アイコン : </label>
+        {{ form.image }}
+      </div>
+      <div class="form-group">
+        <label>詳細 : </label>
+        {{ form.detail }}
+      </div>
+      <div class="form-group">
+        <label>事前アンケートURL(任意) : </label>
+        {{ form.questionnaire_url }}
+      </div>
+    </div>
+
+    <button class="white trans submit" type="submit" value="create">登録</button>
+  </form>
+  <div class="form-error">
+    {% if form.errors %}
+    {% for field in form %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+  <a href="{% url 'relight:profile' %}">プロフィールページに戻る</a>
+  <footer>
+    <br>
+    <a href="{% url 'relight:privacy' %}">プライバシーポリシー</a>
+    <p>©RElight, 2020</p>
+  </footer>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="{% static 'relight/js/query.js' %}"></script>
+  
+</body>
+
+</html>

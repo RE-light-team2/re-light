@@ -6,7 +6,7 @@ from django.contrib.auth.views import LogoutView, PasswordResetDoneView, Passwor
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from relight.models import UserInfo, Shop_Profile, Cus_Profile, Event
-from relight.forms.forms import Create_UserInfo_Form, Create_Cus_Form, LoginForm, Create_Shop_Form, Create_Event_Form, Change_UserInfo_Form, Change_Cus_Form, Change_Shop_Form
+from relight.forms.forms import Create_UserInfo_Form, Create_Cus_Form, LoginForm, Create_Shop_Form, Create_Event_Form, Change_UserInfo_Form, Change_Cus_Form, Change_Shop_Form, Change_Event_Form
 from django.contrib.auth import authenticate, login
 from django.views import View, generic
 from django.core.signing import BadSignature, SignatureExpired, dumps, loads
@@ -521,3 +521,64 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 class PasswordResetComplete(PasswordResetCompleteView):
     """新パスワード設定しましたページ"""
     template_name = 'relight/password_reset_complete.html'
+
+
+def change_event(request, event_title):
+    user = request.user
+    event = Event.objects.get(title=event_title)
+    if user.s_or_c == "cus":
+        profile = Cus_Profile.objects.get(cus=user.id)
+    else:
+        profile = Shop_Profile.objects.get(shop=user.id)
+
+    if request.method == 'GET':
+        initial_event = {
+            'title': event_title,
+            'detail': event.detail,
+            'questionnaire_url': event.questionnaire_url,
+        }
+        form = Change_Event_Form(initial=initial_event)
+
+    else:
+        form = Change_Event_Form(request.POST, instance=event)
+
+        if form.is_valid():
+            event_changed = form.save(
+                request.POST, request.FILES or None, event, commit=False)
+            event_changed.save()
+            url = '/event/'+event_changed.title
+            return redirect(url)
+        else:
+            print('user_regist false is_valid')
+
+    template = loader.get_template('relight/change_event.html')
+    context = {
+        'event': event,
+        'form': form,
+        'user': user,
+        'profile': profile,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def delete_event(request, event_title):
+    user = request.user
+    event = Event.objects.get(title=event_title)
+    if user.s_or_c == "cus":
+        profile = Cus_Profile.objects.get(cus=user.id)
+    else:
+        profile = Shop_Profile.objects.get(shop=user.id)
+
+    if request.method == 'POST':
+        if 'yes' in request.POST:
+            event.delete()
+        else:
+            return redirect('/profile')
+        return redirect('/profile')
+    template = loader.get_template('relight/delete_event.html')
+    context = {
+        'event': event,
+        'user': user,
+        'profile': profile,
+    }
+    return HttpResponse(template.render(context, request))
