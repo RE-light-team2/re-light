@@ -122,6 +122,7 @@ def delete_event(request, event_title):
 
     if request.method == 'POST':
         if 'yes' in request.POST:
+            print("delete")
             event.delete()
         else:
             return redirect('/profile')

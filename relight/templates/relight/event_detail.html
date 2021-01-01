@@ -74,13 +74,15 @@
         </span>
       </div>
       <span>
-        {% ifequal user.id event.user.id %}
+        {% if user.id == event.user.id %}
         <button class="call yellow trans submit" type="button"><a
             href="{% url 'relight:shop_video' event.title %}">ビデオ通話</a></button>
+        {% elif user.id != event.user.id and event.active %}
+        <h2>この部屋は現在使用中です</h2>
         {% else %}
         <button class="call yellow trans submit" type="button"><a
             href="{% url 'relight:cus_video' event.title %}">ビデオ通話</a></button>
-        {% endifequal %}
+        {% endif %}
       </span>
     </div>
   </div>

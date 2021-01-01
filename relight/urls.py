@@ -18,6 +18,7 @@ urlpatterns = [
     path('about', index.about, name='about'),
     path('cus_video/<str:event_title>', detail.cus_video, name='cus_video'),
     path('shop_video/<str:event_title>', detail.shop_video, name='shop_video'),
+    path('ajax/<str:cus_name>', detail.ajax, name='ajax'),
     path('event_index', index.event_index, name='event_index'),
     path('shop_index', index.shop_index, name='shop_index'),
     path('shop_profile/<str:shop_name>',

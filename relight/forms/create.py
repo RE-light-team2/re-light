@@ -61,8 +61,8 @@ class Create_Shop_Form(forms.ModelForm):
                   'online_address', 'self_introduction']
     name = forms.CharField(label='NAME', max_length=30, widget=forms.TextInput(
         attrs={'placeholder': '名前を入力してください', 'class': 'form-control'}))
-    icons = forms.ImageField()
-    headers = forms.ImageField()
+    icons = forms.ImageField(required=False)
+    headers = forms.ImageField(required=False)
     error_message = 'error'
     online_address = forms.URLField()
     PLAN = [('Light Plan', 'ライトプラン'), ('Basic Plan',
@@ -111,8 +111,8 @@ class Create_Cus_Form(forms.ModelForm):
 
     name = forms.CharField(label='NAME', max_length=30, widget=forms.TextInput(
         attrs={'placeholder': '名前を入力してください', 'class': 'form-control'}))
-    icons = forms.ImageField()
-    headers = forms.ImageField()
+    icons = forms.ImageField(required=False)
+    headers = forms.ImageField(required=False)
     error_message = 'error'
     GENDER = [('man', '男性'), ('woman', '女性'), ('No', '未回答')]
     gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
@@ -151,7 +151,7 @@ class Create_Event_Form(forms.ModelForm):
         attrs={'placeholder': 'タイトルを入力してください', 'class': 'form-control'}))
     detail = forms.CharField(label='DETAIL',  max_length=1000, widget=forms.Textarea(
         attrs={'rows': 5, 'class': 'form-control'}))
-    questionnaire_url = forms.CharField(label='URL', max_length=500, widget=forms.TextInput(
+    questionnaire_url = forms.CharField(required=False, label='URL', max_length=500, widget=forms.TextInput(
         attrs={'placeholder': 'アンケート用のURLを入力してください', 'class': 'form-control'}))
 
     def clean_title(self):

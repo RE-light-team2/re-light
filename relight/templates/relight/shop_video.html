@@ -29,16 +29,14 @@
     <!-- Steps -->
     <div class="video-info">
         <h2>SkyWay Video Chat</h2>
-
         <div hidden id="my-id">{{auth_user.name}}{{event.title}}</div>
         <p>Share this id with others so they can call you.</p>
         <h3>Make a call</h3>
         <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
         <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">御社のショッピングサイトへ</button></a>
-        <form id="end-call" class="info-form">
-            <p>Currently in call with <span id="their-id">...</span></p>
-            <button href="#" type="submit">End Call</button>
-        </form>
+        <p>Currently in call with <span id="their-id">...</span></p>
+        <button href="#" id="end-call" type="button">End Call</button>
+        <form hidden action="{% url 'relight:shop_video' event.title %}" name="form1"></form>
     </div>
 </div>
 <h3>Chat</h3>
@@ -48,8 +46,11 @@
     <input id="chat-message-submit" type="button" value="Send"/>
     <div id="cus_messages"></div>
     <div id="shop_messages"></div>
+    <div id="pinned_messages"></div>
+    <div id="cus_profile"></div>
 </div>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
 <script type="text/javascript" src="{% static 'relight/js/shop_video.js' %}"></script>
 </html>

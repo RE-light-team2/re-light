@@ -102,7 +102,9 @@
         {{ form_shop.online_address }}
       </div>
     </div>
-    <button class="white trans submit" type="submit" value="create">登録</button>
+    <a target="_blank" href="{% url 'relight:privacy' %}">こちらの利用規約をご確認ください</a>
+    <button class="white trans submit" type="submit" value="create">規約に同意して登録</button>
+    <button href="{% url 'relight:top' %}" class="white trans submit" type="button" value="disagree">戻る</button>
   </form>
   <div class="form-error">
     {% if form.errors %}

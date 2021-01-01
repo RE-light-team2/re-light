@@ -24,7 +24,7 @@ def create_customer(request):
         form_user = Create_UserInfo_Form()
     else:
         form_user = Create_UserInfo_Form(request.POST)
-        form_cus = Create_Cus_Form(request.POST, request.FILES)
+        form_cus = Create_Cus_Form(request.POST, request.FILES or None)
         if form_user.is_valid():
             if form_cus.is_valid():
                 print('user_regist is_valid')
@@ -32,7 +32,7 @@ def create_customer(request):
                 user.is_active = False
                 user.save()
                 prof = form_cus.save(
-                    request.POST, request.FILES, user, commit=False)
+                    request.POST, request.FILES or None, user, commit=False)
                 prof.save()
                 current_site = get_current_site(request)
                 domain = current_site.domain
