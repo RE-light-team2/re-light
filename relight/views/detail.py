@@ -5,6 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from relight.models import UserInfo, Shop_Profile, Cus_Profile, Event
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+import json
+from django.http import JsonResponse
+from django.http import QueryDict
 
 
 @login_required
@@ -36,14 +39,13 @@ def event_detail(request, event_title):
         if (user.s_or_c == 'cus'):
             profile = Cus_Profile.objects.get(cus=user.id)
         auth_user = Shop_Profile.objects.get(shop=event.user.id)
-
-    template = loader.get_template('relight/event_detail.html')
     context = {
         'user': user,
         'profile': profile,
         'event': event,
         'auth_user': auth_user,
     }
+    template = loader.get_template('relight/event_detail.html')
     return HttpResponse(template.render(context, request))
 
 
@@ -51,11 +53,25 @@ def event_detail(request, event_title):
 def shop_video(request, event_title):
     event = Event.objects.get(title=event_title)
     auth_user = Shop_Profile.objects.get(shop=event.user.id)
-    template = loader.get_template('relight/shop_video.html')
     context = {
         'event': event,
         'auth_user': auth_user,
     }
+    if request.method == 'POST':
+        print("post")
+        if request.is_ajax:
+            print("post ajax")
+            dic = QueryDict(request.body, encoding='utf-8')
+            value = dic.get('data')
+            if value == 'end':
+                print("post ajax1")
+                event.active = False
+                event.save()
+            else:
+                print("post ajax1")
+                event.active = True
+                event.save()
+    template = loader.get_template('relight/shop_video.html')
     return HttpResponse(template.render(context, request))
 
 
@@ -65,6 +81,25 @@ def cus_video(request, event_title):
     event = Event.objects.get(title=event_title)
     auth_user = Shop_Profile.objects.get(shop=event.user.id)
     profile = Cus_Profile.objects.get(cus=user.id)
+    if request.method == 'POST':
+        print("post")
+        q = QueryDict()
+        print(q)
+        if request.POST == q:
+            dic = QueryDict(request.body, encoding='utf-8')
+            value = dic.get('data')
+            print("post ajax")
+            print(value)
+            if value == 'end':
+                print("post ajax1")
+                event.active = False
+                event.save()
+        else:
+            if request.POST['data'] == 'end':
+                print("post beacon")
+                event.active = False
+                event.save()
+
     template = loader.get_template('relight/cus_video.html')
     context = {
         'profile': profile,
@@ -93,5 +128,15 @@ def shop_profile(request, shop_name):
         'profile': profile,
         'shop': shop,
         'shop_profile': shop_profile,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def ajax(request, cus_name):
+    cus_profile = Cus_Profile.objects.get(name=cus_name)
+    template = loader.get_template('relight/ajax.html')
+    context = {
+        'cus_profile': cus_profile,
     }
     return HttpResponse(template.render(context, request))

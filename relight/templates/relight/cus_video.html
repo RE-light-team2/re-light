@@ -33,13 +33,10 @@
         <p>Share this id with others so they can call you.</p>
         <h3>Make a call</h3>
         <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
-        <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">このお店のショッピングサイトへ</button></a>
-        <form id="make-call" class="info-form">            
-            <button href="#" class="pure-button pure-button-success" type="submit">Call</button>
-        </form>
-        <form id="end-call" class="info-form">
-            <button href="#" type="submit">End Call</button>
-        </form>
+        <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">このお店のショッピングサイトへ</button></a>           
+        <button href="#" id="make-call" class="pure-button pure-button-success" type="button">Call</button>
+        <button href="#" id="end-call" type="button">End Call</button>
+        <form hidden id="end-call" action="{% url 'relight:cus_video' event.title %}" name="form1"></form>
     </div>
     <h3>Chat</h3>
     <div class="form-group">
@@ -50,7 +47,11 @@
     <div id="shop_messages"></div>
 </div>
 </div>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    var csrftoken = '{{ csrf_token }}';
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
 <script type="text/javascript" src="{% static 'relight/js/cus_video.js' %}"></script>
 </html>
