@@ -222,7 +222,6 @@ function setupCallEventHandlers(call){
         pagein();
         $('#end-call').show();
         $('#their-id').text(name); 
-        setTimeout(dojQueryAjax, 1000);
     });
 
     call.on('close', function(){
