@@ -93,6 +93,25 @@ button a{
 button:hover{
     cursor : pointer;
 }
+.circle{
+    justify-content: center;
+}
+.btn{
+    border-radius: 50%;
+    border: solid #FFF55F 3px;
+    justify-content: center;
+    margin:0 10px;
+}
+.btn img{
+    width:50px;
+    padding:10px;
+}
+.btn .active{
+    background-color: #E8FD95;
+}
+.btn .active img{
+    display: none;
+}
 
 a{
     color:black;

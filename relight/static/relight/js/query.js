@@ -21,6 +21,13 @@ $('.hum2').on('click',function(){
   }
 });
 
+$(function(){
+  $('.btn').on('click', function(event){
+      event.preventDefault();
+      $(this).toggleClass('active');
+  });
+});
+
 /*
 $(function() {
 
