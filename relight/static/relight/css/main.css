@@ -133,6 +133,12 @@ a:hover{
     border: solid #FFF55F 5px;
     padding:15px;
 }
+.mini{
+    margin:1px;
+    font-size:20px;
+    width:5%;
+    padding:3px;
+}
 .submit{
     margin:15px;
     font-size:20px;
