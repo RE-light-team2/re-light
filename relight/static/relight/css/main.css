@@ -96,20 +96,20 @@ button:hover{
 .circle{
     justify-content: center;
 }
-.btn{
+.circle button{
     border-radius: 50%;
     border: solid #FFF55F 3px;
     justify-content: center;
     margin:0 10px;
 }
-.btn img{
+.circle button img{
     width:50px;
     padding:10px;
 }
-.btn .active{
+.circle button .active{
     background-color: #E8FD95;
 }
-.btn .active img{
+.circle button .active img{
     display: none;
 }
 
