@@ -5,9 +5,48 @@
     <title>RElight - Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
 </head>
+<body>
+    <header>
+
+        <div class="humberger">
+    
+          <button class="hum trans"><img src="{% static 'relight/img/hamburger.png' %}"></button>
+    
+        </div>
+        <div class="flex">
+          <ul class="header">
+            <li><a href="/">HOME</a></li>
+            <li class="Rmenu"><a href="{% url 'relight:login' %}">ログイン</a></li>
+            <li class="Rmenu"><a href="{% url 'relight:create_account' %}">新規会員登録</a></li>
+          </ul>
+          <ul class="logoH">
+            <li><a href="{% url 'relight:about' %}">About RE light</a></li>
+          </ul>
+        </div>
+      </header>
+    
+      <div id="slideL" class="off">
+        <nav>
+          <div class="humberger cancel">
+    
+            <button class="hum trans"><img src="{% static 'relight/img/hamburger.png' %}"></button>
+      
+          </div>
+          <br>
+          <ul>
+            <li><a href="{% url 'relight:top' %}">TOP</a></li>
+            <li><a href="{% url 'relight:shop_index' %}">SHOP</a></li>
+            <li><a href="{% url 'relight:event_index' %}">EVENT</a></li>
+            <li><a href="{% url 'relight:login' %}">LOGIN</a></li>
+            <li><a href="{% url 'relight:logout' %}">SIGN UP</a></li>
+          </ul>
+    
+        </nav>
+      </div>
 <div class="video-body">
-    <h1 id="event_name">{{event.title}}</h1>
+    <h1 class="title" id="event_name">{{event.title}}</h1>
 
     <!-- Video area -->
     <div class="video" id="video-container">
@@ -15,12 +54,12 @@
         <video id="my-video"></video>
     </div>
     <!-- ビデオ・マイクOFF用ボタン -->
-    <div class="toggle-mute">
-        <button id="js-toggle-camera">Toggle Camera</button>
+    <div class="flex circle toggle-mute">
+        <button class="btn" id="js-toggle-camera"><img src="{% static 'relight/img/video.png' %}"></button>
         <span id="camera-status"></span>
         <br>
       
-        <button id="js-toggle-microphone">Toggle Microphone</button>
+        <button class="btn" id="js-toggle-microphone"><img src="{% static 'relight/img/mic.png' %}"></button>
         <span id="microphone-status"></span>
         <br>
     </div>
@@ -43,14 +82,21 @@
 <div class="form-group">
     <br/>
     <input id="chat-message-input" type="text" size="100"/><br/>
-    <input id="chat-message-submit" type="button" value="Send"/>
+    <input id="chat-message-submit" type="button" value="Send" src="{% static 'relight/img/send.jpg' %}" width="3%"/>
     <div id="cus_messages"></div>
     <div id="shop_messages"></div>
     <div id="pinned_messages"></div>
     <div id="cus_profile"></div>
 </div>
+<footer>
+    <br>
+    <a href="{% url 'relight:privacy' %}">プライバシーポリシー</a>
+    <p>©RElight, 2020</p>
+  </footer>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
-<script type="text/javascript" src="{% static 'relight/js/shop_video.js' %}"></script>
+<script type="text/javascript" src="{% static 'relight/js/shop_video.js' %}"></script>  
+</body>
 </html>
