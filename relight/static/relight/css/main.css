@@ -274,3 +274,13 @@ nav li{
 .event{
     margin-left:150px;
 }
+/* event */
+/* privacy */
+.privacy{
+    text-align: left;
+
+}
+.policybox{
+    width:60vw;
+    margin-left:20vw;
+}
