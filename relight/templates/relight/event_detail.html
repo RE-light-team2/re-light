@@ -3,7 +3,7 @@
 <html lang="ja">
 
 <head>
-  <title>RElight</title>
+  <title>RElight - イベント詳細</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
@@ -56,7 +56,10 @@
       <span class="prof">
         <h1> {{ event.title }}</h1>
         <h3> {{ event.detail }}</h3>
-        <p>Auth Name : {{ auth_user.name }}</p>
+        {% if event.questionnaire_url %}       
+        <a target="_blank" href="{{ event.questionnaire_url }}">事前アンケートでより快適な接客を!!(アカウント名での回答をお願いします)</a> 
+        {% endif %}          
+        <p>お店 : {{ auth_user.name }}</p>
       </span>
     </div><br>
 

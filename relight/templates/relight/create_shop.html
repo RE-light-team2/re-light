@@ -3,7 +3,7 @@
 <html lang="ja">
 
 <head>
-  <title>RElight</title>
+  <title>RElight - 販売者アカウント</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
@@ -82,7 +82,7 @@
         {{ form_shop.name }}
       </div>
       <div class="form-group">
-        <label>ご希望の料金プラン(途中で変更できます)</label>
+        <label>ご希望の料金プラン(登録後も変更可能)</label>
         {{ form_shop.plan }}
       </div>
       <div class="form-group">
@@ -106,16 +106,32 @@
     <button class="white trans submit" type="submit" value="create">規約に同意して登録</button>
     <button href="{% url 'relight:top' %}" class="white trans submit" type="button" value="disagree">戻る</button>
   </form>
-  <div class="form-error">
-    {% if form.errors %}
-    {% for field in form %}
+  <div class="form-user-error">
+    {% if form_user.errors %}
+    {% for field in form_user %}
     {% for error in field.errors %}
     <div class="alert alert-danger">
       <strong>{{ error|escape }}</strong>
     </div>
     {% endfor %}
     {% endfor %}
-    {% for error in form.non_field_errors %}
+    {% for error in form_user.non_field_errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div class="form-shop-error">
+    {% if form_shop.errors %}
+    {% for field in form_shop %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in form_shop.non_field_errors %}
     <div class="alert alert-danger">
       <strong>{{ error|escape }}</strong>
     </div>

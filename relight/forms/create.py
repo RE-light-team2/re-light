@@ -65,9 +65,10 @@ class Create_Shop_Form(forms.ModelForm):
     headers = forms.ImageField(required=False)
     error_message = 'error'
     online_address = forms.URLField()
-    PLAN = [('Light Plan', 'ライトプラン'), ('Basic Plan',
-                                       'ベーシックプラン'), ('Premium Plan', 'プレミアムプラン')]
-    plan = forms.ChoiceField(choices=PLAN, widget=forms.RadioSelect())
+    PLAN = [('ライトプラン', 'ライトプラン'), ('ベーシックプラン',
+                                   'ベーシックプラン'), ('プレミアムプラン', 'プレミアムプラン')]
+    plan = forms.ChoiceField(choices=PLAN, widget=forms.RadioSelect(
+        attrs={'class': "custom-radio-list"}))
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False
@@ -115,7 +116,8 @@ class Create_Cus_Form(forms.ModelForm):
     headers = forms.ImageField(required=False)
     error_message = 'error'
     GENDER = [('man', '男性'), ('woman', '女性'), ('No', '未回答')]
-    gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
+    gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect(
+        attrs={'class': "custom-radio-list"}))
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False

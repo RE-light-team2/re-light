@@ -10,6 +10,8 @@
 このリンクは一度しか使えません。 もし、もう一度リセットページに飛びたい場合は,
 {{ protocol }}://{{domain}}こちらにアクセスしもう一度リセットのメールを送ってください。
 
-RE-light公式より
+-------------------------------
+Email : remote.enter.relight@gmail.com
+RE-light運営組合より
 
 {% endautoescape %}

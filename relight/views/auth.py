@@ -25,7 +25,6 @@ def Login(request):
     else:
         form = LoginForm(data=request.POST)
         if form.is_valid():
-            print('user_login is_valid')
             userid = form.cleaned_data.get('userid')
             password = form.cleaned_data.get('password')
             user = authenticate(userid=userid, password=password)

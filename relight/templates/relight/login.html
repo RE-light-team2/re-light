@@ -3,7 +3,7 @@
 <html lang="ja">
 
 <head>
-  <title>RElight - Login</title>
+  <title>RElight - ログイン</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
@@ -70,22 +70,6 @@
     <button class="white trans submit" type="submit">ログイン</button>
 
   </form>
-  <div class="form-error">
-    {% if form.errors %}
-    {% for field in form %}
-    {% for error in field.errors %}
-    <div class="alert alert-danger">
-      <strong>{{ error|escape }}</strong>
-    </div>
-    {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-    <div class="alert alert-danger">
-      <strong>{{ error|escape }}</strong>
-    </div>
-    {% endfor %}
-    {% endif %}
-  </div>
   <a href="{% url 'relight:password_reset' %}">パスワードを忘れた方はこちらへ</a>
   <footer>
     <br>

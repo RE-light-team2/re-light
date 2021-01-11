@@ -137,12 +137,10 @@ def UserCreateComplete(request, token):
         user_pk = loads(token, max_age=timeout_seconds)
         # 期限切れ
     except SignatureExpired:
-        print("Error1")
         return HttpResponseBadRequest()
 
         # tokenが間違っている
     except BadSignature:
-        print("Error2")
         return HttpResponseBadRequest()
 
         # tokenは問題なし
@@ -150,14 +148,11 @@ def UserCreateComplete(request, token):
         try:
             user = User.objects.get(pk=user_pk)
         except User.DoesNotExist:
-            print("Error3")
             return HttpResponseBadRequest()
         else:
-            print("Error4")
             if not user.is_active:
                 # 問題なければ本登録とする
                 user.is_active = True
                 user.save()
                 return HttpResponse(template.render(None, request))
-    print("Error5")
     return HttpResponseBadRequest()

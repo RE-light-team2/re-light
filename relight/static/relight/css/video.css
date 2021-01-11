@@ -1,0 +1,65 @@
+#pinned_messages {
+    border: 2px solid yellow;
+    border-radius: 10px;
+    width: 400px;
+    display: inline-block;
+    font-weight: bold;
+    background-color: rgba(235, 235, 148, 0.836);
+}
+
+#your_messages {
+    display: inline-block;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    width: 600px;
+}
+
+#other_messages {
+    display: inline-block;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    width: 600px;
+}
+
+#my-video {
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 800px;
+    float: left;
+    margin: 2px;
+}
+
+#their-video {
+    width: 0px;
+    margin: 2px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#chat-message-input {
+    height: 15px;
+    width: 100%;
+    /*親要素いっぱい広げる*/
+    padding: 10px 15px;
+    /*ボックスを大きくする*/
+    font-size: 16px;
+    border-radius: 3px;
+    /*ボックス角の丸み*/
+    border: 2px solid #ddd;
+    /*枠線*/
+    box-sizing: border-box;
+    /*横幅の解釈をpadding, borderまでとする*/
+    display: inline-block;
+}
+
+button {
+    border-radius: 10px;
+    margin: 5px;
+}
+
+#chat-message-submit {
+    border-radius: 10px;
+    display: inline-block;
+}

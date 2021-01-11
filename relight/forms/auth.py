@@ -14,5 +14,4 @@ class LoginForm(AuthenticationForm):
         super(LoginForm, self).__init__(*args, **kwargs)
         self.fields.pop('username')
         for field in self.fields.values():
-            print(field.widget)
             field.widget.attrs['placeholder'] = field.label
