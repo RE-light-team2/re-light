@@ -3,7 +3,7 @@
 <html lang="ja">
 
 <head>
-  <title>RElight</title>
+  <title>RElight - アカウント情報変更</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
@@ -91,6 +91,8 @@
       <div class="form-group">
         <label>御社のオンラインショッピングサイトのURL</label>
         {{ form_prof.online_address }}
+        <label>料金プラン</label>
+        {{ form_prof.plan }}
       </div>
       {% endifequal %}
       {% ifequal user.s_or_c "cus" %}

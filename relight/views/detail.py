@@ -58,17 +58,13 @@ def shop_video(request, event_title):
         'auth_user': auth_user,
     }
     if request.method == 'POST':
-        print("post")
         if request.is_ajax:
-            print("post ajax")
             dic = QueryDict(request.body, encoding='utf-8')
             value = dic.get('data')
             if value == 'end':
-                print("post ajax1")
                 event.active = False
                 event.save()
             else:
-                print("post ajax1")
                 event.active = True
                 event.save()
     template = loader.get_template('relight/shop_video.html')
@@ -82,21 +78,15 @@ def cus_video(request, event_title):
     auth_user = Shop_Profile.objects.get(shop=event.user.id)
     profile = Cus_Profile.objects.get(cus=user.id)
     if request.method == 'POST':
-        print("post")
         q = QueryDict()
-        print(q)
         if request.POST == q:
             dic = QueryDict(request.body, encoding='utf-8')
             value = dic.get('data')
-            print("post ajax")
-            print(value)
             if value == 'end':
-                print("post ajax1")
                 event.active = False
                 event.save()
         else:
             if request.POST['data'] == 'end':
-                print("post beacon")
                 event.active = False
                 event.save()
 
@@ -135,6 +125,7 @@ def shop_profile(request, shop_name):
 @login_required
 def ajax(request, cus_name):
     cus_profile = Cus_Profile.objects.get(name=cus_name)
+    user = cus_profile.cus
     template = loader.get_template('relight/ajax.html')
     context = {
         'cus_profile': cus_profile,

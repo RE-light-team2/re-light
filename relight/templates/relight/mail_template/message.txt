@@ -5,3 +5,7 @@
 
 本登録用URL
 {{ protocol}}://{{ domain }}{% url 'relight:user_create_complete' token %}
+
+-------------------------------
+Email : remote.enter.relight@gmail.com
+RE-light運営組合より

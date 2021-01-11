@@ -1,79 +1,97 @@
+{% load static %}
 <!doctype html>
 <html lang="ja">
-  <head>
-    <title>RElight</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
-    </head>
-    <body>
-      <header>
 
-        <div class="humberger">
-    
-          <button class="hum trans"><img src="{% static 'relight/img/hamburger.png' %}"></button>
-    
-        </div>
-        <div class="flex">
-          <ul class="header">
-            <li><a href="/">HOME</a></li>
-            <li class="Rmenu"><a href="{% url 'relight:profile' %}">マイページ</a></li>
-            <li class="Rmenu"><a href="{% url 'relight:create_account' %}">新規会員登録</a></li>
-          </ul>
-          <ul class="logoH">
-            <li><a href="{% url 'relight:about' %}">About RE light</a></li>
-          </ul>
-        </div>
-      </header>
-    
-      <div id="slideL" class="off">
-        <nav>
-          <div class="humberger cancel">
-    
-            <button class="hum trans"><img src="{% static 'relight/img/hamburger.png' %}"></button>
-    
-          </div>
-          <br>
-          <ul>
-            <li><a href="{% url 'relight:top' %}">TOP</a></li>
-            <li><a href="{% url 'relight:shop_index' %}">SHOP</a></li>
-            <li><a href="{% url 'relight:event_index' %}">EVENT</a></li>
-            <li><a href="{% url 'relight:login' %}">LOGIN</a></li>
-            <li><a href="{% url 'relight:logout' %}">SIGN UP</a></li>
-          </ul>
-    
-        </nav>
+<head>
+  <title>RElight - プロフィール</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
+</head>
+
+<body>
+  <header>
+
+    <div class="humberger">
+
+      <button class="hum trans"><img src="{% static 'relight/img/hamburger.png' %}"></button>
+
+    </div>
+    <div class="flex">
+      <ul class="header">
+        <li><a href="/">HOME</a></li>
+        <li class="Rmenu"><a href="{% url 'relight:profile' %}">マイページ</a></li>
+        <li class="Rmenu"><a href="{% url 'relight:create_account' %}">新規会員登録</a></li>
+      </ul>
+      <ul class="logoH">
+        <li><a href="{% url 'relight:about' %}">About RE light</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div id="slideL" class="off">
+    <nav>
+      <div class="humberger cancel">
+
+        <button class="hum trans"><img src="{% static 'relight/img/hamburger.png' %}"></button>
+
       </div>
-    
-    <h1 class="title">Shop Profile</h1>
-      <div class="personal">
-        <h1>Name :{{ shop_profile.name }}</h1>
-        <h1>Email : {{ shop.email }}</h1>
-        <div class="icon">
-          Icon :
-        <img src="{{ shop_profile.icons.url }}" width="200">
-        </div>
-        <div class="header">
-          header :
-        <img src="{{ shop_profile.headers.url }}" width="200"> 
-        </div>
-        <h1>Self_introduction : {{ shop_profile.self_introduction }}</h1>
-        <button type="button"><a href="{% url 'relight:event_index' %}">イベント一覧ページへ</a></button>
-        <h1>{{ shop_profile.name }}さんが作成したイベント一覧</h1>          
-          {% for event in events %}
-          <div class="event_title">
-            <p><a href="{% url 'relight:detail' event.title %}" class="title">{{event.title}}</a></p>
-          </div>
-          {% endfor %}  <br>
-          <button class="yellow trans submit" type="button"><a href="{% url 'relight:logout' %}">ログアウト</a></button>
-      </div>
-      <footer>
-        <br>
-        <a href="{% url 'relight:privacy' %}">プライバシーポリシー</a>
-        <p>©RElight, 2020</p>
-      </footer>
-      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-      <script type="text/javascript" src="{% static 'relight/js/query.js' %}"></script>
-    
-    </body>
+      <br>
+      <ul>
+        <li><a href="{% url 'relight:top' %}">TOP</a></li>
+        <li><a href="{% url 'relight:shop_index' %}">SHOP</a></li>
+        <li><a href="{% url 'relight:event_index' %}">EVENT</a></li>
+        <li><a href="{% url 'relight:login' %}">LOGIN</a></li>
+        <li><a href="{% url 'relight:logout' %}">SIGN UP</a></li>
+      </ul>
+
+    </nav>
+  </div>
+
+  <div class="headI">
+    <img src="{{ profile.headers.url }}" width="200">
+  </div>
+
+  <h1>プロフィール</h1>
+
+  <div class="personal">
+    <div class="flex">
+      <span class="icon">
+        <img src="{{ shop_profile.icons.url }}" width="200"></span>
+      <span class="prof">
+        <h3>店名 :　{{ shop_profile.name }}</h3>
+        <h3>メールアドレス :　 {{ shop.email }}</h3>
+        <h3>店紹介 :</h3>
+        {% if shop_profile.self_introduction %}
+        {{ shop_profile.self_introduction }}
+        {% else %}
+        よろしくお願いします
+        {% endif %}
+        </span>
+    </div>
+    <br><br>
+    <h1>{{ shop_profile.name }}の作成したイベント一覧</h1>
+    {% for event in events %}
+    <div class="event_title">
+      <ul>
+            <li>
+                {{ event.created_at }}
+                {{ event.title }}
+                <a href="{% url 'relight:detail' event.title %}">詳細</a>
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+  </div>
+  <button class="white trans submit" type="button"><a href="{% url 'relight:event_index' %}">イベント一覧ページへ戻る</a></button>
+  <footer>
+    <br>
+    <a href="{% url 'relight:privacy' %}">プライバシーポリシー</a>
+    <p>©RElight, 2020</p>
+  </footer>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="{% static 'relight/js/query.js' %}"></script>
+  
+</body>
+
 </html>

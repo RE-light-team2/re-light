@@ -3,7 +3,7 @@
 <html lang="ja">
 
 <head>
-  <title>RElight</title>
+  <title>RElight - プロフィール</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
@@ -53,18 +53,24 @@
     <img src="{{ profile.headers.url }}" width="200">
   </div>
 
-  <h1>Your Profile</h1>
+  <h1>プロフィール</h1>
 
   <div class="personal">
     <div class="flex">
       <span class="icon">
         <img src="{{ profile.icons.url }}" width="200"></span>
       <span class="prof">
-        <h3>Name :　{{ profile.name }}</h3>
-        <h3>Email :　 {{ user.email }}</h3>
-        <br><br>
-        <h3>Self_introduction</h3>
+        <h3>氏名 :　{{ profile.name }}</h3>
+        <h3>メールアドレス :　 {{ user.email }}</h3>
+        <h3>自己紹介 :</h3>
+        {% if profile.self_introduction %}
         {{ profile.self_introduction }}
+        {% else %}
+        よろしくお願いします
+        {% endif %}
+        {% ifequal user.s_or_c "shop" %}
+        <h3>お使いの料金プラン :<br/>　{{ profile.plan }}</h3>
+        {% endifequal %}
       </span>
     </div>
     

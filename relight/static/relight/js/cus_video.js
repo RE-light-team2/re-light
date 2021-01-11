@@ -4,9 +4,22 @@ var existingCall = null;
 var conn;  
 let cus_cnt_set = 0;
 let shop_cnt_set = 0;
+let pinned_cnt = 0;
 
 const localVideo = document.getElementById('my-video');
 const ChatVideo = document.getElementById('their-video');
+
+function setupMakeCallUI() {
+    $('#make-call').show();
+    $('#end-call').hide();
+}
+
+function setupEndCallUI() {
+    $('#make-call').hide();
+    $('#end-call').show();
+}
+
+setupMakeCallUI();
 
 localVideo.muted = true; // 自分の音声を自分のスピーカーから聞こえなくする。相手には届く。
 localVideo.playsInline = true;
@@ -89,20 +102,31 @@ $(document).ready(function () {
         var name = (peer.id).replace(event,"");
  
         var cnt = Number(cus_cnt_set);
-        var html = '<div id="your_message'+ cnt +'">' + name + ": " + message + '</div><button type="button" value="pin'+cnt+'" class="pin-btn-cus">ピン</button>';
+        var html = '<div id="cus_message'+ cnt +'">' + name + ": " + message + '<button type="button" value="pin'+cnt+'" class="pin-btn-cus">ピン</button></div>';
         cus_cnt_set += 1;
-        $("#shop_messages").append(html);
- 
+        $("#your_messages").prepend(html);
         // 送信テキストボックスをクリア
         $("#chat-message-input").val("");
     });
 
     $(document).on('click', '.pin-btn-cus', function () {
         var tmp = $(this).val();
-        var num = tmp.replace('ピン', '');
-        var sent = "#your_message" + num;
+        var num = tmp.replace('pin', '');
+        var sent = "#cus_message" + num;
         var mess = $(sent).text();
-        $("#pinned_messages").append($("<p>").html(mess).css("font-weight", "bold"));
+        var message  = mess.slice(0, -2);
+        var cnt = Number(pinned_cnt);
+        pinned_cnt += 1;
+        var html = '<div id="pinned'+ cnt +'">'+ message + '<button type="button" value="rm'+cnt+'" class="pin-rm">ピンから削除</button></div>';   
+        $("#pinned_messages").prepend(html);
+    });
+
+    $(document).on('click', '.pin-rm', function () {
+        var tmp = $(this).val();
+        var num = tmp.replace('rm', '');
+        var sent = "#pinned" + num;
+        $(sent).remove();
+        $(this).remove();
     });
 
 
@@ -150,17 +174,21 @@ function onRecvMessage(data) {
     var cnt = Number(shop_cnt_set);
     var event = $('#event_name').text(); 
     var name = (existingCall.remoteId).replace(event, "");
-    var html = '<div id="other_message'+ cnt +'">' + name + ": " + data + '</div><button type="button" value="pin'+cnt+'" class="pin-btn-shop">ピン'+cnt+'</button>';
+    var html = '<div id="shop_message'+ cnt +'">' + name + ": " + data + '<button type="button" value="pin'+cnt+'" class="pin-btn-shop">ピン</button></div>';
     shop_cnt_set += 1;
-    $("#shop_messages").append(html);
+    $("#other_messages").prepend(html);
 }
 
 $(document).on('click', '.pin-btn-shop', function () {
-    var tmp = $(this).text();
-    var num = tmp.replace('ピン', '');
-    var sent = "#other_message" + num;
+    var tmp = $(this).val();
+    var num = tmp.replace('pin', '');
+    var sent = "#shop_message" + num;
     var mess = $(sent).text();
-    $("#pinned_messages").append($("<p>").html(mess).css("font-weight", "bold"));
+    var message  = mess.slice(0, -2);
+    var cnt = Number(pinned_cnt);
+    pinned_cnt += 1;
+    var html = '<div id="pinned'+ cnt +'">'+ message + '<button type="button" value="rm'+cnt+'" class="pin-rm">ピンから削除</button></div>';   
+    $("#pinned_messages").prepend(html);
 });
 
 peer.on('connection', function(connection){
@@ -211,6 +239,8 @@ function setupCallEventHandlers(call) {
     call.on('stream', function (stream) {
         addVideo(call, stream);
         setupEndCallUI();
+        $('#my-video').css({'width':'150px','float':'right'});
+        $('#their-video').css({'width':'800px','float':'left','border':'2px solid black','border-radius': '10px'});
     });
 
     call.on('close', function () {
@@ -224,18 +254,8 @@ peer.on('call', function (call) {
     setupCallEventHandlers(call);
 });
 
-function setupMakeCallUI() {
-    $('#make-call').show();
-    $('#end-call').hide();
-}
-
-function setupEndCallUI() {
-    $('#make-call').hide();
-    $('#end-call').show();
-}
 //マイク・カメラOFF・ON切り替えボタン用スクリプト
 const toggleCamera = document.getElementById('js-toggle-camera');
 const toggleMicrophone = document.getElementById('js-toggle-microphone');
 const cameraStatus = document.getElementById('camera-status');
 const microphoneStatus = document.getElementById('microphone-status');
-

@@ -104,7 +104,10 @@ def shop_searched(request):
     shops = Shop_Profile.objects.order_by('-id')
     keyword = request.GET.get('keyword')
     user = request.user
-    profile = Shop_Profile.objects.get(shop=user.id)
+    if (user.s_or_c == 'shop'):
+        profile = Shop_Profile.objects.get(shop=user.id)
+    if (user.s_or_c == 'cus'):
+        profile = Cus_Profile.objects.get(cus=user.id)
 
     if keyword:
         """ 除外リストを作成 """

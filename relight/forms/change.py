@@ -49,6 +49,10 @@ class Change_Shop_Form(forms.ModelForm):
     icons = forms.ImageField(required=False)
     headers = forms.ImageField(required=False)
     error_message = 'error'
+    PLAN = [('ライトプラン', 'ライトプラン'), ('ベーシックプラン',
+                                   'ベーシックプラン'), ('プレミアムプラン', 'プレミアムプラン')]
+    plan = forms.ChoiceField(choices=PLAN, widget=forms.RadioSelect(
+        attrs={'class': "custom-radio-list"}))
     online_address = forms.URLField()
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
@@ -79,6 +83,7 @@ class Change_Shop_Form(forms.ModelForm):
                 profile.icons = file["icons"]
             if 'headers' in file:
                 profile.headers = file["headers"]
+        profile.plan = post["plan"]
         profile.self_introduction = post["self_introduction"]
         profile.online_address = post["online_address"]
         profile.shop = user
@@ -98,7 +103,8 @@ class Change_Cus_Form(forms.ModelForm):
     headers = forms.ImageField(required=False)
     error_message = 'error'
     GENDER = [('man', '男性'), ('woman', '女性'), ('No', '未回答')]
-    gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
+    gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect(
+        attrs={'class': "custom-radio-list"}))
     self_introduction = forms.CharField(required=False, label='SELF_INTRODUCTION',
                                         max_length=1000, widget=forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}))
     is_save = False

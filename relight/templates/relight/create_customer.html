@@ -3,7 +3,7 @@
 <html lang="ja">
 
 <head>
-  <title>RElight</title>
+  <title>RElight - 利用者アカウント作成</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
@@ -102,16 +102,32 @@
     <button href="{% url 'relight:top' %}" class="white trans submit" type="button" value="disagree">戻る</button>
  
   </form>
-  <div class="form-error">
-    {% if form.errors %}
-    {% for field in form %}
+  <div class="form-user-error">
+    {% if form_user.errors %}
+    {% for field in form_user %}
     {% for error in field.errors %}
     <div class="alert alert-danger">
       <strong>{{ error|escape }}</strong>
     </div>
     {% endfor %}
     {% endfor %}
-    {% for error in form.non_field_errors %}
+    {% for error in form_user.non_field_errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div class="form-cus-error">
+    {% if form_cus.errors %}
+    {% for field in form_cus %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in form_cus.non_field_errors %}
     <div class="alert alert-danger">
       <strong>{{ error|escape }}</strong>
     </div>

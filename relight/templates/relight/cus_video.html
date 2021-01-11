@@ -2,10 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head lang="ja">
-    <title>RElight - Video</title>
+    <title>RElight - 顧客側ビデオ通話</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'relight/css/video.css' %}">
 </head>
 <body>
     <header>
@@ -50,51 +51,38 @@
     <h1 class="title" id="event_name">{{event.title}}</h1>
 
     <!-- Video area -->
-    <p>{{ user.name }}</p>
     <div class="video" id="video-container">
         <video id="their-video"></video>
-        <video id="my-video"></video>
+        <video id="my-video"></video>               
     </div>
-    <div class="flex circle toggle-mute">
-        <button class="btn" id="js-toggle-camera"><img src="{% static 'relight/img/video.png' %}"></button>
+    <div class="toggle-mute">
+        <button class="video-button"id=" js-toggle-camera">カメラOFF</button>
         <span id="camera-status"></span>
         <br>
       
-        <button class="btn" id="js-toggle-microphone"><img src="{% static 'relight/img/mic.png' %}"></button>
+        <button class="video-button" id="js-toggle-microphone">マイクOFF</button>
         <span id="microphone-status"></span>
         <br>
     </div>
-
     <!-- Steps -->
     <div class="video-info">
-        <h2>SkyWay Video Chat</h2>
-
         <div hidden id="my-id">{{profile.name}}{{event.title}}</div>
-        <p>Share this id with others so they can call you.</p>
-        <h3>Make a call</h3>
         <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
         <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">このお店のショッピングサイトへ</button></a>           
-        <button href="#" id="make-call" class="pure-button pure-button-success" type="button">Call</button>
-        <button href="#" id="end-call" type="button">End Call</button>
-        <form hidden id="end-call" action="{% url 'relight:cus_video' event.title %}" name="form1"></form>
+        <button href="#" id="make-call" class="video-button" type="button">通話開始</button>
+        <button href="#" id="end-call" class="video-button" type="button">通話終了</button>
+        <form hidden action="{% url 'relight:cus_video' event.title %}" name="form1"></form>
     </div>
-    <h3>Chat</h3>
     <div class="form-group">
     <br/>
-    <input id="chat-message-input" type="text" size="100"/><br/>
-    <input id="chat-message-submit" type="button" value="Send" src="{% static 'relight/img/send.jpg' %}" width="3%"/>
-    <div id="cus_messages"></div>
-    <div id="shop_messages"></div>
+    <div id="pinned_messages">ピン止めアイテム<br></div>
+    <div id="your_messages">自分のメッセージ<br>
+        <textarea rows="10" id="chat-message-input" cols="60"></textarea><br/>
+        <input id="chat-message-submit" type="button" value="Send"/>   
+    </div>
+    <div id="other_messages">お店からのメッセージ<br></div>
 </div>
 </div>
-  <footer>
-    <br>
-    <a href="{% url 'relight:privacy' %}">プライバシーポリシー</a>
-    <p>©RElight, 2020</p>
-
-<script>
-    var csrftoken = '{{ csrf_token }}';
-</script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>

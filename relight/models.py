@@ -71,8 +71,8 @@ class Event(models.Model):
     """開催中のイベントのモデル"""
     user = models.ForeignKey('UserInfo', on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to="event/", unique=True)
-    title = models.CharField(max_length=256)
-    detail = models.CharField(max_length=500)
+    title = models.CharField(max_length=256, unique=True)
+    detail = models.CharField(max_length=1000)
     questionnaire_url = models.CharField(blank=True, max_length=500)
     created_at = models.DateTimeField(default=datetime.datetime.now)
     active = models.BooleanField(default=False)

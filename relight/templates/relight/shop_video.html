@@ -2,10 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head lang="ja">
-    <title>RElight - Login</title>
+    <title>RElight - ショップ側ビデオ通話</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">   
     <link rel="stylesheet" type="text/css" href="{% static 'relight/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'relight/css/video.css' %}">
 </head>
 <body>
     <header>
@@ -54,39 +55,34 @@
         <video id="my-video"></video>
     </div>
     <!-- ビデオ・マイクOFF用ボタン -->
-    <div class="flex circle toggle-mute">
-        <button class="btn" id="js-toggle-camera"><img src="{% static 'relight/img/video.png' %}"></button>
+    <div class="toggle-mute">
+        <button class="video-button" id="js-toggle-camera">カメラOFF</button>
         <span id="camera-status"></span>
         <br>
       
-        <button class="btn" id="js-toggle-microphone"><img src="{% static 'relight/img/mic.png' %}"></button>
+        <button class="video-button" id="js-toggle-microphone">マイクOFF</button>
         <span id="microphone-status"></span>
         <br>
     </div>
 
-
     <!-- Steps -->
     <div class="video-info">
-        <h2>SkyWay Video Chat</h2>
         <div hidden id="my-id">{{auth_user.name}}{{event.title}}</div>
-        <p>Share this id with others so they can call you.</p>
-        <h3>Make a call</h3>
         <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
-        <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">御社のショッピングサイトへ</button></a>
-        <p>Currently in call with <span id="their-id">...</span></p>
-        <button href="#" id="end-call" type="button">End Call</button>
+        <a target="_blank" href="{{ auth_user.online_address }}"><button class="video-button" type="button">御社のショッピングサイトへ</button></a>
+        <button href="#" class="video-button" id="end-call" type="button">通話終了</button>
         <form hidden action="{% url 'relight:shop_video' event.title %}" name="form1"></form>
     </div>
 </div>
-<h3>Chat</h3>
 <div class="form-group">
     <br/>
-    <input id="chat-message-input" type="text" size="100"/><br/>
-    <input id="chat-message-submit" type="button" value="Send" src="{% static 'relight/img/send.jpg' %}" width="3%"/>
-    <div id="cus_messages"></div>
-    <div id="shop_messages"></div>
-    <div id="pinned_messages"></div>
     <div id="cus_profile"></div>
+    <div id="pinned_messages">ピン止めアイテム<br></div>
+    <div id="your_messages">自分のメッセージ<br>
+        <textarea rows="10" id="chat-message-input" cols="60"></textarea><br/>
+        <input id="chat-message-submit" type="button" value="Send"/>   
+    </div>
+    <div id="other_messages">お客様のメッセージ<br></div>    
 </div>
 <footer>
     <br>
