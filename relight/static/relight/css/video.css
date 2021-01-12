@@ -1,7 +1,6 @@
 #pinned_messages {
     border: 2px solid yellow;
     border-radius: 10px;
-    width: 400px;
     display: inline-block;
     font-weight: bold;
     background-color: rgba(235, 235, 148, 0.836);
@@ -11,14 +10,12 @@
     display: inline-block;
     border: 2px solid yellow;
     border-radius: 10px;
-    width: 600px;
 }
 
 #other_messages {
     display: inline-block;
     border: 2px solid yellow;
     border-radius: 10px;
-    width: 600px;
 }
 
 #my-video {
@@ -53,3 +50,34 @@ h1 {
     /*横幅の解釈をpadding, borderまでとする*/
     display: inline-block;
 }
+
+.video{
+    margin-left:25vw;
+}
+.other{
+    margin-top:25vw;
+}
+#shoplink{
+    font-size: small;
+}
+.tab a{
+    text-decoration: none;
+    padding:2px;
+    margin:0 3px;
+    border-radius: 10px;
+    border:solid yellow 3px;
+}
+.tab{
+    justify-content: center;
+}
+.fst{
+    background: linear-gradient(to right, #FFF55F, #E8FD95);
+    font-weight: bold;
+}
+.form-group div{
+    width:60vw;
+}
+.form-group{
+    margin-left: 20vw;
+}
+

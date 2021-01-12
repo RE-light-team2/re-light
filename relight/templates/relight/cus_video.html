@@ -19,8 +19,7 @@
         <div class="flex">
           <ul class="header">
             <li><a href="/">HOME</a></li>
-            <li class="Rmenu"><a href="{% url 'relight:login' %}">ログイン</a></li>
-            <li class="Rmenu"><a href="{% url 'relight:create_account' %}">新規会員登録</a></li>
+            <li class="Rmenu"><a href="{% url 'relight:profile' %}">マイページ</a></li>
           </ul>
           <ul class="logoH">
             <li><a href="{% url 'relight:about' %}">About RE light</a></li>
@@ -51,41 +50,64 @@
     <h1 class="title" id="event_name">{{event.title}}</h1>
 
     <!-- Video area -->
+    <p>{{ user.name }}
+      <a target="_blank" href="{{ auth_user.online_address }}"><button class="top white trans" id="shoplink"
+          type="button">このお店のショッピングサイトへ</button></a>
+    </p>
     <div class="video" id="video-container">
-        <video id="their-video"></video>
-        <video id="my-video"></video>               
+      <video id="their-video"></video>
+      <video id="my-video"></video>
     </div>
-    <div class="toggle-mute">
-        <button class="video-button"id=" js-toggle-camera">カメラOFF</button>
+
+    <div class="other">
+      <div class="flex circle toggle-mute">
+        <button href="#" id="make-call" class="video-button top yellow trans" type="button">通話開始</button>
+
+        <button class="btn video-button" id="js-toggle-camera"><img src="{% static 'relight/img/video.png' %}"></button>
         <span id="camera-status"></span>
         <br>
-      
-        <button class="video-button" id="js-toggle-microphone">マイクOFF</button>
+
+        <button class="btn video-button" id="js-toggle-microphone"><img src="{% static 'relight/img/mic.png' %}"></button>
         <span id="microphone-status"></span>
         <br>
-    </div>
+        <button href="#" id="end-call" class="video-button top yellow trans" type="button">通話終了</button>
+
+      </div>
+      <br>
     <!-- Steps -->
     <div class="video-info">
-        <div hidden id="my-id">{{profile.name}}{{event.title}}</div>
-        <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
-        <a target="_blank" href="{{ auth_user.online_address }}"><button type="button">このお店のショッピングサイトへ</button></a>           
-        <button href="#" id="make-call" class="video-button" type="button">通話開始</button>
-        <button href="#" id="end-call" class="video-button" type="button">通話終了</button>
-        <form hidden action="{% url 'relight:cus_video' event.title %}" name="form1"></form>
+      <div hidden id="my-id">{{profile.name}}{{event.title}}</div>
+      <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
+    
+      <form hidden action="{% url 'relight:cus_video' event.title %}" name="form1"></form>
     </div>
     <div class="form-group">
-    <br/>
-    <div id="pinned_messages">ピン止めアイテム<br></div>
-    <div id="your_messages">自分のメッセージ<br>
-        <textarea rows="10" id="chat-message-input" cols="60"></textarea><br/>
-        <input id="chat-message-submit" type="button" value="Send"/>   
-    </div>
-    <div id="other_messages">お店からのメッセージ<br></div>
+      <div class="flex tab">
+        <a href="#pinned_messages">ピン留めアイテム</a>
+        <a href="#your_messages" class="fst">自分のメッセージ</a>
+        <a href="#other_messages">お店からのメッセージ</a>
+      </div>
+      <div id="box">
+        <div id="pinned_messages">ピン留めアイテム<br></div>
+        <div id="your_messages" class="flex">
+          自分のメッセージ<br>
+          <textarea rows="10" id="chat-message-input" cols="60"></textarea>
+          <input id="chat-message-submit" type="image" src="{% static 'relight/img/send.jpg' %}" width="5%" />
+        </div>
+        <div id="other_messages">お店からのメッセージ<br></div>
+      </div>
 </div>
 </div>
+</div>
+<footer>
+  <a href="{% url 'relight:privacy' %}">プライバシーポリシー</a>
+  <p>©RElight, 2020</p>
+</footer>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
 <script type="text/javascript" src="{% static 'relight/js/cus_video.js' %}"></script>
+<script type="text/javascript" src="{% static 'relight/js/query.js' %}"></script>
+
 </body>
 </html>
