@@ -247,7 +247,7 @@ function setupCallEventHandlers(call){
         $('#end-call').show(); 
         $('#my-video').css({'width':'150px','float':'right'});
         $('#their-video').css({'width':'800px','float':'left','border':'2px solid black','border-radius': '10px'});
-        $('#cus_profile').css({'width':'400px','float':'right','border':'2px solid yellow','border-radius': '10px','text-align':'center'});
+        $('#cus_profile').css({ 'width': '400px', 'float': 'right', 'border': '2px solid yellow', 'border-radius': '10px', 'text-align': 'center' });   
     });
 
     call.on('close', function(){
@@ -260,3 +260,16 @@ peer.on('call', function(call){
     call.answer(localStream);
     setupCallEventHandlers(call);
 });
+$('#detail_cus').hide();
+$('#cus_profile').hover(
+    function() {        
+        //マウスカーソルが重なった時の処理
+        $('#detail_cus').show();
+        $('#cus_profile').css('background-color', 'white');      
+    },
+    function() {       
+        //マウスカーソルが離れた時の処理
+        $('#detail_cus').hide();
+        $('#cus_profile').css('background-color', '');     
+    }
+);

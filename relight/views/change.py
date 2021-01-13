@@ -121,7 +121,9 @@ def delete_event(request, event_title):
         profile = Shop_Profile.objects.get(shop=user.id)
 
     if request.method == 'POST':
+        print("post")
         if 'yes' in request.POST:
+            print("post yes")
             event.delete()
         else:
             return redirect('/profile')
