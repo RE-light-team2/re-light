@@ -1,6 +1,7 @@
 #pinned_messages {
     border: 2px solid yellow;
     border-radius: 10px;
+    width: 20vw;
     display: inline-block;
     font-weight: bold;
     background-color: rgba(235, 235, 148, 0.836);
@@ -9,12 +10,14 @@
 #your_messages {
     display: inline-block;
     border: 2px solid yellow;
+    width: 45vw;
     border-radius: 10px;
 }
 
 #other_messages {
     display: inline-block;
     border: 2px solid yellow;
+    width: 45vw;
     border-radius: 10px;
 }
 
@@ -51,33 +54,24 @@ h1 {
     display: inline-block;
 }
 
-.video{
-    margin-left:25vw;
-}
-.other{
-    margin-top:25vw;
-}
-#shoplink{
+#shoplink {
     font-size: small;
 }
-.tab a{
-    text-decoration: none;
-    padding:2px;
-    margin:0 3px;
-    border-radius: 10px;
-    border:solid yellow 3px;
-}
-.tab{
-    justify-content: center;
-}
-.fst{
-    background: linear-gradient(to right, #FFF55F, #E8FD95);
-    font-weight: bold;
-}
-.form-group div{
-    width:60vw;
-}
-.form-group{
-    margin-left: 20vw;
+
+.other {
+    margin-top: 15vw;
 }
 
+.video {
+    margin-left: 10vw;
+}
+
+#cus_profile {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+#cus_profile:hover {
+    background-color: white;
+}

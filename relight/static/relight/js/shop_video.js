@@ -8,6 +8,11 @@ let pinned_cnt = 0;
 
 const localVideo = document.getElementById('my-video');
 const ChatVideo = document.getElementById('their-video');
+//マイク・カメラOFF・ON切り替えボタン用スクリプト
+const toggleCamera = document.getElementById('js-toggle-camera');
+const toggleMicrophone = document.getElementById('js-toggle-microphone');
+const cameraStatus = document.getElementById('camera-status');
+const microphoneStatus = document.getElementById('microphone-status');
 
 localVideo.muted = true; // 自分の音声を自分のスピーカーから聞こえなくする。相手には届く。
 localVideo.playsInline = true;
@@ -120,13 +125,15 @@ $(document).ready(function () {
     toggleCamera.addEventListener('click', () => {
         const videoTracks = localStream.getVideoTracks()[0];
         videoTracks.enabled = !videoTracks.enabled;
-        cameraStatus.textContent = `カメラ${videoTracks.enabled ? 'ON' : 'OFF'}`;
+        var color = `${videoTracks.enabled ? 'white' : 'red'}`;
+        $('#js-toggle-camera').css({'background-color':color});
     });
 
     toggleMicrophone.addEventListener('click', () => {
         const audioTracks = localStream.getAudioTracks()[0];
         audioTracks.enabled = !audioTracks.enabled;
-        microphoneStatus.textContent = `マイク${audioTracks.enabled ? 'ON' : 'OFF'}`;
+        var color = `${audioTracks.enabled ? 'white' : 'red'}`;
+        $('#js-toggle-microphone').css({'background-color':color});
     });
 });
 
@@ -253,9 +260,3 @@ peer.on('call', function(call){
     call.answer(localStream);
     setupCallEventHandlers(call);
 });
-
-//マイク・カメラOFF・ON切り替えボタン用スクリプト
-const toggleCamera = document.getElementById('js-toggle-camera');
-const toggleMicrophone = document.getElementById('js-toggle-microphone');
-const cameraStatus = document.getElementById('camera-status');
-const microphoneStatus = document.getElementById('microphone-status');

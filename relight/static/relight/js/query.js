@@ -27,23 +27,6 @@ $(function(){
       $(this).toggleClass('active');
   });
 });
-
-$ (function() {
-  
-  $("#box div") .hide();
-  $("#your_messages") .show();
-
-    $(".flex a") .click(function() {
-      $("#box div") .hide();
-      $($(this) .attr("href")) .show();
-
-      $(".fst") .removeClass ("fst"); 
-
-      $(this) .addClass ("fst");
-      return false;
-});
-});
-
 /*
 $(function() {
 

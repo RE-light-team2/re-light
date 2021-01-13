@@ -58,18 +58,14 @@
     <!-- ビデオ・マイクOFF用ボタン -->
     <div class="other">
       <div class="flex circle toggle-mute">
-        <button href="#" id="make-call" class="video-button top yellow trans" type="button">通話開始</button>
-
         <button class="btn video-button" id="js-toggle-camera"><img src="{% static 'relight/img/video.png' %}"></button>
         <span id="camera-status"></span>
         <br>
 
-        <button class="btn video-button" id="js-toggle-microphone"><img
-            src="{% static 'relight/img/mic.png' %}"></button>
+        <button class="btn video-button" id="js-toggle-microphone"><img src="{% static 'relight/img/mic.png' %}"></button>
         <span id="microphone-status"></span>
         <br>
         <button href="#" id="end-call" class="video-button top yellow trans" type="button">通話終了</button>
-
       </div>
       <br>
 
@@ -79,26 +75,17 @@
         <div hidden id="callto-id">{{auth_user.name}}{{event.title}}</div>
         <form hidden action="{% url 'relight:shop_video' event.title %}" name="form1"></form>
       </div>
-
       <div class="form-group">
-        <div class="flex tab">
-          <a href="#cus_profile">顧客情報</a>
-          <a href="#pinned_messages">ピン留めアイテム</a>
-          <a href="#your_messages" class="fst">自分のメッセージ</a>
-          <a href="#other_messages">お客様のメッセージ</a>
-        </div>
-        <div id="box">
           <div id="cus_profile"></div>
           <div id="pinned_messages">ピン留めアイテム<br></div>
           <div id="your_messages" class="flex">自分のメッセージ<br>
             <textarea rows="10" id="chat-message-input" cols="60"></textarea><br />
-            <input id="chat-message-submit" type="button" value="Send" />
+            <input id="chat-message-submit" type="image" src="{% static 'relight/img/send.jpg' %}" width="5%" />
           </div>
           <div id="other_messages">お客様のメッセージ<br></div>
         </div>
       </div>
     </div>
-  </div>
   <footer>
     <br>
     <a href="{% url 'relight:privacy' %}">プライバシーポリシー</a>
